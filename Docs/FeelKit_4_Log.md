@@ -33,7 +33,14 @@ Scale). Reference chapters 16 to 19 take editions from the code and needed nothi
 before), 72 labeled cells (27 before), 0 warnings; lint 0 errors. D4 (D-110) built into `build_manual.py` the
 same day, welcome 1.3 and chapter 15 describe the band; checked in a LibreOffice render (pages 2, 34, 42, 54, 112:
 band, bar, PRO at the right, long titles wrap with PRO on the last line). The final PDF comes from Word on the
-development PC: `python build_manual.py --pdf`.
+development PC: `python build_manual.py --pdf`. Usefulness check (same day, a buyer's first
+hour against the code): install, quick start, Play Feel, targets, the C++ sample and the support contacts are accurate
+(quick start recipe FR_Impact_HeavyHit is in Lite, banner text and node names match the source, pictures come from the
+editor by script). Fixed: chapter 3 told every buyer the Tools menu holds the FeelKit windows, which are all Pro; the
+install path now says "usually `Engine/Plugins/Marketplace`" and the GAS steps find the folder by searching for
+`FeelKit.uplugin` (the 2026-09-23 Fab research quoted `Engine/Plugins/Fab`; web sources say Marketplace); Based On is
+named as Pro (hidden in Lite) in chapters 4 and 9; both subsystem delegates are named as Pro; the C++ sample says what
+`HitRecipe` and `HitHandle` are. Video boxes say the video will be added after publishing.
 
 **As of 2026-09-26:** the Fab publishing package is ready in `Publish/` (Lite and Pro, six checked packages and
 upload zips, galleries, both listings with every form field); what only the user can do is listed in

@@ -17,7 +17,7 @@ FeelKit is an engine plugin: it is installed once per engine version and then en
 ## Installing from Fab and enabling the plugin {#ch03_install}
 
 1. In the Epic Games Launcher, open **Unreal Engine** > **Library** and scroll to **Fab Library**.
-2. Search for FeelKit and click **Install to Engine**. Choose the engine version and click **Install**. The launcher places the plugin in the engine's `Engine/Plugins/Marketplace` folder, where every project that uses this engine version can find it.
+2. Search for FeelKit and click **Install to Engine**. Choose the engine version and click **Install**. The launcher places the plugin in a folder under the engine's `Engine/Plugins` folder, usually `Engine/Plugins/Marketplace`, where every project that uses this engine version can find it.
 3. Open the project and choose **Edit** > **Plugins**. Type **FeelKit** in the search box. The entry is called **FeelKit** for Pro and **FeelKit Lite** for Lite.
 4. Tick **Enabled** on the entry and click **Restart Now**.
 
@@ -25,7 +25,7 @@ Install one edition per engine version. Both editions are the same plugin, FeelK
 
 [shot: S03-02 | Edit > Plugins with FeelKit found by the search box. FeelKit GAS appears only in a project that has the add-on]
 
-After the restart, the **Tools** menu contains the FeelKit windows, the Content Browser can create recipes (right-click > **FeelKit** > **Feel Recipe**), and the Blueprint action menu lists the **Feel** nodes. Enabling adds FeelKit to the `Plugins` list of the project's `.uproject` file; nothing else in the project changes.
+After the restart, the Content Browser can create recipes (right-click > **FeelKit** > **Feel Recipe**) and the Blueprint action menu lists the **Feel** nodes. In Pro, the **Tools** menu also holds the FeelKit windows: the Recipe Browser, the Debugger and the Comfort Audit. Enabling adds FeelKit to the `Plugins` list of the project's `.uproject` file; nothing else in the project changes.
 
 An update from Fab replaces the installed plugin in the engine folder. Anything edited inside that folder, such as FeelKit's own comfort menu, is replaced as well; [Ref: ch08] describes how to restyle the comfort menu safely.
 
@@ -67,13 +67,13 @@ The Content Browser hides plugin content until it is asked to show it:
 Support for the Gameplay Ability System is a separate plugin, **FeelKit GAS**, inside FeelKit's `Extras` folder. It stays out of projects that do not use GAS, so they never load the Gameplay Abilities plugin because of FeelKit. It is added per project, and it compiles with the project, so Visual Studio 2022 with the C++ workload is required.
 
 1. Close the Unreal Editor.
-2. In File Explorer, open the engine's `Engine/Plugins/Marketplace` folder, then the FeelKit folder inside it (the one that contains `FeelKit.uplugin`), then `Extras`.
+2. In File Explorer, open the engine's `Engine/Plugins` folder and search it for `FeelKit.uplugin`. The folder that contains that file is FeelKit's folder, usually inside `Engine/Plugins/Marketplace`. Open its `Extras` folder.
 3. Copy the `FeelKitGAS` folder into the project's `Plugins` folder, creating `Plugins` if it does not exist. The result is `<Project>/Plugins/FeelKitGAS/FeelKitGAS.uplugin`.
 4. Open the project. Unreal reports that the FeelKit GAS module is missing or was built with a different engine version and offers to rebuild it; click **Yes**. In a C++ project, building the project from Visual Studio does the same.
 
 | Location | Path |
 |---|---|
-| Copy from | `<Engine>/Engine/Plugins/Marketplace/<FeelKit folder>/Extras/FeelKitGAS` |
+| Copy from | `<FeelKit folder>/Extras/FeelKitGAS`, usually `<Engine>/Engine/Plugins/Marketplace/<FeelKit folder>/Extras/FeelKitGAS` |
 | Copy to | `<Project>/Plugins/FeelKitGAS` |
 
 FeelKit GAS is enabled as soon as it is in the project, and it enables Gameplay Abilities. The Gameplay Cue notifies it adds are described in [Ref: ch06_gas]. To remove it, delete the `Plugins/FeelKitGAS` folder while the editor is closed; FeelKit itself is unaffected.

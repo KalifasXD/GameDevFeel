@@ -43,7 +43,7 @@ A project uses its own copy of a library recipe. Copies can be made in three way
 - **In the recipe editor:** open the library recipe and click **Copy to Project** in the banner above the timeline ([Ref: ch04_pick]).
 - **From a template** (Pro): right-click a folder in the Content Browser and choose **Recipe from Template...**. A window titled **Create a recipe from a template** shows the library in the same layout as the Recipe Browser; select a recipe and click **Create**.
 
-A save dialog opens, with the name shortened to the part after the feeling: `FR_Impact_HeavyHit` becomes `HeavyHit`. The copy opens in the recipe editor and can be changed freely. Its **Based On** field records the library recipe it came from.
+A save dialog opens, with the name shortened to the part after the feeling: `FR_Impact_HeavyHit` becomes `HeavyHit`. The copy opens in the recipe editor and can be changed freely. In Pro, its **Based On** field records the library recipe it came from.
 
 Some library recipes use sounds and materials from **FeelKit Content** > **Samples**. The copy refers to the same assets; duplicating them into the project is only necessary when they are to be changed.
 

@@ -209,7 +209,7 @@ if (UFeelSubsystem* Feel = UFeelSubsystem::Get(this))
 }
 ```
 
-`FFeelTarget::FromActor`, `FromComponent`, `AtLocation`, `FromLocalPlayerCamera` and `FromWidget` match the Make Feel Target nodes. Every Blueprint node is also a static function of `UFeelBlueprintLibrary`. The subsystem broadcasts `OnFeelStarted` and `OnFeelFinished` (Pro) for code that reacts to plays. The Feel Input component needs the module `FeelEnhancedInput`, and the GAS cue notifies need `FeelGAS`. [Ref: ch17] lists the subsystem's functions.
+Here `HitRecipe` is a `UFeelRecipe*` property set in the editor and `HitHandle` an `FFeelHandle` member, kept to stop or change the play later. `FFeelTarget::FromActor`, `FromComponent`, `AtLocation`, `FromLocalPlayerCamera` and `FromWidget` match the Make Feel Target nodes. Every Blueprint node is also a static function of `UFeelBlueprintLibrary`. In Pro, the subsystem also broadcasts `OnFeelStarted` and `OnFeelFinished` for code that reacts to plays. The Feel Input component needs the module `FeelEnhancedInput`, and the GAS cue notifies need `FeelGAS`. [Ref: ch17] lists the subsystem's functions.
 
 ## The Feel Switch: feel off and on while playing {#ch06_switch}
 

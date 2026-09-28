@@ -14,7 +14,7 @@ FeelKit includes a library of ready-made recipes, grouped by the feeling they pr
 [shot: S04-01 | The Impact folder of the FeelKit library in the Content Browser. 1 the folder; 2 FR_Impact_HeavyHit]
 
 3. Double-click the recipe. The recipe editor opens it with a banner across the timeline: "Library recipe (read-only). Copy it to your project to edit."
-4. Click **Copy to Project**. In the save dialog, choose a folder of the project, keep the suggested name `HeavyHit` and click **Save**. The copy opens in the recipe editor and can be changed freely; its **Based On** field records the library recipe it came from.
+4. Click **Copy to Project**. In the save dialog, choose a folder of the project, keep the suggested name `HeavyHit` and click **Save**. The copy opens in the recipe editor and can be changed freely. In Pro, its **Based On** field records the library recipe it came from.
 
 [shot: S04-02 | A library recipe opens read-only. Copy to Project creates an editable copy in the project]
 
