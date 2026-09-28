@@ -52,7 +52,7 @@ do; `PUBLISH-README.md` (one folder up) explains each one.
 | Tool type | Plugin |
 | Blueprints | 1 (the comfort menu, WBP_FeelComfortMenu) |
 | C++ classes | 58 |
-| Additional information | Built and tested on Windows with Unreal Engine 5.6, 5.7 and 5.8. Needs no other plugin. Packaging a Blueprint-only project with FeelKit needs Visual Studio, as with any code plugin. On Windows, PlayStation and other non-Xbox controllers vibrate through Steam Input. Documentation: under construction, linked from the description when published. Support: https://discord.gg/AtJ6RdwaxA and billoue4@gmail.com |
+| Additional information | Built and tested on Windows with Unreal Engine 5.6, 5.7 and 5.8. Needs no other plugin. Packaging a Blueprint-only project with FeelKit needs Visual Studio, as with any code plugin. On Windows, PlayStation and other non-Xbox controllers vibrate through Steam Input. Documentation: the FeelKit Manual (PDF), <MANUAL LINK>. Support: https://discord.gg/AtJ6RdwaxA and billoue4@gmail.com |
 
 ## 2. Text to paste
 
@@ -125,7 +125,7 @@ Four demo levels show what FeelKit does in a game. They are built with FeelKit P
 
 **Documentation and support**
 
-- Manual (PDF): under construction. It will be linked here as soon as it is published; until then, ask on Discord or by email and we will answer.
+- Manual (PDF): <MANUAL LINK>
 - Discord: https://discord.gg/AtJ6RdwaxA
 - Email: billoue4@gmail.com
 

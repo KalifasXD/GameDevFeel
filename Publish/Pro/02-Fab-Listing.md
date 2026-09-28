@@ -53,7 +53,7 @@ section 2 is ready to paste as it is. Items marked **MANUAL ACTION REQUIRED** ne
 | Tool type | Plugin |
 | Blueprints | 1 (the comfort menu, WBP_FeelComfortMenu) |
 | C++ classes | 101 |
-| Additional information | Built and tested on Windows with Unreal Engine 5.6, 5.7 and 5.8. Engine plugins it turns on: Niagara, Enhanced Input. GAS add-on: copy Extras/FeelKitGAS from the FeelKit folder in your engine into your project's Plugins folder. Packaging a Blueprint-only project with FeelKit needs Visual Studio, as with any code plugin. On Windows, PlayStation and other non-Xbox controllers vibrate through Steam Input. Documentation: under construction, linked from the description when published. Support: https://discord.gg/AtJ6RdwaxA and billoue4@gmail.com |
+| Additional information | Built and tested on Windows with Unreal Engine 5.6, 5.7 and 5.8. Engine plugins it turns on: Niagara, Enhanced Input. GAS add-on: copy Extras/FeelKitGAS from the FeelKit folder in your engine into your project's Plugins folder. Packaging a Blueprint-only project with FeelKit needs Visual Studio, as with any code plugin. On Windows, PlayStation and other non-Xbox controllers vibrate through Steam Input. Documentation: the FeelKit Manual (PDF), <MANUAL LINK>. Support: https://discord.gg/AtJ6RdwaxA and billoue4@gmail.com |
 
 ## 2. Text to paste
 
@@ -145,7 +145,7 @@ Owners of FeelKit can request the Unreal Engine 5.6 projects behind the playable
 
 **Documentation and support**
 
-- Manual (PDF): under construction. It will be linked here as soon as it is published; until then, ask on Discord or by email and we will answer.
+- Manual (PDF): <MANUAL LINK>
 - Discord: https://discord.gg/AtJ6RdwaxA
 - Email: billoue4@gmail.com
 

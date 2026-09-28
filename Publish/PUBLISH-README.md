@@ -48,13 +48,15 @@ The Pro zips online were made before the support email changed, so their plugin 
 address. The listings and the manual use billoue4@gmail.com. The FabURL rebuild after Fab's review (2.4) replaces all
 six zips anyway, and carries the new address.
 
-### 2.2 Documentation: under construction
+### 2.2 Documentation: the manual
 
-By the publisher's decision (2026-09-26), both descriptions say the manual is under construction and point to Discord
-and email until it is published. When the PDF is online, replace the "Manual (PDF)" line under "Documentation and
-support" with its link, and the "Documentation" sentence at the end of "Additional information" in the technical
-details. Fab's rule 4.3.8 asks for documentation at launch, so the review may ask for it; the answer is the link once
-it exists.
+Fab's first review (2026-09-28) failed both listings on documentation, so the manual goes online before the
+resubmission. Build the final PDF on the development PC with Word closed:
+`python B:\NewUE5Project\Tools\Manual\build_manual.py --release --pdf`. Upload
+`Docs/Manual/out/FeelKit_Manual_1.0.0.pdf` to Google Drive, share it with "Anyone with the link", check the link in a
+private browser window, and put it in place of `<MANUAL LINK>` in both listings: the "Manual (PDF)" line under
+"Documentation and support", the "Documentation" sentence in the technical details, and the notes to the reviewer
+(section 3). A later rebuild replaces the file on Drive with Manage versions > Upload new version, which keeps the link.
 
 ### 2.3 Create the two listings
 
