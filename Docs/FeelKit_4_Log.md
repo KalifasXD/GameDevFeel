@@ -16,6 +16,13 @@ What is left before launch: `FeelKit_2_Launch.md`. Documents named in older entr
 
 ## 1. Current status (update on every change)
 
+**As of 2026-09-28:** Fab's first technical review failed both listings on two points only: documentation (the manual
+is "under construction") and the third-party declaration (the box is ticked for the CC0 sounds, so Fab wants its Third
+Party Software form). Everything else passed, including code plugin rules and media. Fix: publish the manual PDF and
+link it; fill in the form, one entry per sound pack (Lite 3, Pro 6), answers and reviewer notes in
+`Publish/<Edition>/02-Fab-Listing.md` section 3 (D-109). The Feel for Unity appendix is dropped from the manual
+(D-108). The project is on GitHub (`KalifasXD/GameDevFeel`, pushed by the user) from 2026-09-28.
+
 **As of 2026-09-26:** the Fab publishing package is ready in `Publish/` (Lite and Pro, six checked packages and
 upload zips, galleries, both listings with every form field); what only the user can do is listed in
 `Publish/PUBLISH-README.md` (zip links, the manual's link, creating the listings, FabURL after Fab's review). 118/118
@@ -878,6 +885,8 @@ Recipe/track/step data, shared evaluator, shake/flash/scale punch, recipe editor
 | D-105 | 2026-09-26 | **Support email is billoue4@gmail.com** in the plugin descriptors (FeelKit and FeelKitGAS SupportURL), the listings, the README and the manual; replaces the earlier address of D-078 | User | User |
 | D-106 | 2026-09-26 | **The listings say the documentation is under construction** until the manual is published, and point to Discord and email meanwhile. Pro zips uploaded to the publisher's Synology share; links in the Pro listing | User; Fab 4.3.8 may still ask for the manual at review | User |
 | D-107 | 2026-09-26 | **Fab tags are chosen from Fab's existing tags.** The first lists used phrases (screen shake, game feel, hitstop) that the picker does not have. Fab tags are single lowercase words; each candidate was tested against Fab's listing search (tag used by other listings = accepted). New lists: Pro feedback, shake, camera, impact, hit, freeze, slow, flash, punch, squash, stretch, force, controller, comfort, accessibility, timeline, editor, blueprint, codeplugin, combat, reaction, gameplay, multiplayer, gas, niagara; Lite the same without multiplayer, gas, niagara, plus gamepad, plugin, freebie. hitstop, screenshake, camerashake, gamefeel, haptics, vibration, rumble, forcefeedback, slowmotion and vignette are not Fab tags | User found the tags rejected | Developer |
+| D-108 | 2026-09-28 | **The manual has no Feel for Unity appendix.** The sword-hit walkthrough becomes appendix B (still Later) | User: "this is not part of the manual" | User |
+| D-109 | 2026-09-28 | **Third Party Software form: one entry per sound pack** (Lite 3: Impact, Interface, Sci-fi Sounds; Pro 6: those plus RPG Audio, UI Audio, Swishes Sound Pack). The declaration stays ticked (Fab 4.2.5). No ThirdParty folder under Source: FeelKit has no third-party code (the GIF encoder is our own), which the reviewer notes say | Fab review 2026-09-28 (both listings failed on the form; Pro also on the ThirdParty folder rule) | Developer |
 | D-069 | 2026-09-23 | **Action/RPG block design:** guards are shown as an energy shield in front of the character (the project has no block animation); the player holds Left Shift / left trigger to guard; a block pressed just before the hit lands is a parry with its own, stronger reaction and staggers the attacker; different attacks land differently on a guard (light, heavy finisher, charged breaks the guard) | Makes the difference between attacks visible on the guard, and shows how one input feels different by timing | User choices (all recommended options) |
 | D-068 | 2026-09-23 | **Soften the hit's camera turn** in FR_ARPG_HitLanded instead of lowering motion blur: the hit keeps its push but turns the view less and a little slower, so the frame stays readable under the engine's motion blur | The kick's up to 5.5 degree turn in a few frames smeared the whole screen at impact | User choice (recommended option) |
 | D-067 | 2026-09-23 | **Platformer landing: the view only goes down.** No shake on landing; a fast drop and a slow eased settle, deeper and longer the harder the landing (FR_PLAT_Land) | A landing is weight going down; a shake moves the view up as much as down and a quick return reads as a bounce | User request |

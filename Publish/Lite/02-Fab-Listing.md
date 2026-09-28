@@ -47,7 +47,7 @@ do; `PUBLISH-README.md` (one folder up) explains each one.
 | Supported development platforms | Windows, macOS, Linux (the editor module allows all three; only Windows was built and tested, as the description says) |
 | Distribution method | Plugin |
 | Third party software usage | **This product uses third party software.** The 7 sample sounds (Kenney) come from other authors under CC0 1.0; every file is listed with its source in Credits.md. Selecting "does not include" would be wrong: Fab counts sounds from other sources as third-party software |
-| Third-party software to declare, if the form asks for details | 7 sample sounds (Kenney), CC0 1.0 (public domain), from https://kenney.nl; listed in Credits.md |
+| Third-party software to declare, if the form asks for details | 7 sample sounds (Kenney), CC0 1.0 (public domain), from https://kenney.nl; listed in Credits.md. Fab's Third Party Software form: section 3 |
 | Is open source | No. The full C++ source is included, but under Fab's Standard License, not an open source license |
 | Tool type | Plugin |
 | Blueprints | 1 (the comfort menu, WBP_FeelComfortMenu) |
@@ -172,3 +172,43 @@ Yes. Remove Lite from your engine, install Pro, and your recipes open unchanged.
 ### 2.3 Version notes
 
 First release of FeelKit Lite, 1.0.0. Built and tested on Windows.
+
+## 3. Third Party Software form (Fab review, 2026-09-28)
+
+Fab's first review failed the listing on the third-party declaration: the box "This product uses third party
+software" is ticked, so Fab asks for its Third Party Software Submission Form (https://forms.gle/sgXJHReig6nSM1FE7).
+FeelKit Lite has no third-party code. The only third-party content is 7 CC0 sample sounds by Kenney,
+from 3 source packs, so the form gets one entry per pack.
+
+| Form field | Value |
+|---|---|
+| Seller Name | Billo |
+| Plugin Name | FeelKit Lite |
+| Total Number of TPS | 3 |
+
+The same answers for every entry, apart from the pack name, link and the sounds it gives:
+
+| Question | Answer |
+|---|---|
+| License | CC0 1.0 Universal (public domain dedication), https://creativecommons.org/publicdomain/zero/1.0/ |
+| Version | The pack as published on its page (the pack has no version number) |
+| What does this software do? | It is not code. It is a pack of sound effect recordings. FeelKit ships the sounds listed for the entry below, imported as Unreal Sound Wave assets in `Content/Samples/Sounds`. |
+| Why does your plugin need it? | The sample recipes play these sounds, so a recipe is audible the first time a buyer previews it. Buyers can swap every sound for their own. |
+| Is the library statically or dynamically linked? | Neither. No library or code is linked. The sounds are content assets (.uasset) that the engine loads like any other sound. |
+| Will this software send data back to the creator? | No. They are audio files, with no code and no network access. |
+
+| Entry | Name | Author | Link | Sounds in FeelKit Lite |
+|---|---|---|---|---|
+| 1 | Impact Sounds | Kenney | https://kenney.nl/assets/impact-sounds | 4: S_FK_Hit_Light, S_FK_Hit_Heavy, S_FK_Hit_Crit, S_FK_Land_Thud |
+| 2 | Interface Sounds | Kenney | https://kenney.nl/assets/interface-sounds | 2: S_FK_Pickup, S_FK_Denied |
+| 3 | Sci-fi Sounds | Kenney | https://kenney.nl/assets/sci-fi-sounds | 1: S_FK_Alarm |
+
+### Notes to the reviewer (paste when resubmitting)
+
+---
+
+Documentation: the manual is online at <MANUAL LINK>. It is linked from the description and from the technical details of each engine version.
+
+Third-party software: the Third Party Software form is filled in for FeelKit Lite (3 entries). FeelKit contains no third-party code or libraries: every file under Source is our own code and carries the Billo copyright notice. The only third-party content is 7 sample sounds under CC0 1.0 by Kenney, imported as Sound Wave assets in Content/Samples/Sounds and listed file by file, with their source packs, in Credits.md at the plugin root. There is no ThirdParty folder under Source because there is no third-party code to put in it.
+
+---

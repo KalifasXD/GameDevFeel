@@ -129,8 +129,7 @@ Priority: **Launch** = must exist before launch. **Recommended** = should exist 
 
 **Appendices**
 - A. Glossary (Recommended).
-- B. Coming from Feel for Unity (Later).
-- C. Walkthrough: building the Action/RPG sword hit. This is the one "how I made it" tutorial agreed earlier (Later).
+- B. Walkthrough: building the Action/RPG sword hit. This is the one "how I made it" tutorial agreed earlier (Later).
 
 **Videos** (each about 6 to 9 minutes):
 - 1: Install FeelKit and play your first recipe.
@@ -1074,8 +1073,7 @@ written yet shows in the draft as highlighted text.
 | ch23 | 23 | Version history |
 | ch23_100 | 23.1 | 1.0.0 |
 | appA | A | Glossary |
-| appB | B | Coming from Feel for Unity |
-| appC | C | Walkthrough: building the Action/RPG sword hit |
+| appB | B | Walkthrough: building the Action/RPG sword hit |
 
 ### Screenshots
 
@@ -1203,7 +1201,7 @@ WEBM) and names a feel off / feel on clip as a candidate; the marketing brief as
 visual as real; the Product document lists trailer material among the content. The video table above feeds the
 manual's video boxes and holds only V1 to V4; the T1 and T2 links go into the Launch document (section 4.1).
 
-Not covered here: the one "how I made it" walkthrough of the Action/RPG sword hit. It is Appendix C of the manual,
+Not covered here: the one "how I made it" walkthrough of the Action/RPG sword hit. It is Appendix B of the manual,
 planned as a document with screenshots and marked Later.
 
 #### Why these lengths {#vg_lengths}
