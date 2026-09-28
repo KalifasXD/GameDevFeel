@@ -1375,7 +1375,7 @@ class Builder:
         if info.get("url"):
             lines.append((f"[{info['url']}]({info['url']})", False))
         else:
-            lines.append(("*The link is added before release.*", False))
+            lines.append(("*The video will be added after publishing.*", False))
         self.box(lines, HEX_NOTE, HEX_ACCENT)
         self.doc.add_paragraph().paragraph_format.space_after = Pt(2)
 

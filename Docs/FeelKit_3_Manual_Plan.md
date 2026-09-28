@@ -1812,7 +1812,7 @@ Support on Discord: https://discord.gg/AtJ6RdwaxA
 - **Manual:** the video table of this document (under "Lists read by the build script", marker `table: videos`).
   Fill the **Link** column of V1 to V4 with the full address (`https://www.youtube.com/watch?v=<id>`) and set
   **Minutes** to the final length. `build_manual.py` reads that column: the video boxes then print the link instead of
-  "The link is added before release". Rebuild with `python Tools/Manual/build_manual.py --pdf`.
+  "The video will be added after publishing". Rebuild with `python Tools/Manual/build_manual.py --pdf`.
 - **Hosted PDF:** replace the Google Drive file as a new version of the same file (**Manage versions** > **Upload new
   version** in Drive), which keeps the share link, the one behind `DocsURL` and the listings. Verify the menu names in
   Drive when doing it.
