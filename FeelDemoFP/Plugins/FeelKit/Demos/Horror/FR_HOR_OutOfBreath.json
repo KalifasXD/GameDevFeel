@@ -1,0 +1,210 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_HOR_OutOfBreath",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Heartbeat.S_FK_Heartbeat",
+					"placement": "TwoD",
+					"volumeMultiplier": 0.8,
+					"bStopAtTrackEnd": true,
+					"fadeOutTime": 0.6
+				},
+				"startTime": 0.0,
+				"duration": 2.0,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_VignettePulse",
+					"vignetteIntensity": 0.7,
+					"shape": "Smooth",
+					"frequency": 1.1,
+					"damping": 0.4,
+					"repeats": 2
+				},
+				"startTime": 0.0,
+				"duration": 2.0,
+				"channel": {
+					"tagName": "Feel.Screen.Distortion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_Desaturate",
+					"amount": 0.35,
+					"shape": "Smooth"
+				},
+				"startTime": 0.0,
+				"duration": 2.0,
+				"channel": {
+					"tagName": "Feel.Screen.Color"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_LowPassSweep",
+					"cutoffFrequency": 1200.0,
+					"attackFraction": 0.2,
+					"releaseFraction": 0.3
+				},
+				"startTime": 0.0,
+				"duration": 2.0,
+				"channel": {
+					"tagName": "Feel.Audio.Mix"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 0.7,
+					"rotationAmplitude": {
+						"pitch": 0.8,
+						"yaw": 0.2,
+						"roll": 0.2
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 0,
+						"z": 1.5
+					}
+				},
+				"startTime": 0.0,
+				"duration": 2.0,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 0.25,
+					"shape": "Smooth",
+					"repeats": 2
+				},
+				"startTime": 0.0,
+				"duration": 1.0,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Dread"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Horror"
+				}
+			]
+		},
+		"description": "Out of breath: a heavy heartbeat, the edges close in, color drains a little, the world sounds muffled, and the view heaves with each breath until the stamina has recovered.",
+		"bSustain": true,
+		"sustainStart": 0.1,
+		"sustainEnd": 1.0
+	}
+}

@@ -1,0 +1,13 @@
+id,chapter,on_screen,window,state,method,project,status
+S02-01,2,"The timeline of a project copy of FR_Impact_HeavyHit (saved as HeavyHit) with its seven tracks. Numbered callouts, added in Word: 1 the recipe name on the editor tab, 2 one track bar, 3 the step name on the bar, 4 the channel colour of the bar.",Recipe editor,Playhead at 0.05 s; no track selected,HAND,CLEAN,missing
+S02-02,2,The Intensity tab of FR_Impact_ScalableHit with one line per channel across the recipe.,Recipe editor,Preview parameter Damage at its default of 50; Comfort dropdown at Neutral,HAND,CLEAN,missing
+S02-03,2,"A Feel Map made for the manual, open in its editor, with four rows: Feel.Event.Hit.Landed twice (one with the Required Tag Hit.Heavy) and Feel.Event.Hit.Received twice, each pointing to a copied library recipe.",Feel Map editor,All rows expanded,HAND,CLEAN,missing
+D02-01,2,"Diagram, not a screenshot: a Feel Event (tag and context) goes to a Feel Map; the map picks a recipe; the recipe's tracks reach the camera, the screen, the actor, audio, the controller and the UI.",Diagram,Drawn to the manual's colours,DESIGN,,missing
+S16-01,16,"The + Track menu open, listing every step by display name.",Recipe editor,Any recipe open; menu opened from the Timeline toolbar,HAND,CLEAN,missing
+S16-02,16,"A Global Hitstop track bar with its No preview label, next to a Camera Punch track that previews.",Recipe editor,Recipe with both tracks; playhead inside the hitstop,HAND,CLEAN,missing
+S17-01,17,"The Blueprint context menu with ""Feel"" typed in the search box, showing the Feel categories.",Blueprint editor,Event Graph of BP_ThirdPersonCharacter; Context Sensitive on,HAND,CLEAN,missing
+S18-01,18,"Project Settings, Plugins, FeelKit, with the Camera and Playback categories expanded.",Project Settings,Default values,HAND,CLEAN,missing
+S18-02,18,"Project Settings, Plugins, FeelKit, with the Events and Comfort categories expanded.",Project Settings,Default values,HAND,CLEAN,missing
+S18-03,18,"Project Settings, Plugins, FeelKit, with the three presets and the Comfort Storage category expanded.",Project Settings,Default values,HAND,CLEAN,missing
+S18-04,18,"Editor Preferences, Plugins, FeelKit.",Editor Preferences,Default values,HAND,CLEAN,missing
+S19-01,19,"The showdebug feel lines over the game view while two recipes play, with the comfort and Controller vibration lines visible.",Play In Editor,Two recipes playing on the character; one accumulator set,HAND,CLEAN,missing

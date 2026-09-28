@@ -1,0 +1,198 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Danger_DamageTaken",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ScreenFlash",
+					"color": {
+						"r": 0.8,
+						"g": 0.05,
+						"b": 0.05,
+						"a": 1.0
+					},
+					"maxOpacity": 0.35
+				},
+				"startTime": 0.0,
+				"duration": 0.25,
+				"channel": {
+					"tagName": "Feel.Screen.Flash"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"bEssential": true,
+				"substituteStep": {
+					"_ClassName": "/Script/FeelCore.FeelStep_VignettePulse",
+					"vignetteIntensity": 1.2
+				},
+				"essentialFloor": 0.35
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_VignettePulse",
+					"vignetteIntensity": 1.0
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Screen.Distortion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": -8,
+						"y": 4,
+						"z": -3
+					},
+					"rotationPunch": {
+						"pitch": -2.0,
+						"yaw": 1.5,
+						"roll": 0
+					},
+					"frequency": 7.0,
+					"damping": 7.0
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 15.0,
+					"rotationAmplitude": {
+						"pitch": 1.5,
+						"yaw": 1.5,
+						"roll": 0.8
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 4,
+						"z": 4
+					}
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 0.8,
+					"rightLarge": 0.8,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Danger"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Action"
+				},
+				{
+					"tagName": "Feel.Genre.Shooter"
+				},
+				{
+					"tagName": "Feel.Genre.Horror"
+				}
+			]
+		},
+		"description": "Being hurt: a red wash at the edges, a jolt and a low rumble."
+	}
+}

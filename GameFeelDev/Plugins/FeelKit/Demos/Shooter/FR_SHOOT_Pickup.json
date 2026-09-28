@@ -1,0 +1,80 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_SHOOT_Pickup",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Pickup.S_FK_Pickup",
+					"placement": "TwoD",
+					"volumeMultiplier": 0.6,
+					"pitchVariation": 0.05
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"rightSmall": 0.2,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.06,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Reward"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Shooter"
+				}
+			]
+		},
+		"description": "The player walks over a weapon pickup: a short pickup chime and a light tap on the controller."
+	}
+}

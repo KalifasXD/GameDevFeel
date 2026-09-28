@@ -1,0 +1,268 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Reward_ComboStep",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ScalePunch",
+					"amount": {
+						"x": 0.18,
+						"y": 0.18,
+						"z": 0.18
+					},
+					"bounces": 1
+				},
+				"startTime": 0.0,
+				"duration": 0.25,
+				"channel": {
+					"tagName": "Feel.Actor.Transform"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Combo",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.6
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.4
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": 0,
+						"y": 0,
+						"z": 4
+					},
+					"rotationPunch": {
+						"pitch": 1.0,
+						"yaw": 0,
+						"roll": 0
+					},
+					"frequency": 10.0,
+					"damping": 9.0
+				},
+				"startTime": 0.0,
+				"duration": 0.25,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Combo",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.4
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.2
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_NumberPop",
+					"valueParameter": "Combo",
+					"suffix": "x",
+					"color": {
+						"r": 1,
+						"g": 0.9,
+						"b": 0.4,
+						"a": 1.0
+					},
+					"fontSize": 32.0,
+					"popScale": 1.8
+				},
+				"startTime": 0.0,
+				"duration": 0.8,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Pickup.S_FK_Pickup",
+					"placement": "AtTargetLocation",
+					"pitchMultiplier": 1.0,
+					"pitchVariation": 0.0
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftSmall": 0.4,
+					"rightSmall": 0.4,
+					"leftLarge": 0.0,
+					"rightLarge": 0.0,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.12,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Combo",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.4
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Reward"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Platformer"
+				},
+				{
+					"tagName": "Feel.Genre.Action"
+				},
+				{
+					"tagName": "Feel.Genre.UI"
+				}
+			]
+		},
+		"description": "Each step of a streak feels bigger than the last, and the pitch climbs with it.",
+		"parameters": [
+			{
+				"name": "Combo",
+				"defaultValue": 1.0,
+				"minValue": 0.0,
+				"maxValue": 10.0,
+				"description": "How long the streak is. Reads the Combo accumulator when the game does not pass it.",
+				"accumulator": "Combo"
+			}
+		]
+	}
+}

@@ -1,0 +1,460 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_ARPG_GuardBreak",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/Game/FeelKitDemos/ActionRPG/Sounds/S_FK_Guard_Break.S_FK_Guard_Break",
+					"placement": "AttachedToTarget"
+				},
+				"startTime": 0.0,
+				"duration": 0.6,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/Game/FeelKitDemos/ActionRPG/Sounds/S_FK_Guard_Clang_Heavy.S_FK_Guard_Clang_Heavy",
+					"placement": "AttachedToTarget",
+					"pitchMultiplier": 0.8
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/Game/FeelKitDemos/ActionRPG/Sounds/S_FK_Body_Hit_Heavy.S_FK_Body_Hit_Heavy",
+					"placement": "AttachedToTarget",
+					"pitchMultiplier": 0.85
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_GlobalHitstop",
+					"timeDilation": 0.02
+				},
+				"startTime": 0.0,
+				"duration": 0.1,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_SlowMoRamp",
+					"timeDilation": 0.3,
+					"rampInTime": 0.02,
+					"rampOutTime": 0.3
+				},
+				"startTime": 0.1,
+				"duration": 0.55,
+				"channel": {
+					"tagName": "Feel.Time.SlowMo"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ScreenFlash",
+					"color": {
+						"r": 1,
+						"g": 0.85,
+						"b": 0.6,
+						"a": 1.0
+					},
+					"maxOpacity": 0.3
+				},
+				"startTime": 0.0,
+				"duration": 0.12,
+				"channel": {
+					"tagName": "Feel.Screen.Flash"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ChromaticAberration",
+					"fringeIntensity": 5.0
+				},
+				"startTime": 0.0,
+				"duration": 0.35,
+				"channel": {
+					"tagName": "Feel.Screen.Distortion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": -35,
+						"y": 0,
+						"z": -15
+					},
+					"rotationPunch": {
+						"pitch": -6.0,
+						"yaw": 0,
+						"roll": 0
+					},
+					"shape": "Kick",
+					"attackFraction": 0.1
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 14.0,
+					"rotationAmplitude": {
+						"pitch": 1.4,
+						"yaw": 1.4,
+						"roll": 0.7
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 12,
+						"z": 10
+					}
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelNiagara.FeelStep_SpawnParticle",
+					"system": "/Game/Variant_Combat/VFX/NS_Damage.NS_Damage",
+					"scale": {
+						"x": 2.6,
+						"y": 2.6,
+						"z": 2.6
+					},
+					"bDeactivateWithTrack": false
+				},
+				"startTime": 0.0,
+				"duration": 0.05,
+				"channel": {
+					"tagName": "Feel.Spawn"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelNiagara.FeelStep_SpawnParticle",
+					"system": "/Game/Variant_Combat/VFX/NS_Damage.NS_Damage",
+					"scale": {
+						"x": 1.6,
+						"y": 1.6,
+						"z": 1.6
+					},
+					"bDeactivateWithTrack": false
+				},
+				"startTime": 0.0,
+				"duration": 0.05,
+				"channel": {
+					"tagName": "Feel.Spawn"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_HitFlash",
+					"flashMaterial": "/FeelKit/Samples/Materials/M_FK_HitFlash.M_FK_HitFlash",
+					"color": {
+						"r": 1,
+						"g": 0.6,
+						"b": 0.3,
+						"a": 1.0
+					},
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.22,
+				"channel": {
+					"tagName": "Feel.Actor.Material"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_SquashStretch",
+					"axis": "Z",
+					"amount": -0.12,
+					"shape": "Kick",
+					"attackFraction": 0.15
+				},
+				"startTime": 0.0,
+				"duration": 0.35,
+				"channel": {
+					"tagName": "Feel.Actor.Transform"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 1.0,
+					"rightLarge": 1.0,
+					"leftSmall": 0.6,
+					"rightSmall": 0.6,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Power"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Action"
+				}
+			]
+		},
+		"description": "A charged strike breaks a guard. Plays on the defender: the shield shatters over a heavy clang, a freeze into slow motion, a warm flash with color fringes, the defender flashes and buckles, a long rumble."
+	}
+}

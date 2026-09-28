@@ -1,0 +1,892 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_ARPG_HitLanded",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_GlobalHitstop",
+					"timeDilation": 0.02
+				},
+				"startTime": 0.0,
+				"duration": 0.06,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_GlobalHitstop",
+					"timeDilation": 0.02
+				},
+				"startTime": 0.06,
+				"duration": 0.04,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_GlobalHitstop",
+					"timeDilation": 0.02
+				},
+				"startTime": 0.1,
+				"duration": 0.05,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.9,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.95,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": -20,
+						"y": 0,
+						"z": -7
+					},
+					"rotationPunch": {
+						"pitch": -5.5,
+						"yaw": 0,
+						"roll": 0
+					},
+					"frequency": 9.0,
+					"damping": 7.0
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.6
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.2
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 24.0,
+					"rotationAmplitude": {
+						"pitch": 3.0,
+						"yaw": 3.0,
+						"roll": 1.6
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 6,
+						"z": 6
+					}
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.5
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.2
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_FOVKick",
+					"fieldOfViewKick": 10.0,
+					"frequency": 7.0,
+					"damping": 7.0
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ChromaticAberration",
+					"fringeIntensity": 5.0
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Screen.Distortion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraZoom",
+					"fieldOfViewChange": -14.0,
+					"easeInFraction": 0.1,
+					"easeOutFraction": 0.6
+				},
+				"startTime": 0.0,
+				"duration": 0.45,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.9,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.95,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/Game/FeelKitDemos/ActionRPG/Sounds/S_FK_Sword_Hit.S_FK_Sword_Hit",
+					"placement": "AttachedToTarget",
+					"pitchVariation": 0.06,
+					"volumeMultiplier": 0.8
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Body_Hit.S_FK_Body_Hit",
+					"placement": "AttachedToTarget",
+					"pitchVariation": 0.08
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/Game/FeelKitDemos/ActionRPG/Sounds/S_FK_Body_Hit_Heavy.S_FK_Body_Hit_Heavy",
+					"placement": "AttachedToTarget",
+					"pitchVariation": 0.05
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/Game/FeelKitDemos/ActionRPG/Sounds/S_FK_Sword_Clash.S_FK_Sword_Clash",
+					"placement": "AttachedToTarget",
+					"pitchVariation": 0.04,
+					"volumeMultiplier": 0.8
+				},
+				"startTime": 0.0,
+				"duration": 0.6,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.9,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.95,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 1.0,
+					"rightLarge": 1.0,
+					"leftSmall": 0.8,
+					"rightSmall": 0.8,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.28,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.6
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_SlowMoRamp",
+					"timeDilation": 0.25,
+					"rampInTime": 0.03,
+					"rampOutTime": 0.3
+				},
+				"startTime": 0.15,
+				"duration": 0.6,
+				"channel": {
+					"tagName": "Feel.Time.SlowMo"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Charged",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/Game/FeelKitDemos/ActionRPG/Sounds/S_FK_Body_Hit_Heavy.S_FK_Body_Hit_Heavy",
+					"placement": "AttachedToTarget",
+					"pitchMultiplier": 0.7
+				},
+				"startTime": 0.0,
+				"duration": 0.7,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Charged",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 1.0,
+					"rightLarge": 1.0,
+					"leftSmall": 0.5,
+					"rightSmall": 0.5,
+					"shape": "Smooth"
+				},
+				"startTime": 0.1,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Charged",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Impact"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Action"
+				}
+			]
+		},
+		"description": "The player's hit connects. Light, heavy and finisher from one recipe, driven by the Swing marker; the charged strike adds a crit on top.",
+		"parameters": [
+			{
+				"name": "Swing",
+				"defaultValue": 0.35,
+				"minValue": 0.0,
+				"maxValue": 1.0,
+				"description": "How heavy the swing is: 0.35 first swing, 0.65 second, 1 finisher. Set by the Set Feel Value markers in the attack animations.",
+				"accumulator": "Swing"
+			},
+			{
+				"name": "Charged",
+				"defaultValue": 0.0,
+				"minValue": 0.0,
+				"maxValue": 1.0,
+				"description": "1 when the hit comes from the charged attack. Set by the Set Feel Value markers.",
+				"accumulator": "Charged"
+			}
+		]
+	}
+}

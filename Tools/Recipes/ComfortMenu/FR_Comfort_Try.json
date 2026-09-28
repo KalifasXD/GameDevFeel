@@ -1,0 +1,238 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Comfort_Try",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_GlobalHitstop",
+					"timeDilation": 0.05
+				},
+				"startTime": 0.0,
+				"duration": 0.06,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 14.0,
+					"rotationAmplitude": {
+						"pitch": 1.2,
+						"yaw": 1.2,
+						"roll": 0.6
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 4,
+						"z": 4
+					}
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": -24,
+						"y": 0,
+						"z": -10
+					},
+					"rotationPunch": {
+						"pitch": -3.0,
+						"yaw": 0,
+						"roll": 0
+					},
+					"shape": "Kick",
+					"attackFraction": 0.12
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ScreenFlash",
+					"color": {
+						"r": 1,
+						"g": 1,
+						"b": 1,
+						"a": 1.0
+					},
+					"maxOpacity": 0.5
+				},
+				"startTime": 0.0,
+				"duration": 0.1,
+				"channel": {
+					"tagName": "Feel.Screen.Flash"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_VignettePulse",
+					"vignetteIntensity": 1.2,
+					"shape": "Smooth"
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Screen.Distortion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 0.8,
+					"rightLarge": 0.8,
+					"leftSmall": 0.5,
+					"rightSmall": 0.5,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.25,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Hit_Heavy.S_FK_Hit_Heavy",
+					"placement": "TwoD",
+					"volumeMultiplier": 0.7
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Interface"
+		},
+		"description": "Comfort menu Try button: a sample of every comfort group at once, played with the player's current settings."
+	}
+}

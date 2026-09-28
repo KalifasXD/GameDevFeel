@@ -1,0 +1,109 @@
+anchor,number,title
+ch01,1,Welcome
+ch01_what,1.1,What FeelKit does
+ch01_package,1.2,What is in the package
+ch01_manual,1.3,How to use this manual
+ch01_help,1.4,Getting help
+ch02,2,Core ideas
+ch02_recipes,2.1,"Recipes, tracks and steps"
+ch02_channels,2.2,"Channels, and what happens when effects overlap"
+ch02_intensity,2.3,Intensity: how strong each effect plays
+ch02_targets,2.4,Targets: what a recipe plays on
+ch02_parameters,2.5,"Parameters, accumulators and sustained recipes, in brief"
+ch02_events,2.6,"Events and Feel Maps, in brief"
+ch02_comfort,2.7,Comfort on one page
+ch02_preview,2.8,Why the editor preview matches the game
+ch03,3,Installing FeelKit
+ch03_requirements,3.1,"Requirements: engine versions, platforms, and when Visual Studio is needed"
+ch03_install,3.2,Installing from Fab and enabling the plugin
+ch03_dependencies,3.3,"What FeelKit switches on for you (Niagara, Enhanced Input)"
+ch03_content,3.4,Showing FeelKit content in the Content Browser
+ch03_gas,3.5,Adding the GAS add-on (a folder you copy)
+ch03_packaging,3.6,Blueprint-only projects and packaging
+ch04,4,Quick start: your first recipe
+ch04_pick,4.1,Pick a recipe from the library
+ch04_preview,4.2,Preview it without pressing Play
+ch04_play,4.3,Play it from a Blueprint
+ch04_switch,4.4,Compare with the feel off (Feel Switch)
+ch04_next,4.5,Where to go next
+ch05,5,The recipe editor
+ch05_create,5.1,Creating and opening recipes
+ch05_window,5.2,"The window: Preview, Timeline, Details, Intensity"
+ch05_toolbar,5.3,The toolbar
+ch05_tracks,5.4,"Adding, moving and resizing tracks"
+ch05_curves,5.5,Shaping intensity with curve keys
+ch05_details,5.6,Recipe and track settings in Details
+ch05_preview,5.7,"The preview: play, loop, scrub, preview mesh, parameter sliders"
+ch05_sound,5.8,"Sound tracks: waveforms, snapping, tracks made from a sound"
+ch05_comfort,5.9,"Checking comfort, and the intensity graph"
+ch05_pie,5.10,"Play in PIE, and editing while the game runs"
+ch05_shortcuts,5.11,"Copy, paste and keyboard shortcuts"
+ch05_validation,5.12,Validation messages on save
+ch06,6,Playing recipes in your game
+ch06_play,6.1,"Play Feel, and choosing a target"
+ch06_context,6.2,Passing context with Play Feel With Context
+ch06_handles,6.3,"Handles: stop, release, change a parameter"
+ch06_wait,6.4,Play Feel and Wait
+ch06_events,6.5,Events and Feel Maps
+ch06_notifies,6.6,Animation notifies
+ch06_trigger,6.7,The Feel Trigger component (no Blueprint wiring)
+ch06_input,6.8,Enhanced Input: the Feel Input component
+ch06_gas,6.9,Gameplay Ability System cues (add-on)
+ch06_cpp,6.10,Using FeelKit from C++
+ch06_switch,6.11,The Feel Switch: feel off and on while playing
+ch07,7,"Parameters, context and variation"
+ch07_parameters,7.1,Parameters and track mappings
+ch07_distance,7.2,The Distance parameter
+ch07_accumulators,7.3,Accumulators: effects that build up with repeated plays
+ch07_sustain,7.4,Sustained recipes
+ch07_instigator,7.5,"The instigator, and the Applies To setting"
+ch07_directions,7.6,Directions and locations
+ch07_random,7.7,"Randomness, conditions and Random Choice"
+ch07_nested,7.8,Recipes inside recipes
+ch08,8,Comfort and accessibility
+ch08_groups,8.1,"Comfort groups, and how the scales apply"
+ch08_presets,8.2,Presets
+ch08_settings,8.3,Reading and changing a player's settings
+ch08_essential,8.4,Essential tracks and substitutes
+ch08_flash_limiter,8.5,The flash limiter
+ch08_motion,8.6,Motion comfort: camera roll and field of view speed
+ch08_engine,8.7,Engine camera shakes and controller vibration
+ch08_storage,8.8,"Saving settings, or using your own save system"
+ch08_menu,8.9,Building a comfort menu for your players
+ch08_audit,8.10,The Comfort Audit
+ch09,9,The recipe library and browser
+ch09_browser,9.1,The Recipe Browser
+ch09_filters,9.2,"Filters, search and live preview"
+ch09_copy,9.3,Copying a library recipe into your project
+ch09_readonly,9.4,Why library recipes are read-only
+ch09_tiles,9.5,Content Browser tiles and tooltips
+ch09_recipes,9.6,The 38 library recipes at a glance
+ch09_tagging,9.7,Tagging your own recipes
+ch10,10,Debugging and tuning
+ch10_debugger,10.1,The FeelKit Debugger
+ch10_replay,10.2,Replaying a recent play in the editor
+ch10_labels,10.3,Track labels that explain why a track did not play
+ch10_showdebug,10.4,showdebug feel and stat Feel
+ch10_log,10.5,Log messages
+ch10_gif,10.6,Capture GIF
+ch11,11,Multiplayer
+ch11_what,11.1,What travels over the network
+ch11_component,11.2,The Feel Replication component and its modes
+ch11_relevancy,11.3,Relevancy distance
+ch11_time,11.4,Hitstop and slow motion in networked games
+ch11_server,11.5,Dedicated servers
+ch12,12,Performance
+ch13,13,Demo kits
+ch14,14,Troubleshooting and questions
+ch15,15,Lite and Pro
+ch16,16,Step reference
+ch17,17,Blueprint nodes and components
+ch18,18,Project settings and editor preferences
+ch19,19,Console commands
+ch20,20,Writing your own steps in Blueprint and C++
+ch21,21,Recipe JSON files and editor scripting
+ch22,22,Credits and licences
+ch23,23,Version history
+appA,A,Glossary
+appB,B,Coming from Feel for Unity
+appC,C,Walkthrough: building the Action/RPG sword hit

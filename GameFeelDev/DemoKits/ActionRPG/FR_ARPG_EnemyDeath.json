@@ -1,0 +1,268 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_ARPG_EnemyDeath",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_GlobalHitstop",
+					"timeDilation": 0.02
+				},
+				"startTime": 0.0,
+				"duration": 0.1,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_SlowMoRamp",
+					"timeDilation": 0.25,
+					"rampInTime": 0.02,
+					"rampOutTime": 0.35
+				},
+				"startTime": 0.1,
+				"duration": 0.8,
+				"channel": {
+					"tagName": "Feel.Time.SlowMo"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_Desaturate",
+					"amount": 0.9,
+					"shape": "Smooth"
+				},
+				"startTime": 0.0,
+				"duration": 1.0,
+				"channel": {
+					"tagName": "Feel.Screen.Color"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 0.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.35,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_VignettePulse",
+					"vignetteIntensity": 0.7,
+					"shape": "Smooth"
+				},
+				"startTime": 0.0,
+				"duration": 1.0,
+				"channel": {
+					"tagName": "Feel.Screen.Distortion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 0.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.35,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraZoom",
+					"fieldOfViewChange": -10.0,
+					"easeInFraction": 0.15,
+					"easeOutFraction": 0.5
+				},
+				"startTime": 0.0,
+				"duration": 0.9,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": 0,
+						"y": 0,
+						"z": -10
+					},
+					"rotationPunch": {
+						"pitch": -2.0,
+						"yaw": 0,
+						"roll": 0
+					},
+					"frequency": 6.0,
+					"damping": 7.0
+				},
+				"startTime": 0.0,
+				"duration": 0.45,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Body_Fall.S_FK_Body_Fall",
+					"placement": "AttachedToTarget"
+				},
+				"startTime": 0.05,
+				"duration": 0.8,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 1.0,
+					"rightLarge": 1.0,
+					"shape": "Smooth"
+				},
+				"startTime": 0.0,
+				"duration": 0.45,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Impact"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Action"
+				}
+			]
+		},
+		"description": "An enemy goes down: a freeze, then a slow-motion beat with the color drained, a zoom, a heavy thud and a long rumble."
+	}
+}

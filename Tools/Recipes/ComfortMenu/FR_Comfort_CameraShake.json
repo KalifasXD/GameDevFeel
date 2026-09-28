@@ -1,0 +1,52 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Comfort_CameraShake",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 14.0,
+					"rotationAmplitude": {
+						"pitch": 1.2,
+						"yaw": 1.2,
+						"roll": 0.6
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 4,
+						"z": 4
+					}
+				},
+				"startTime": 0.0,
+				"duration": 0.45,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Interface"
+		},
+		"description": "Comfort menu preview of the Camera Shake setting: a short shake."
+	}
+}

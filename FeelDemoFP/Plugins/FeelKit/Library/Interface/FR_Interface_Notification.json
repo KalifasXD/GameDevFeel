@@ -1,0 +1,87 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Interface_Notification",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetPunch",
+					"scaleChange": {
+						"x": 0.1,
+						"y": 0.1
+					},
+					"translation": {
+						"x": 0.0,
+						"y": -24.0
+					},
+					"frequency": 6.0,
+					"damping": 7.0
+				},
+				"startTime": 0.0,
+				"duration": 0.45,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Pickup.S_FK_Pickup",
+					"placement": "TwoD",
+					"pitchMultiplier": 1.1
+				},
+				"startTime": 0.0,
+				"duration": 0.35,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Interface"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.UI"
+				}
+			]
+		},
+		"description": "Something arrives on screen: it slides in, settles and chimes."
+	}
+}

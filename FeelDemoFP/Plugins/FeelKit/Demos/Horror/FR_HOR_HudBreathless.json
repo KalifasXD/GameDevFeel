@@ -1,0 +1,155 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_HOR_HudBreathless",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetFlash",
+					"color": {
+						"r": 1,
+						"g": 0.12,
+						"b": 0.08,
+						"a": 1.0
+					},
+					"strength": 0.9,
+					"shape": "Smooth"
+				},
+				"startTime": 0.1,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetPunch",
+					"scaleChange": {
+						"x": 0.06,
+						"y": 0.12
+					},
+					"shape": "Smooth"
+				},
+				"startTime": 0.1,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetFlash",
+					"color": {
+						"r": 1,
+						"g": 0.12,
+						"b": 0.08,
+						"a": 1.0
+					},
+					"strength": 0.6,
+					"shape": "Smooth"
+				},
+				"startTime": 0.55,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetPunch",
+					"scaleChange": {
+						"x": 0.04,
+						"y": 0.08
+					},
+					"shape": "Smooth"
+				},
+				"startTime": 0.55,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Dread"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Horror"
+				}
+			]
+		},
+		"description": "The sprint meter ran empty: it beats red with the heartbeat until it has refilled.",
+		"bSustain": true,
+		"sustainStart": 0.1,
+		"sustainEnd": 1.0
+	}
+}

@@ -1,0 +1,218 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Impact_LightHit",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_GlobalHitstop",
+					"timeDilation": 0.15
+				},
+				"startTime": 0.0,
+				"duration": 0.04,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 22.0,
+					"rotationAmplitude": {
+						"pitch": 0.8,
+						"yaw": 0.8,
+						"roll": 0.4
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 2,
+						"z": 2
+					}
+				},
+				"startTime": 0.0,
+				"duration": 0.18,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": -6,
+						"y": 0,
+						"z": -2
+					},
+					"rotationPunch": {
+						"pitch": -1.5,
+						"yaw": 0,
+						"roll": 0
+					},
+					"frequency": 9.0,
+					"damping": 9.0
+				},
+				"startTime": 0.0,
+				"duration": 0.25,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ScalePunch",
+					"amount": {
+						"x": 0.12,
+						"y": 0.12,
+						"z": 0.12
+					},
+					"bounces": 1
+				},
+				"startTime": 0.0,
+				"duration": 0.22,
+				"channel": {
+					"tagName": "Feel.Actor.Transform"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Hit_Light.S_FK_Hit_Light",
+					"placement": "AttachedToTarget"
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 0.35,
+					"rightLarge": 0.35,
+					"leftSmall": 0.5,
+					"rightSmall": 0.5,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.12,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Impact"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Action"
+				},
+				{
+					"tagName": "Feel.Genre.Shooter"
+				}
+			]
+		},
+		"description": "A quick, light hit: a short shake, a small punch and a brief freeze."
+	}
+}

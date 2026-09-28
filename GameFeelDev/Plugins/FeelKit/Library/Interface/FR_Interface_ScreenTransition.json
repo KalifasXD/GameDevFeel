@@ -1,0 +1,86 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Interface_ScreenTransition",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ScreenFade",
+					"fadeColor": {
+						"r": 0,
+						"g": 0,
+						"b": 0,
+						"a": 1.0
+					},
+					"maxOpacity": 1.0,
+					"fadeInFraction": 0.35,
+					"fadeOutFraction": 0.35
+				},
+				"startTime": 0.0,
+				"duration": 0.7,
+				"channel": {
+					"tagName": "Feel.Screen.Fade"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Whoosh.S_FK_Whoosh",
+					"placement": "TwoD",
+					"pitchMultiplier": 1.1
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Interface"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.UI"
+				}
+			]
+		},
+		"description": "Moving between screens: a quick fade out and back in."
+	}
+}

@@ -1,0 +1,239 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_PLAT_AirJump",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_SquashStretch",
+					"axis": "Z",
+					"amount": 0.3,
+					"shape": "Kick",
+					"attackFraction": 0.2
+				},
+				"startTime": 0.0,
+				"duration": 0.45,
+				"channel": {
+					"tagName": "Feel.Actor.Transform"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Air_Lift.S_FK_Air_Lift",
+					"placement": "AttachedToTarget",
+					"pitchVariation": 0.05,
+					"volumeMultiplier": 0.55
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Jump_Whoosh.S_FK_Jump_Whoosh",
+					"placement": "AttachedToTarget",
+					"pitchMultiplier": 1.25,
+					"pitchVariation": 0.05,
+					"volumeMultiplier": 0.8
+				},
+				"startTime": 0.0,
+				"duration": 0.2,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_FOVKick",
+					"fieldOfViewKick": 6.0,
+					"shape": "Smooth"
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "JumpNumber",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.5
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": 0,
+						"y": 0,
+						"z": 6
+					},
+					"rotationPunch": {
+						"pitch": 1.5,
+						"yaw": 0,
+						"roll": 0
+					},
+					"shape": "Smooth"
+				},
+				"startTime": 0.0,
+				"duration": 0.45,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftSmall": 0.45,
+					"rightSmall": 0.45,
+					"leftLarge": 0.15,
+					"rightLarge": 0.15,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.12,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Power"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Platformer"
+				}
+			]
+		},
+		"description": "A jump in the air: a bigger stretch, a rising lift sound on top of the whoosh, the view widens and the camera pops up.",
+		"parameters": [
+			{
+				"name": "JumpNumber",
+				"defaultValue": 2.0,
+				"minValue": 2.0,
+				"maxValue": 3.0,
+				"description": "Which jump in the air this is (2 = double jump, 3 = triple jump), passed by the Feel Trigger Air Jumped event."
+			}
+		]
+	}
+}

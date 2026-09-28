@@ -1,0 +1,186 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_HOR_LightUnease",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_LightFlash",
+					"intensityChange": -0.85,
+					"bFlicker": true,
+					"flickerRate": 11.0
+				},
+				"startTime": 0.0,
+				"duration": 1.2,
+				"channel": {
+					"tagName": "Feel.Actor.Light"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Light_Buzz.S_FK_Light_Buzz",
+					"placement": "AtTargetLocation",
+					"attenuationSettings": "/FeelKit/Samples/Sounds/ATT_FK_World.ATT_FK_World",
+					"volumeMultiplier": 0.45,
+					"pitchMultiplier": 0.85,
+					"pitchVariation": 0.08
+				},
+				"startTime": 0.0,
+				"duration": 1.0,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Light_Crackle.S_FK_Light_Crackle",
+					"placement": "AtTargetLocation",
+					"attenuationSettings": "/FeelKit/Samples/Sounds/ATT_FK_World.ATT_FK_World",
+					"volumeMultiplier": 0.5,
+					"pitchVariation": 0.2
+				},
+				"startTime": 0.05,
+				"duration": 0.1,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ColorTint",
+					"tintColor": {
+						"r": 0.6,
+						"g": 0.75,
+						"b": 1.0,
+						"a": 1.0
+					},
+					"strength": 0.3,
+					"shape": "Smooth"
+				},
+				"startTime": 0.0,
+				"duration": 1.6,
+				"channel": {
+					"tagName": "Feel.Screen.Color"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 0.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.35,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraRoll",
+					"rollDegrees": 1.0,
+					"bRandomDirection": true
+				},
+				"startTime": 0.0,
+				"duration": 1.6,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 0.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.35,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 8.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Dread"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Horror"
+				}
+			]
+		},
+		"description": "Walking under a failing light: the lamp buzzes, surges and drops out for a moment, and the color goes cold."
+	}
+}

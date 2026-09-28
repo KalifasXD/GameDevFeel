@@ -1,0 +1,194 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_SHOOT_Hit",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Hit_Tick.S_FK_Hit_Tick",
+					"placement": "TwoD",
+					"volumeMultiplier": 0.8,
+					"pitchMultiplier": 1.1,
+					"pitchVariation": 0.05
+				},
+				"startTime": 0.0,
+				"duration": 0.1,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_HitFlash",
+					"flashMaterial": "/FeelKit/Samples/Materials/M_FK_HitFlash.M_FK_HitFlash",
+					"color": {
+						"r": 1,
+						"g": 1,
+						"b": 1,
+						"a": 1.0
+					},
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.12,
+				"channel": {
+					"tagName": "Feel.Actor.Material"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"appliesTo": "Instigator"
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ActorHitstop",
+					"timeDilation": 0.02
+				},
+				"startTime": 0.0,
+				"duration": 0.06,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"appliesTo": "Instigator"
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_NumberPop",
+					"valueParameter": "Damage",
+					"color": {
+						"r": 1,
+						"g": 1,
+						"b": 1,
+						"a": 1.0
+					},
+					"fontSize": 26.0,
+					"popScale": 1.5,
+					"riseDistance": 70.0,
+					"worldOffset": {
+						"x": 0,
+						"y": 0,
+						"z": 90
+					}
+				},
+				"startTime": 0.0,
+				"duration": 0.7,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"rightSmall": 0.25,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.05,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Impact"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Shooter"
+				}
+			]
+		},
+		"description": "The player hits an enemy: a crisp tick, the enemy flashes white and freezes for a moment, the damage pops up over it.",
+		"parameters": [
+			{
+				"name": "Damage",
+				"defaultValue": 25.0,
+				"minValue": 0.0,
+				"maxValue": 100.0,
+				"description": "Damage of the hit, passed by the hook. Shown as a number over the enemy."
+			}
+		]
+	}
+}

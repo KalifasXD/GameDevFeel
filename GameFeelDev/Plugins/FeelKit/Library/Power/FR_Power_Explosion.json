@@ -1,0 +1,382 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Power_Explosion",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ScreenFlash",
+					"color": {
+						"r": 1,
+						"g": 0.85,
+						"b": 0.6,
+						"a": 1.0
+					},
+					"maxOpacity": 0.5
+				},
+				"startTime": 0.0,
+				"duration": 0.15,
+				"channel": {
+					"tagName": "Feel.Screen.Flash"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Distance",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 0.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": -25,
+						"y": 0,
+						"z": -6
+					},
+					"rotationPunch": {
+						"pitch": -4.0,
+						"yaw": 0,
+						"roll": 0
+					},
+					"frequency": 5.0,
+					"damping": 6.0,
+					"directionSource": "AwayFromPlayLocation"
+				},
+				"startTime": 0.0,
+				"duration": 0.6,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Distance",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 0.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 14.0,
+					"rotationAmplitude": {
+						"pitch": 3.0,
+						"yaw": 3.0,
+						"roll": 2.0
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 8,
+						"z": 8
+					}
+				},
+				"startTime": 0.0,
+				"duration": 0.7,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Distance",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 0.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ChromaticAberration",
+					"fringeIntensity": 6.0
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Screen.Distortion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Distance",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 0.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_LowPassSweep",
+					"cutoffFrequency": 600.0,
+					"attackFraction": 0.05,
+					"releaseFraction": 0.6
+				},
+				"startTime": 0.0,
+				"duration": 1.2,
+				"channel": {
+					"tagName": "Feel.Audio.Mix"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Distance",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 0.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Explosion.S_FK_Explosion",
+					"placement": "AtTargetLocation"
+				},
+				"startTime": 0.0,
+				"duration": 0.8,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftLarge": 1.0,
+					"rightLarge": 1.0,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.5,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Distance",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 0.0
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Power"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Shooter"
+				},
+				{
+					"tagName": "Feel.Genre.Action"
+				}
+			]
+		},
+		"description": "A blast going off nearby: the closer it is, the harder it hits.",
+		"parameters": [
+			{
+				"name": "Distance",
+				"defaultValue": 0.0,
+				"minValue": 0.0,
+				"maxValue": 2000.0,
+				"description": "How far the player is from the blast, in centimeters. FeelKit fills this in when the game does not."
+			}
+		]
+	}
+}

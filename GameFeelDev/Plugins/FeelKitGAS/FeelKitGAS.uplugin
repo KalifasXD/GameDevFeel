@@ -1,0 +1,42 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0.0",
+	"FriendlyName": "FeelKit GAS",
+	"Description": "Gameplay Ability System support for FeelKit: Gameplay Cue notifies that play FeelKit recipes. Needs FeelKit. To use it, copy this folder into your project's Plugins folder and build the project.",
+	"Category": "Gameplay",
+	"CreatedBy": "Billo",
+	"CreatedByURL": "https://www.fab.com/sellers/Billo/about",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "mailto:billoue4@gmail.com",
+	"EngineVersion": "5.6.0",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"Installed": false,
+	"EnabledByDefault": true,
+	"Modules": [
+		{
+			"Name": "FeelGAS",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Mac",
+				"Linux",
+				"Android",
+				"IOS"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "FeelKit",
+			"Enabled": true
+		},
+		{
+			"Name": "GameplayAbilities",
+			"Enabled": true
+		}
+	]
+}

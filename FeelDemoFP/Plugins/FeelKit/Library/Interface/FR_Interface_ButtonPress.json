@@ -1,0 +1,147 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Interface_ButtonPress",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetPunch",
+					"scaleChange": {
+						"x": -0.12,
+						"y": -0.12
+					},
+					"frequency": 12.0,
+					"damping": 10.0
+				},
+				"startTime": 0.0,
+				"duration": 0.22,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetFlash",
+					"color": {
+						"r": 1,
+						"g": 1,
+						"b": 1,
+						"a": 1.0
+					},
+					"strength": 0.4,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.15,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_UI_Click.S_FK_UI_Click",
+					"placement": "TwoD"
+				},
+				"startTime": 0.0,
+				"duration": 0.2,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ForceFeedbackCurve",
+					"leftSmall": 0.25,
+					"rightSmall": 0.25,
+					"leftLarge": 0.0,
+					"rightLarge": 0.0,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.08,
+				"channel": {
+					"tagName": "Feel.Haptics"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Interface"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.UI"
+				}
+			]
+		},
+		"description": "A button taking the press: a squash inward, then a bounce back."
+	}
+}

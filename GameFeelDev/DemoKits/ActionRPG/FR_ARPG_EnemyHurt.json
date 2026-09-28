@@ -1,0 +1,450 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_ARPG_EnemyHurt",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_HitFlash",
+					"flashMaterial": "/FeelKit/Samples/Materials/M_FK_HitFlash.M_FK_HitFlash",
+					"color": {
+						"r": 1,
+						"g": 1,
+						"b": 1,
+						"a": 1.0
+					},
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.16,
+				"channel": {
+					"tagName": "Feel.Actor.Material"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.85
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ActorHitstop",
+					"timeDilation": 0.01
+				},
+				"startTime": 0.0,
+				"duration": 0.12,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ActorHitstop",
+					"timeDilation": 0.01
+				},
+				"startTime": 0.12,
+				"duration": 0.08,
+				"channel": {
+					"tagName": "Feel.Time.Hitstop"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_SquashStretch",
+					"axis": "Z",
+					"amount": 0.28,
+					"frequency": 11.0,
+					"damping": 6.0
+				},
+				"startTime": 0.0,
+				"duration": 0.45,
+				"channel": {
+					"tagName": "Feel.Actor.Transform"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.6
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.2
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_MeshWobble",
+					"tiltAmplitude": {
+						"pitch": 0,
+						"yaw": 0,
+						"roll": 10
+					},
+					"frequency": 14.0,
+					"decay": 2.5
+				},
+				"startTime": 0.0,
+				"duration": 0.4,
+				"channel": {
+					"tagName": "Feel.Actor.Transform"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.5
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelNiagara.FeelStep_SpawnParticle",
+					"system": "/Game/Variant_Combat/VFX/NS_Damage.NS_Damage",
+					"scale": {
+						"x": 1.6,
+						"y": 1.6,
+						"z": 1.6
+					},
+					"bDeactivateWithTrack": false
+				},
+				"startTime": 0.0,
+				"duration": 0.05,
+				"channel": {
+					"tagName": "Feel.Spawn"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelNiagara.FeelStep_SpawnParticle",
+					"system": "/Game/Variant_Combat/VFX/NS_Damage.NS_Damage",
+					"scale": {
+						"x": 2.6,
+						"y": 2.6,
+						"z": 2.6
+					},
+					"bDeactivateWithTrack": false
+				},
+				"startTime": 0.0,
+				"duration": 0.05,
+				"channel": {
+					"tagName": "Feel.Spawn"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Swing",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.5,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.55,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_NumberPop",
+					"valueParameter": "Streak",
+					"prefix": "x",
+					"color": {
+						"r": 1,
+						"g": 0.85,
+						"b": 0.35,
+						"a": 1.0
+					},
+					"fontSize": 34.0,
+					"popScale": 1.9,
+					"riseDistance": 80.0
+				},
+				"startTime": 0.0,
+				"duration": 0.8,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Streak",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.15,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.2,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Impact"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Action"
+				}
+			]
+		},
+		"description": "What was hit reacts: a hard white flash, a freeze, a squash and wobble, sparks, and a streak counter from the second hit on.",
+		"parameters": [
+			{
+				"name": "Swing",
+				"defaultValue": 0.35,
+				"minValue": 0.0,
+				"maxValue": 1.0,
+				"description": "How heavy the swing is: 0.35 first swing, 0.65 second, 1 finisher. Set by the Set Feel Value markers in the attack animations.",
+				"accumulator": "Swing"
+			},
+			{
+				"name": "Streak",
+				"defaultValue": 0.0,
+				"minValue": 0.0,
+				"maxValue": 10.0,
+				"description": "Hits in the current streak. Reads the Combo accumulator, which the player adds to on every hit.",
+				"accumulator": "Combo"
+			}
+		]
+	}
+}

@@ -1,0 +1,126 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Danger_Alarm",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ColorTint",
+					"tintColor": {
+						"r": 1,
+						"g": 0.15,
+						"b": 0.1,
+						"a": 1.0
+					},
+					"strength": 0.55,
+					"shape": "Smooth",
+					"frequency": 1.2,
+					"damping": 0.5,
+					"repeats": 3
+				},
+				"startTime": 0.0,
+				"duration": 1.5,
+				"channel": {
+					"tagName": "Feel.Screen.Color"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_VignettePulse",
+					"vignetteIntensity": 0.9,
+					"shape": "Smooth",
+					"frequency": 1.2,
+					"damping": 0.5,
+					"repeats": 3
+				},
+				"startTime": 0.0,
+				"duration": 1.5,
+				"channel": {
+					"tagName": "Feel.Screen.Distortion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Alarm.S_FK_Alarm",
+					"placement": "TwoD",
+					"bStopAtTrackEnd": true,
+					"fadeOutTime": 0.3
+				},
+				"startTime": 0.0,
+				"duration": 1.5,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Danger"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Horror"
+				},
+				{
+					"tagName": "Feel.Genre.Shooter"
+				}
+			]
+		},
+		"description": "An alarm going off: a repeating red wash and a warning tone.",
+		"bSustain": true,
+		"sustainStart": 0.05,
+		"sustainEnd": 1.45
+	}
+}

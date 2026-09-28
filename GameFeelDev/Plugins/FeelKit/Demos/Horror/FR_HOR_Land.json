@@ -1,0 +1,162 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_HOR_Land",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Land_Soft.S_FK_Land_Soft",
+					"placement": "TwoD",
+					"volumeMultiplier": 0.6,
+					"pitchMultiplier": 0.9,
+					"pitchVariation": 0.08
+				},
+				"startTime": 0.0,
+				"duration": 0.25,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "LandSpeed",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.15,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.3,
+										"value": 0.7
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraPunch",
+					"locationPunch": {
+						"x": 0,
+						"y": 0,
+						"z": -4
+					},
+					"rotationPunch": {
+						"pitch": -1.2,
+						"yaw": 0,
+						"roll": 0
+					},
+					"shape": "Kick",
+					"attackFraction": 0.12
+				},
+				"startTime": 0.0,
+				"duration": 0.3,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "LandSpeed",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.15,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.3,
+										"value": 0.5
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.2
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Weight"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Horror"
+				}
+			]
+		},
+		"description": "Landing after a real drop: a soft thud and a small dip that grow with the fall. Stepping off a kerb stays silent.",
+		"parameters": [
+			{
+				"name": "LandSpeed",
+				"defaultValue": 500.0,
+				"minValue": 300.0,
+				"maxValue": 1400.0,
+				"description": "Downward speed at landing in cm/s, passed by the Feel Trigger Landed event."
+			}
+		]
+	}
+}

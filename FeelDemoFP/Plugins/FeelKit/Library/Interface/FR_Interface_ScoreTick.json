@@ -1,0 +1,131 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_Interface_ScoreTick",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_NumberPop",
+					"valueParameter": "Combo",
+					"prefix": "+",
+					"color": {
+						"r": 1,
+						"g": 0.92,
+						"b": 0.5,
+						"a": 1.0
+					},
+					"fontSize": 26.0,
+					"popScale": 1.5,
+					"riseDistance": 40.0
+				},
+				"startTime": 0.0,
+				"duration": 0.6,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetPunch",
+					"scaleChange": {
+						"x": 0.08,
+						"y": 0.08
+					},
+					"frequency": 13.0,
+					"damping": 10.0
+				},
+				"startTime": 0.0,
+				"duration": 0.2,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 0.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_UI_Click.S_FK_UI_Click",
+					"placement": "TwoD",
+					"pitchMultiplier": 1.2,
+					"pitchVariation": 0.0
+				},
+				"startTime": 0.0,
+				"duration": 0.15,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Interface"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.UI"
+				}
+			]
+		},
+		"description": "A score counting up: numbers pop and the pitch climbs with the total.",
+		"parameters": [
+			{
+				"name": "Combo",
+				"defaultValue": 1.0,
+				"minValue": 0.0,
+				"maxValue": 10.0,
+				"description": "The number shown and how big the pop is. Reads the Combo accumulator when the game does not pass it.",
+				"accumulator": "Combo"
+			}
+		]
+	}
+}

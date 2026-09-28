@@ -1,0 +1,153 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_HOR_Sprint",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_CameraZoom",
+					"fieldOfViewChange": 4.0,
+					"easeInFraction": 0.2,
+					"easeOutFraction": 0.2
+				},
+				"startTime": 0.0,
+				"duration": 1.8,
+				"channel": {
+					"tagName": "Feel.Camera.Motion"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_ProceduralShake",
+					"frequency": 2.2,
+					"rotationAmplitude": {
+						"pitch": 0.35,
+						"yaw": 0.25,
+						"roll": 0.3
+					},
+					"locationAmplitude": {
+						"x": 0,
+						"y": 0.6,
+						"z": 0.8
+					}
+				},
+				"startTime": 0.0,
+				"duration": 1.8,
+				"channel": {
+					"tagName": "Feel.Camera.Shake"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Land_Step.S_FK_Land_Step",
+					"placement": "TwoD",
+					"volumeMultiplier": 0.3,
+					"pitchMultiplier": 0.85,
+					"pitchVariation": 0.12
+				},
+				"startTime": 0.45,
+				"duration": 0.15,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_PlaySound",
+					"sound": "/FeelKit/Samples/Sounds/S_FK_Land_Step.S_FK_Land_Step",
+					"placement": "TwoD",
+					"volumeMultiplier": 0.3,
+					"pitchMultiplier": 0.8,
+					"pitchVariation": 0.12
+				},
+				"startTime": 0.95,
+				"duration": 0.15,
+				"channel": {
+					"tagName": "Feel.Audio"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Speed"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Horror"
+				}
+			]
+		},
+		"description": "While sprinting: the view widens a touch, sways with the run, and heavy footfalls carry through the floor.",
+		"bSustain": true,
+		"sustainStart": 0.4,
+		"sustainEnd": 1.4
+	}
+}

@@ -1,0 +1,132 @@
+{
+	"format": "FeelKitRecipe",
+	"schemaVersion": 2,
+	"name": "FR_SHOOT_HudShot",
+	"recipe": {
+		"tracks": [
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetPunch",
+					"scaleChange": {
+						"x": 0.04,
+						"y": 0.08
+					},
+					"translation": {
+						"x": 0.0,
+						"y": 4.0
+					},
+					"shape": "Kick",
+					"attackFraction": 0.2
+				},
+				"startTime": 0.0,
+				"duration": 0.12,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				}
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_WidgetFlash",
+					"color": {
+						"r": 1,
+						"g": 0.2,
+						"b": 0.15,
+						"a": 1.0
+					},
+					"strength": 0.9,
+					"shape": "Kick"
+				},
+				"startTime": 0.0,
+				"duration": 0.18,
+				"channel": {
+					"tagName": "Feel.UI"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Ammo",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.25,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.3,
+										"value": 0.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 0.0
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		],
+		"cooldown": 0.0,
+		"defaultIntensity": 1.0,
+		"feeling": {
+			"tagName": "Feel.Feeling.Interface"
+		},
+		"genres": {
+			"gameplayTags": [
+				{
+					"tagName": "Feel.Genre.Shooter"
+				}
+			]
+		},
+		"description": "One shot fired: the bullet counter kicks down a little; when the magazine runs low it flashes red with every shot.",
+		"parameters": [
+			{
+				"name": "Ammo",
+				"defaultValue": 1.0,
+				"minValue": 0.0,
+				"maxValue": 1.0,
+				"description": "Share of the magazine left after the shot, 0 to 1. Passed by the bullet counter."
+			}
+		]
+	}
+}

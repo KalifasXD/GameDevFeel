@@ -1,0 +1,355 @@
+# Hand-kept values for gen_reference.py: things the headers do not say, the order of the reference
+# chapters, and which edition each step and feature belongs to. Text here ends up in the manual, so the
+# same writing rules apply (lint_manual.py checks this file too).
+
+# Order of the steps inside their groups. Every concrete step class of the plugin must be listed.
+step_order:
+  - UFeelStep_ProceduralShake
+  - UFeelStep_CameraPunch
+  - UFeelStep_FOVKick
+  - UFeelStep_CameraRoll
+  - UFeelStep_CameraZoom
+  - UFeelStep_LookAtNudge
+  - UFeelStep_GlobalHitstop
+  - UFeelStep_ActorHitstop
+  - UFeelStep_SlowMoRamp
+  - UFeelStep_ScreenFlash
+  - UFeelStep_VignettePulse
+  - UFeelStep_ChromaticAberration
+  - UFeelStep_Desaturate
+  - UFeelStep_ColorTint
+  - UFeelStep_ScreenFade
+  - UFeelStep_PostProcessMaterialPulse
+  - UFeelStep_ScalePunch
+  - UFeelStep_SquashStretch
+  - UFeelStep_MaterialPulse
+  - UFeelStep_HitFlash
+  - UFeelStep_MeshWobble
+  - UFeelStep_LightFlash
+  - UFeelStep_PlaySound
+  - UFeelStep_SoundClassDuck
+  - UFeelStep_PitchBend
+  - UFeelStep_LowPassSweep
+  - UFeelStep_ForceFeedbackCurve
+  - UFeelStep_HapticPattern
+  - UFeelStep_WidgetPunch
+  - UFeelStep_WidgetShake
+  - UFeelStep_WidgetFlash
+  - UFeelStep_NumberPop
+  - UFeelStep_SpawnDecal
+  - UFeelStep_SpawnParticle
+  - UFeelStep_Recipe
+  - UFeelStep_RandomChoice
+  - UFeelStep_BlueprintEvent
+
+# Step groups, found from each step's default channel.
+step_groups:
+  - {key: camera, title: Camera steps, channels: [Feel.Camera]}
+  - {key: time, title: Time steps, channels: [Feel.Time]}
+  - {key: screen, title: Screen steps, channels: [Feel.Screen]}
+  - {key: actor, title: Actor steps, channels: [Feel.Actor]}
+  - {key: audio, title: Audio steps, channels: [Feel.Audio]}
+  - {key: haptics, title: Haptics steps, channels: [Feel.Haptics]}
+  - {key: ui, title: UI steps, channels: [Feel.UI]}
+  - {key: spawn, title: Spawn steps, channels: [Feel.Spawn]}
+  - {key: meta, title: Meta steps, channels: [Feel.Meta]}
+
+# Everything listed here is in FeelKit Lite and in FeelKit Pro. Everything else is Pro only.
+lite:
+  - UFeelStep_ProceduralShake
+  - UFeelStep_CameraPunch
+  - UFeelStep_FOVKick
+  - UFeelStep_GlobalHitstop
+  - UFeelStep_SlowMoRamp
+  - UFeelStep_ScreenFlash
+  - UFeelStep_VignettePulse
+  - UFeelStep_ScalePunch
+  - UFeelStep_SquashStretch
+  - UFeelStep_PlaySound
+  - UFeelStep_ForceFeedbackCurve
+  - UFeelStep_BlueprintEvent
+  - fn:UFeelBlueprintLibrary.PlayFeel
+  - fn:UFeelBlueprintLibrary.StopFeel
+  - fn:UFeelBlueprintLibrary.StopAllFeel
+  - fn:UFeelBlueprintLibrary.IsFeelPlaying
+  - fn:UFeelBlueprintLibrary.IsValidFeelHandle
+  - fn:UFeelBlueprintLibrary.MakeFeelTargetFromActor
+  - fn:UFeelBlueprintLibrary.MakeFeelTargetFromComponent
+  - fn:UFeelBlueprintLibrary.MakeFeelTargetAtLocation
+  - fn:UFeelBlueprintLibrary.MakeFeelTargetFromLocalPlayerCamera
+  - fn:UFeelBlueprintLibrary.MakeFeelTargetFromWidget
+  - fn:UFeelRecipe.GetDuration
+  - type:FFeelTarget
+  - fn:UFeelBlueprintLibrary.GetFeelComfort
+  - fn:UFeelComfortSubsystem.GetComfortScales
+  - fn:UFeelComfortSubsystem.SetComfortScales
+  - fn:UFeelComfortSubsystem.SetMasterComfortScale
+  - fn:UFeelComfortSubsystem.SetComfortGroupScale
+  - fn:UFeelComfortSubsystem.ApplyComfortPreset
+  - fn:UFeelComfortSubsystem.ApplyCustomComfortPreset
+  - fn:UFeelComfortSubsystem.SaveComfortSettings
+  - fn:UFeelComfortSubsystem.LoadComfortSettings
+  - fn:UFeelComfortSubsystem.SetComfortStorage
+  - fn:UFeelComfortSubsystem.GetEffectiveForceFeedbackScale
+  - type:UFeelComfortPreset
+  - fn:IFeelComfortStorage.LoadComfortScales
+  - fn:IFeelComfortStorage.SaveComfortScales
+  - fn:UFeelBlueprintLibrary.SetFeelEnabled
+  - fn:UFeelBlueprintLibrary.ToggleFeel
+  - fn:UFeelBlueprintLibrary.IsFeelEnabled
+  - type:AFeelSwitch
+  - fn:AFeelSwitch.Switch
+  - cpp:UFeelSubsystem.Get
+  - cpp:UFeelSubsystem.PlayFeel
+  - cpp:UFeelSubsystem.StopFeel
+  - cpp:UFeelSubsystem.StopAllFeel
+  - cpp:UFeelSubsystem.IsPlaying
+  - cpp:UFeelSubsystem.GetNumActiveInstances
+  - cvar:feel.Enabled
+
+# Pro only. Listed so that anything new in the plugin shows up as a warning when the generator runs.
+pro:
+  - fn:UFeelBlueprintLibrary.PlayFeelWithContext
+  - fn:UFeelPlayAndWaitAction.PlayFeelAndWait
+  - fn:UFeelBlueprintLibrary.ReleaseFeel
+  - fn:UFeelBlueprintLibrary.SetFeelParameter
+  - fn:UFeelBlueprintLibrary.AddToFeelAccumulator
+  - fn:UFeelBlueprintLibrary.SetFeelAccumulator
+  - fn:UFeelBlueprintLibrary.GetFeelAccumulator
+  - fn:UFeelBlueprintLibrary.SendFeelEvent
+  - type:FFeelPlayContext
+  - type:UFeelMap
+  - type:UAnimNotify_PlayFeel
+  - type:UAnimNotify_SendFeelEvent
+  - type:UAnimNotify_SetFeelValue
+  - type:UAnimNotifyState_PlayFeel
+  - type:UFeelTriggerComponent
+  - fn:UFeelTriggerComponent.FireEvent
+  - type:UFeelInputComponent
+  - fn:UFeelInputComponent.HandleInput
+  - type:UFeelReplicationComponent
+  - fn:UFeelReplicationComponent.PlayFeelNetworked
+  - fn:UFeelReplicationComponent.SendFeelEventNetworked
+  - type:UFeelGameplayCueNotify
+  - type:AFeelGameplayCueNotifyActor
+  - fn:UFeelEditorScripting.ImportRecipeFromJsonFile
+  - fn:UFeelEditorScripting.CreateRecipeFromJsonFile
+  - fn:UFeelEditorScripting.AddFeelMapToProjectSettings
+  - fn:UFeelEditorScripting.SetAccumulatorInProjectSettings
+  - cpp:UFeelSubsystem.SendFeelEvent
+  - cpp:UFeelSubsystem.ReleaseFeel
+  - cpp:UFeelSubsystem.SetFeelParameter
+  - cpp:UFeelSubsystem.AddToAccumulator
+  - cpp:UFeelSubsystem.SetAccumulator
+  - cpp:UFeelSubsystem.GetAccumulator
+  - cpp:UFeelSubsystem.OnFeelStarted
+  - cpp:UFeelSubsystem.OnFeelFinished
+  - cvar:feel.GlobalScale
+  - cmd:stat
+  - cmd:showdebug
+
+# Fields that are Pro only inside tables that are otherwise in both editions.
+pro_fields:
+  - UFeelRecipe.Parameters
+  - UFeelRecipe.bSustain
+  - UFeelRecipe.SustainStart
+  - UFeelRecipe.SustainEnd
+  - UFeelRecipe.Feeling
+  - UFeelRecipe.Genres
+  - UFeelRecipe.Description
+  - UFeelRecipe.BasedOn
+  - FFeelTrack.AppliesTo
+  - FFeelTrack.ParameterMappings
+  - FFeelTrack.RandomIntensity
+  - FFeelTrack.RandomDurationScale
+  - FFeelConditions.bLocalPlayerOnly
+  - FFeelConditions.MaxDistance
+  - FFeelConditions.Chance
+  - FFeelConditions.Platforms
+  - UFeelSettings.bAllowGlobalTimeDilationInMultiplayer
+  - UFeelSettings.Accumulators
+
+# Defaults the headers cannot show on their own. Keys are Class.Property.
+defaults:
+  UFeelRecipe.Tracks: "empty (edited on the timeline)"
+  FFeelTrack.Step: "None (chosen with **+ Track**)"
+  FFeelTrack.Channel: "the step's default channel"
+  FFeelTrack.IntensityCurve: "fades from 1 to 0"
+  FFeelTrack.SubstituteStep: "None"
+  FFeelParameterMapping.Curve: "straight line from 0 to 1"
+  UFeelStep_MaterialPulse.Parameters: "one entry with the defaults below"
+  AFeelSwitch.SwitchKeys: "Tab, Gamepad Special Left"
+  AFeelSwitch.ComfortMenuKeys: "O, Gamepad Special Right"
+  UFeelSettings.DefaultComfortScales: "every scale 1 (see the comfort scale tables)"
+  UFeelSettings.ChannelComfortGroups: "nine entries (see the table below)"
+  UFeelSettings.ReducedMotionPreset: "see the comfort scale tables"
+  UFeelSettings.ReducedFlashingPreset: "see the comfort scale tables"
+  UFeelSettings.NoHapticsPreset: "see the comfort scale tables"
+  UFeelComfortPreset.Scales: "every scale 1"
+  FFeelRandomChoiceOption.Step: "None"
+
+# Units the headers leave to the tooltip text.
+units:
+  UFeelStep_ProceduralShake.LocationAmplitude: cm
+  UFeelStep_ProceduralShake.RotationAmplitude: "°"
+  UFeelStep_CameraPunch.LocationPunch: cm
+  UFeelStep_CameraPunch.RotationPunch: "°"
+  UFeelStep_MeshWobble.TiltAmplitude: "°"
+  UFeelStep_MeshWobble.MoveAmplitude: cm
+  UFeelStep_SpawnDecal.DecalSize: cm
+  UFeelStep_NumberPop.WorldOffset: cm
+  UFeelStep_NumberPop.RiseDistance: slate units
+  UFeelStep_NumberPop.Spread: slate units
+  UFeelStep_WidgetShake.Amplitude: slate units
+  UFeelStep_WidgetPunch.Translation: slate units
+  FFeelComfortScales.MaxFieldOfViewChangePerSecond: "°/s"
+
+# Array properties that get no table of their own entries here.
+no_subtable:
+  - UFeelRecipe.Tracks
+  - UFeelSettings.DefaultComfortScales
+  - UFeelSettings.ReducedMotionPreset
+  - UFeelSettings.ReducedFlashingPreset
+  - UFeelSettings.NoHapticsPreset
+  - UFeelComfortPreset.Scales
+
+# Replacement descriptions where the tooltip alone would mislead in the manual.
+descriptions:
+  FFeelTrack.IntensityCurve: "Intensity over the track's normalized time, from 0 at its start to 1 at its end. An empty curve means a constant 1. New tracks of steps that shape their own motion start with a flat curve at 1."
+  FFeelTarget.Actor: "Target actor when Type is Actor."
+  FFeelTarget.Component: "Target component when Type is Scene Component."
+  FFeelTarget.Location: "World location when Type is World Location."
+  FFeelTarget.LocalPlayerIndex: "Index of the local player when Type is Local Player Camera."
+  FFeelTrack.bEnabled: "Editor mute. Disabled tracks produce no output, in the preview and in the game."
+
+# Facts that depend on how a step is used rather than on one value in the source.
+channel_notes:
+  UFeelStep_RandomChoice: "the default channel of the first option's step, or `Feel.Meta.Recipe` when there is none"
+comfort_notes:
+  UFeelStep_CameraRoll: "Camera Motion; the roll is also removed completely when a player turns **Allow Camera Roll** off"
+  UFeelStep_HapticPattern: "Haptics; comfort can switch the effect off (Haptics at 0) but cannot make it weaker"
+  UFeelStep_Recipe: "none for the track itself; the inner recipe's tracks keep their own channels and comfort groups"
+  UFeelStep_RandomChoice: "the group of the track's channel"
+preview_notes:
+  UFeelStep_PlaySound: "yes, the sound is audible"
+  UFeelStep_Recipe: "yes, exactly like the inner recipe"
+  UFeelStep_RandomChoice: "as the step of the option picked for the preview play"
+
+# Chapter 17 layout.
+ch17_sections:
+  - title: Playing and stopping recipes
+    anchor: ref_nodes_play
+    items:
+      - {kind: fn, id: UFeelBlueprintLibrary.PlayFeel, anchor: node_play_feel}
+      - {kind: fn, id: UFeelBlueprintLibrary.PlayFeelWithContext, anchor: node_play_feel_with_context}
+      - {kind: fn, id: UFeelPlayAndWaitAction.PlayFeelAndWait, anchor: node_play_feel_and_wait}
+      - {kind: fn, id: UFeelBlueprintLibrary.StopFeel, anchor: node_stop_feel}
+      - {kind: fn, id: UFeelBlueprintLibrary.StopAllFeel, anchor: node_stop_all_feel}
+      - {kind: fn, id: UFeelBlueprintLibrary.ReleaseFeel, anchor: node_release_feel}
+      - {kind: fn, id: UFeelBlueprintLibrary.IsFeelPlaying, anchor: node_is_feel_playing}
+      - {kind: fn, id: UFeelBlueprintLibrary.IsValidFeelHandle, anchor: node_is_valid_feel_handle}
+      - {kind: fn, id: UFeelRecipe.GetDuration, anchor: node_get_duration, target: "a Feel Recipe"}
+  - title: Targets
+    anchor: ref_nodes_targets
+    items:
+      - {kind: fn, id: UFeelBlueprintLibrary.MakeFeelTargetFromActor, anchor: node_target_from_actor}
+      - {kind: fn, id: UFeelBlueprintLibrary.MakeFeelTargetFromComponent, anchor: node_target_from_component}
+      - {kind: fn, id: UFeelBlueprintLibrary.MakeFeelTargetAtLocation, anchor: node_target_at_location}
+      - {kind: fn, id: UFeelBlueprintLibrary.MakeFeelTargetFromLocalPlayerCamera, anchor: node_target_from_camera}
+      - {kind: fn, id: UFeelBlueprintLibrary.MakeFeelTargetFromWidget, anchor: node_target_from_widget}
+      - {kind: type, id: FFeelTarget, title: "Feel Target structure", anchor: ref_feel_target}
+      - {kind: enum, id: EFeelTargetType, lead: "Values of **Type**:"}
+  - title: Play context
+    anchor: ref_nodes_context
+    items:
+      - {kind: type, id: FFeelPlayContext, title: "Feel Play Context structure", anchor: ref_play_context}
+  - title: Parameters and accumulators
+    anchor: ref_nodes_parameters
+    items:
+      - {kind: fn, id: UFeelBlueprintLibrary.SetFeelParameter, anchor: node_set_feel_parameter}
+      - {kind: fn, id: UFeelBlueprintLibrary.AddToFeelAccumulator, anchor: node_add_to_accumulator}
+      - {kind: fn, id: UFeelBlueprintLibrary.SetFeelAccumulator, anchor: node_set_accumulator}
+      - {kind: fn, id: UFeelBlueprintLibrary.GetFeelAccumulator, anchor: node_get_accumulator}
+  - title: Events and Feel Maps
+    anchor: ref_nodes_events
+    items:
+      - {kind: fn, id: UFeelBlueprintLibrary.SendFeelEvent, anchor: node_send_feel_event}
+      - {kind: type, id: UFeelMap, title: "Feel Map asset", anchor: ref_feel_map}
+  - title: Comfort
+    anchor: ref_nodes_comfort
+    items:
+      - {kind: fn, id: UFeelBlueprintLibrary.GetFeelComfort, anchor: node_get_feel_comfort}
+      - {kind: fn, id: UFeelComfortSubsystem.GetComfortScales, target: "Feel Comfort Subsystem, from Get Feel Comfort"}
+      - {kind: fn, id: UFeelComfortSubsystem.SetComfortScales, target: "Feel Comfort Subsystem, from Get Feel Comfort"}
+      - {kind: fn, id: UFeelComfortSubsystem.SetMasterComfortScale, target: "Feel Comfort Subsystem, from Get Feel Comfort"}
+      - {kind: fn, id: UFeelComfortSubsystem.SetComfortGroupScale, target: "Feel Comfort Subsystem, from Get Feel Comfort", anchor: node_set_comfort_group_scale}
+      - {kind: enum, id: EFeelComfortGroup, lead: "Values of **Group**:"}
+      - {kind: fn, id: UFeelComfortSubsystem.ApplyComfortPreset, target: "Feel Comfort Subsystem, from Get Feel Comfort", anchor: node_apply_comfort_preset}
+      - {kind: enum, id: EFeelBuiltInComfortPreset, lead: "Values of **Preset**:"}
+      - {kind: fn, id: UFeelComfortSubsystem.ApplyCustomComfortPreset, target: "Feel Comfort Subsystem, from Get Feel Comfort"}
+      - {kind: fn, id: UFeelComfortSubsystem.SaveComfortSettings, target: "Feel Comfort Subsystem, from Get Feel Comfort"}
+      - {kind: fn, id: UFeelComfortSubsystem.LoadComfortSettings, target: "Feel Comfort Subsystem, from Get Feel Comfort"}
+      - {kind: fn, id: UFeelComfortSubsystem.SetComfortStorage, target: "Feel Comfort Subsystem, from Get Feel Comfort"}
+      - {kind: fn, id: UFeelComfortSubsystem.GetEffectiveForceFeedbackScale, target: "Feel Comfort Subsystem, from Get Feel Comfort"}
+      - {kind: type, id: UFeelComfortPreset, title: "Feel Comfort Preset asset", anchor: ref_comfort_preset}
+      - {kind: fn, id: IFeelComfortStorage.LoadComfortScales, target: "your storage class", node: "function of the Feel Comfort Storage interface; you implement it in your own class"}
+      - {kind: fn, id: IFeelComfortStorage.SaveComfortScales, target: "your storage class", node: "function of the Feel Comfort Storage interface; you implement it in your own class"}
+  - title: Feel Switch
+    anchor: ref_nodes_switch
+    items:
+      - {kind: fn, id: UFeelBlueprintLibrary.SetFeelEnabled, anchor: node_set_feel_enabled}
+      - {kind: fn, id: UFeelBlueprintLibrary.ToggleFeel, anchor: node_toggle_feel}
+      - {kind: fn, id: UFeelBlueprintLibrary.IsFeelEnabled, anchor: node_is_feel_enabled}
+      - {kind: type, id: AFeelSwitch, title: "Feel Switch actor", anchor: ref_feel_switch, functions: [Switch], target: "Feel Switch actor"}
+  - title: Animation notifies
+    anchor: ref_nodes_notifies
+    items:
+      - {kind: type, id: UAnimNotify_PlayFeel, title: "Play Feel notify", anchor: ref_notify_play_feel, expand: Settings}
+      - {kind: type, id: UAnimNotify_SendFeelEvent, title: "Send Feel Event notify", anchor: ref_notify_send_event, expand: Settings}
+      - {kind: type, id: UAnimNotify_SetFeelValue, title: "Set Feel Value notify", anchor: ref_notify_set_value}
+      - {kind: type, id: UAnimNotifyState_PlayFeel, title: "Play Feel (Window) notify state", anchor: ref_notify_window, expand: Settings}
+  - title: Feel Trigger component
+    anchor: ref_nodes_trigger
+    items:
+      - {kind: type, id: UFeelTriggerComponent, title: "Feel Trigger", anchor: ref_feel_trigger, functions: [FireEvent], target: "Feel Trigger component"}
+      - {kind: enum, id: EFeelTriggerEvent, lead: "Values of **Event**, with the event value each one passes:"}
+  - title: Feel Input component
+    anchor: ref_nodes_input
+    items:
+      - {kind: type, id: UFeelInputComponent, title: "Feel Input", anchor: ref_feel_input, functions: [HandleInput], target: "Feel Input component"}
+  - title: Feel Replication component
+    anchor: ref_nodes_replication
+    items:
+      - {kind: type, id: UFeelReplicationComponent, title: "Feel Replication", anchor: ref_feel_replication, functions: [PlayFeelNetworked, SendFeelEventNetworked], target: "Feel Replication component"}
+      - {kind: enum, id: EFeelNetMode, lead: "Values of **Mode**:"}
+  - title: Gameplay Cue notifies (GAS add-on)
+    anchor: ref_nodes_gas
+    items:
+      - {kind: type, id: UFeelGameplayCueNotify, title: "Feel Gameplay Cue Notify", anchor: ref_cue_notify, expand: Feel}
+      - {kind: type, id: AFeelGameplayCueNotifyActor, title: "Feel Gameplay Cue Notify (Actor)", anchor: ref_cue_notify_actor, expand: Feel}
+  - title: Editor scripting
+    anchor: ref_nodes_scripting
+    items:
+      - {kind: fn, id: UFeelEditorScripting.ImportRecipeFromJsonFile}
+      - {kind: fn, id: UFeelEditorScripting.CreateRecipeFromJsonFile}
+      - {kind: fn, id: UFeelEditorScripting.AddFeelMapToProjectSettings}
+      - {kind: fn, id: UFeelEditorScripting.SetAccumulatorInProjectSettings}
+  - title: C++ access
+    anchor: ref_cpp
+    items:
+      - {kind: note, id: section.ref_cpp_body}
+      - kind: native
+        id: UFeelSubsystem
+        functions: [Get, PlayFeel, SendFeelEvent, StopFeel, ReleaseFeel, StopAllFeel, SetFeelParameter, IsPlaying, GetNumActiveInstances, AddToAccumulator, SetAccumulator, GetAccumulator]
+        delegates: [OnFeelStarted, OnFeelFinished]
+
+# Chapter 18 layout.
+ch18_sections:
+  - {title: Where the settings are kept, anchor: set_files}
+  - {title: Camera, anchor: set_camera, categories: [Camera], edition: Lite and Pro}
+  - {title: Playback, anchor: set_playback, categories: [Playback], edition: Lite and Pro}
+  - {title: Events, anchor: set_events, categories: [Events], edition: Pro}
+  - {title: Comfort, anchor: set_comfort, categories: [Comfort, Comfort|Presets], edition: Lite and Pro, special: channel_groups}
+  - {title: Comfort scale fields and preset values, anchor: set_comfort_scales, edition: Lite and Pro, special: comfort_scales}
+  - {title: Comfort storage, anchor: set_comfort_storage, categories: [Comfort|Storage], edition: Lite and Pro}
+  - {title: Editor preferences, anchor: set_editor, edition: Lite and Pro, special: editor}

@@ -1,0 +1,135 @@
+﻿# ============================================================
+# Unreal Engine
+# ============================================================
+
+**/Binaries/
+**/Intermediate/
+**/Saved/
+**/DerivedDataCache/
+**/.vs/
+
+# Unreal generated project files
+**/*.sln
+**/*.suo
+**/*.opensdf
+**/*.sdf
+**/*.VC.db
+**/*.VC.opendb
+
+# Build/package output
+Build/*
+!Build/README.md
+!Build/*.md
+!Build/Logs/
+!Build/Logs/*.md
+
+# Large packaged archives
+**/PackagedFeel.zip
+**/*.zip
+
+# ============================================================
+# Visual Studio / Rider / IDE
+# ============================================================
+
+.vs/
+.idea/
+.vscode/
+
+# ============================================================
+# Synology / Windows
+# ============================================================
+
+.SynologyWorkingDirectory/
+desktop.ini
+Thumbs.db
+ehthumbs.db
+
+# ============================================================
+# Local backups
+# ============================================================
+
+Backups/
+
+# ============================================================
+# Unreal user-specific files
+# ============================================================
+
+**/*.user
+**/*.userprefs
+**/*.suo
+
+# ============================================================
+# Temporary files
+# ============================================================
+
+*.tmp
+*.temp
+*.bak
+*.log
+*.pdb
+*.obj
+
+# ============================================================
+# Generated packaged projects
+# ============================================================
+
+**/PackagedFeel/
+**/PackagedFeelFP/
+
+# ============================================================
+# Compiled Unreal plugin binaries
+# ============================================================
+
+**/Plugins/**/Binaries/
+
+# ============================================================
+# Generated build/package directories
+# ============================================================
+
+Build/*
+
+# Keep only human-readable build documentation/logs if present
+!Build/README.md
+!Build/*.md
+!Build/Logs/
+!Build/Logs/*.md
+
+# ============================================================
+# Fab upload archives
+# ============================================================
+
+Publish/*/03-Upload/
+
+# ============================================================
+# All Unreal project build output
+# ============================================================
+
+**/Build/
+**/Build
+
+# Keep the intentional root build logs only if explicitly needed
+!Build/
+!Build/Logs/
+!Build/Logs/*.md
+
+# ============================================================
+# Generated package folders
+# ============================================================
+
+**/PackagedFeel/
+**/PackagedFeelFP/
+
+# ============================================================
+# Compiled plugin binaries
+# ============================================================
+
+**/Plugins/**/Binaries/
+
+# ============================================================
+# Generated Fab upload archives
+# ============================================================
+
+Publish/*/03-Upload/
+
+# Final rule: generated build workspace is not source material
+Build/
