@@ -2,7 +2,7 @@
 
 FeelKit comes in two editions on Fab. **FeelKit Lite** is free and complete in itself: the recipe editor, twelve effects, the whole comfort layer and a small library. **FeelKit Pro** adds the rest: every effect, the full library and its browser, the ways of hooking recipes to gameplay without Blueprint wiring, multiplayer, GAS, and the debugging tools. Both editions are the same plugin with the same modules and class names, so a project can start on Lite and move to Pro without changing anything.
 
-This manual describes both. A section or table row that applies only to Pro carries a small **PRO** label; a section without one applies to both editions.
+This manual describes both. A section that applies only to Pro has a pale green band on its heading with **PRO** at the right, and a table row that applies only to Pro starts with **PRO**. Anything without the band or the label applies to both editions.
 
 ## What each edition contains {#ch15_contents}
 

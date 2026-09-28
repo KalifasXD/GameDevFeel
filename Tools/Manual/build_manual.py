@@ -83,6 +83,12 @@ LABEL_SIZES = {2: (7.5, 5), 3: (7.0, 4), 4: (6.5, 3), "key": (7.0, 1), "cell": (
 # Letter spacing of the Pro label, in twentieths of a point.
 LABEL_TRACKING = 36
 COLOUR_PRO = RGBColor(0x2A, 0x7A, 0x50)
+# Pro heading band (D4, chosen 2026-09-28): pale green fill, a green bar on the left, PRO at the right end. Padding of
+# the band above and below the text (points) by heading level; the values differ per level so that Word never joins
+# two banded headings that follow each other into one box.
+BAND_PADDING = {2: 4, 3: 3, 4: 2, "key": 2}
+BAND_BAR = 18
+BAND_BAR_GAP = 6
 HEX_SPEC = "F1F7F3"
 HEX_TABLE_HEAD = "DCEEE3"
 HEX_TABLE_SECTION = "EEF6F1"
@@ -828,12 +834,20 @@ class Builder:
         toc = doc.add_paragraph()
         add_field(toc, 'TOC \\o "1-2" \\h \\z \\u', "Update fields (F9) to fill in the contents.")
 
+        # The key shows the band itself, so it looks exactly like the Pro headings it explains.
         key = doc.add_paragraph()
         key.paragraph_format.space_before = Pt(20)
-        self.add_pro_label(key, *LABEL_SIZES["key"], gap=False)
-        k = key.add_run("\u2003In FeelKit Pro only. Everything without this label is in FeelKit Lite and FeelKit Pro.")
+        key.paragraph_format.space_after = Pt(4)
+        k = key.add_run("A section in FeelKit Pro only")
         k.font.size = Pt(8.5)
-        k.font.color.rgb = COLOUR_MUTED
+        k.font.color.rgb = COLOUR_HEADING
+        self.pro_band(key, "key", width_cm=7.5)
+        note = doc.add_paragraph()
+        self.add_pro_label(note, *LABEL_SIZES["key"], gap=False)
+        n = note.add_run("\u2003In a table or in the contents: in FeelKit Pro only. Everything without the band or the label is "
+                         "in FeelKit Lite and FeelKit Pro.")
+        n.font.size = Pt(8.5)
+        n.font.color.rgb = COLOUR_MUTED
         spacer = doc.add_paragraph()
         spacer.paragraph_format.space_before = Pt(0)
         if not self.release:
@@ -860,6 +874,40 @@ class Builder:
             pos = OxmlElement("w:position")
             pos.set(qn("w:val"), str(raise_hp))
             rpr.append(pos)
+
+    def pro_band(self, paragraph, level, width_cm: float = TEXT_WIDTH_CM) -> None:
+        """A Pro heading (D4): the paragraph sits on a pale green band with a green bar on its left, and the PRO label
+        at the band's right end. Plain paragraph formatting on the heading's own style, so the heading keeps its
+        number, its place in the contents and its PDF bookmark. The tab before the label becomes spaces in the
+        contents (fix_toc_labels)."""
+        pf = paragraph.paragraph_format
+        if width_cm < TEXT_WIDTH_CM:
+            pf.right_indent = Cm(TEXT_WIDTH_CM - width_cm)
+        pf.tab_stops.add_tab_stop(Cm(width_cm), WD_TAB_ALIGNMENT.RIGHT)
+        paragraph.add_run("\t")
+        self.add_pro_label(paragraph, *LABEL_SIZES[level if level == "key" else min(level, 4)], gap=False)
+        pad = str(BAND_PADDING[level if level == "key" else min(level, 4)])
+        ppr = paragraph._p.get_or_add_pPr()
+        bdr = OxmlElement("w:pBdr")
+        for side, size, space, colour in (("top", 4, pad, HEX_LABEL_TINT), ("left", BAND_BAR, str(BAND_BAR_GAP), HEX_ACCENT),
+                                          ("bottom", 4, pad, HEX_LABEL_TINT), ("right", 4, str(BAND_BAR_GAP), HEX_LABEL_TINT)):
+            el = OxmlElement(f"w:{side}")
+            el.set(qn("w:val"), "single")
+            el.set(qn("w:sz"), str(size))
+            el.set(qn("w:space"), space)
+            el.set(qn("w:color"), colour)
+            bdr.append(el)
+        shd = OxmlElement("w:shd")
+        shd.set(qn("w:val"), "clear")
+        shd.set(qn("w:color"), "auto")
+        shd.set(qn("w:fill"), HEX_LABEL_TINT)
+        later = ("w:tabs", "w:suppressAutoHyphens", "w:kinsoku", "w:wordWrap", "w:overflowPunct", "w:topLinePunct",
+                 "w:autoSpaceDE", "w:autoSpaceDN", "w:bidi", "w:adjustRightInd", "w:snapToGrid", "w:spacing", "w:ind",
+                 "w:contextualSpacing", "w:mirrorIndents", "w:suppressOverlap", "w:jc", "w:textDirection",
+                 "w:textAlignment", "w:textboxTightWrap", "w:outlineLvl", "w:divId", "w:cnfStyle", "w:rPr", "w:sectPr",
+                 "w:pPrChange")
+        ppr.insert_element_before(bdr, *later)
+        ppr.insert_element_before(shd, *later)
 
     @staticmethod
     def frame_picture(run) -> None:
@@ -938,7 +986,7 @@ class Builder:
         entries also state their edition in words in the first row of their key facts card."""
         self.current_edition = text
         if text == "Pro" and self.last_heading is not None and self.last_heading_level >= 2:
-            self.add_pro_label(self.last_heading, *LABEL_SIZES[min(self.last_heading_level, 4)])
+            self.pro_band(self.last_heading, self.last_heading_level)
 
     def reference_chapter(self) -> bool:
         return self.chapter is not None and not self.chapter.appendix and int(self.chapter.label) >= 16
@@ -1424,7 +1472,9 @@ def finalize_package(path: Path, version: str, keep_app: bool) -> None:
 
 def fix_toc_labels(doc, toc_range) -> int:
     """Pro labels in the contents: Word switches them to the contents font. Restores the label's font, size, color,
-    letter spacing and raise."""
+    letter spacing and raise. A Pro heading has a tab before its label (it sits at the right end of the band); in the
+    contents that tab would jump to the page number column, so it becomes three non-breaking spaces, as before D4.
+    Works from the last label back, so replacing text does not move the labels still to do."""
     start, end = toc_range.Start, toc_range.End
     found = []
     r = doc.Range(start, end)
@@ -1437,7 +1487,11 @@ def fix_toc_labels(doc, toc_range) -> int:
         found.append((r.Start, r.End))
         r.Collapse(0)
     green = COLOUR_PRO[2] * 65536 + COLOUR_PRO[1] * 256 + COLOUR_PRO[0]
-    for a, b in found:
+    for a, b in reversed(found):
+        before = doc.Range(a - 1, a)
+        if before.Text == "\t":
+            before.Text = NBSP * 3
+            a, b = a + 2, b + 2
         label = doc.Range(a, b)
         label.Font.Name = FONT_HEADING
         label.Font.Size = 6.5
@@ -1461,10 +1515,10 @@ def export_with_word(docx: Path, pdf: Path) -> None:
             doc.Fields.Update()
             for index in range(1, doc.TablesOfContents.Count + 1):
                 doc.TablesOfContents(index).Update()
-                fix_toc_labels(doc, doc.TablesOfContents(index).Range)
             doc.Fields.Update()
             for index in range(1, doc.TablesOfContents.Count + 1):
                 doc.TablesOfContents(index).UpdatePageNumbers()
+                fix_toc_labels(doc, doc.TablesOfContents(index).Range)
             doc.Save()
             doc.ExportAsFixedFormat(OutputFileName=str(pdf), ExportFormat=17, OpenAfterExport=False, OptimizeFor=0,
                                     Range=0, From=1, To=1, Item=0, IncludeDocProps=True, KeepIRM=True,

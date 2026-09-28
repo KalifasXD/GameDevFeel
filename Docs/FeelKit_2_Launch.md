@@ -19,7 +19,7 @@ price research, and the marketing brief (originals in `Docs/Archive/`).
 
 | Item | State | Blocks launch? | Estimate |
 |---|---|---|---|
-| **Manual** (Word and PDF) | **Written 2026-09-26:** chapters 1 to 23 and appendix A, 200 pages, every figure taken by script or drawn; left: appendix B (the sword-hit walkthrough), planned as Later, and the PRO label design (study running); the Feel for Unity appendix is dropped (D-108) | Yes (Fab 4.3.8); the listings say it is under construction until the PDF is online (D-106) | |
+| **Manual** (Word and PDF) | **Written 2026-09-26:** chapters 1 to 23 and appendix A, 200 pages, every figure taken by script or drawn; left: appendix B (the sword-hit walkthrough), planned as Later, the PRO label design is D4, a tinted band on Pro headings (D-110, built 2026-09-28); the Feel for Unity appendix is dropped (D-108) | Yes (Fab 4.3.8); the listings say it is under construction until the PDF is online (D-106) | |
 | **Lite package:** Pro-only code left out, no clashes when a project moves to Pro, upgrade path, one package per engine version | **Done 2026-09-26** (D-100, D-101, D-104): six packages checked, upgrade checked | Yes | |
 | **Listing text:** description, technical information, third-party declaration, tags (no "juice"), for Lite and Pro | **Done 2026-09-26:** `Publish/<Edition>/02-Fab-Listing.md` (D-102) | Yes | |
 | **Marketing plan** per your brief (section 7): gallery, hero image, shot list, video scripts, asset inventory, order | Gallery and hero done 2026-09-26 (`Publish/<Edition>/01-Images`, all real captures); video scripts in the Video Guide | Yes, before media | |

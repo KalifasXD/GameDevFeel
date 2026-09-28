@@ -61,7 +61,7 @@ The manual has two parts:
 
 - Names shown in the Unreal editor, such as buttons, menus and settings, are printed in **bold**: **Play Feel**, **Project Settings** > **Plugins** > **FeelKit**.
 - Names that are code, assets or gameplay tags are printed in a code font: `FR_Impact_HeavyHit`, `Feel.Camera.Shake`, `UFeelRecipe`.
-- Features that only FeelKit Pro contains carry a green **Pro** label on their heading, or the word Pro in a table. Everything without the label is in both editions.
+- A section that only FeelKit Pro contains has a pale green band on its heading, with a green bar on the left and **PRO** at the right. In tables and in the contents, the word **PRO** marks what only Pro contains. Everything without the band or the label is in both editions.
 - Times are in seconds and distances in centimeters, as in Unreal.
 
 ## Getting help {#ch01_help}
