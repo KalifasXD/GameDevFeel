@@ -210,25 +210,61 @@ from 6 source packs, so the form gets one entry per pack.
 | Plugin Name | FeelKit Pro |
 | Total Number of TPS | 6 |
 
-The same answers for every entry, apart from the pack name, link and the sounds it gives:
+Each entry asks for four fields. Paste them as they are.
 
-| Question | Answer |
+#### TPS #1: Impact Sounds
+
+| Field | Answer |
 |---|---|
-| License | CC0 1.0 Universal (public domain dedication), https://creativecommons.org/publicdomain/zero/1.0/ |
-| Version | The pack as published on its page (the pack has no version number) |
-| What does this software do? | It is not code. It is a pack of sound effect recordings. FeelKit ships the sounds listed for the entry below, imported as Unreal Sound Wave assets in `Content/Samples/Sounds`. |
-| Why does your plugin need it? | The sample recipes play these sounds, so a recipe is audible the first time a buyer previews it. Buyers can swap every sound for their own. |
-| Is the library statically or dynamically linked? | Neither. No library or code is linked. The sounds are content assets (.uasset) that the engine loads like any other sound. |
-| Will this software send data back to the creator? | No. They are audio files, with no code and no network access. |
+| Software Name and Version | Impact Sounds by Kenney (the pack has no version number) |
+| Download URL | https://kenney.nl/assets/impact-sounds |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by Kenney. FeelKit Pro ships 13 of its sounds (S_FK_Hit_Light, S_FK_Hit_Heavy, S_FK_Hit_Crit, S_FK_Impact_Bullet, S_FK_Land_Thud, S_FK_Body_Hit, S_FK_Body_Fall, S_FK_Jump_Scuff, S_FK_Land_Step, S_FK_Land_Soft, S_FK_Land_Heavy, S_FK_Wall_Thump, S_FK_Impact_Ping), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
 
-| Entry | Name | Author | Link | Sounds in FeelKit Pro |
-|---|---|---|---|---|
-| 1 | Impact Sounds | Kenney | https://kenney.nl/assets/impact-sounds | 13: S_FK_Hit_Light, S_FK_Hit_Heavy, S_FK_Hit_Crit, S_FK_Impact_Bullet, S_FK_Land_Thud, S_FK_Body_Hit, S_FK_Body_Fall, S_FK_Jump_Scuff, S_FK_Land_Step, S_FK_Land_Soft, S_FK_Land_Heavy, S_FK_Wall_Thump, S_FK_Impact_Ping |
-| 2 | Sci-fi Sounds | Kenney | https://kenney.nl/assets/sci-fi-sounds | 13: S_FK_Explosion, S_FK_Charge_Loop, S_FK_Alarm, S_FK_Shot_Pistol, S_FK_Shot_Rifle, S_FK_Shot_Thump, S_FK_Shot_Launcher, S_FK_Explosion_Crunch, S_FK_Explosion_Low, S_FK_Impact_Thud, S_FK_Dread_Drone, S_FK_Scare_Boom, S_FK_Light_Buzz |
-| 3 | Interface Sounds | Kenney | https://kenney.nl/assets/interface-sounds | 9: S_FK_Pickup, S_FK_LevelUp, S_FK_Denied, S_FK_Air_Lift, S_FK_Hit_Tick, S_FK_Kill_Confirm, S_FK_Dry_Click, S_FK_Light_Crackle, S_FK_UI_Tick |
-| 4 | RPG Audio | Kenney | https://kenney.nl/assets/rpg-audio | 4: S_FK_Whoosh, S_FK_Heartbeat, S_FK_Weapon_Switch, S_FK_Door_Creak |
-| 5 | UI Audio | Kenney | https://kenney.nl/assets/ui-audio | 2: S_FK_UI_Hover, S_FK_UI_Click |
-| 6 | Swishes Sound Pack | artisticdude | https://opengameart.org/content/swishes-sound-pack | 2: S_FK_Jump_Whoosh, S_FK_Dash_Whoosh |
+#### TPS #2: Sci-fi Sounds
+
+| Field | Answer |
+|---|---|
+| Software Name and Version | Sci-fi Sounds by Kenney (the pack has no version number) |
+| Download URL | https://kenney.nl/assets/sci-fi-sounds |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by Kenney. FeelKit Pro ships 13 of its sounds (S_FK_Explosion, S_FK_Charge_Loop, S_FK_Alarm, S_FK_Shot_Pistol, S_FK_Shot_Rifle, S_FK_Shot_Thump, S_FK_Shot_Launcher, S_FK_Explosion_Crunch, S_FK_Explosion_Low, S_FK_Impact_Thud, S_FK_Dread_Drone, S_FK_Scare_Boom, S_FK_Light_Buzz), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
+
+#### TPS #3: Interface Sounds
+
+| Field | Answer |
+|---|---|
+| Software Name and Version | Interface Sounds by Kenney (the pack has no version number) |
+| Download URL | https://kenney.nl/assets/interface-sounds |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by Kenney. FeelKit Pro ships 9 of its sounds (S_FK_Pickup, S_FK_LevelUp, S_FK_Denied, S_FK_Air_Lift, S_FK_Hit_Tick, S_FK_Kill_Confirm, S_FK_Dry_Click, S_FK_Light_Crackle, S_FK_UI_Tick), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
+
+#### TPS #4: RPG Audio
+
+| Field | Answer |
+|---|---|
+| Software Name and Version | RPG Audio by Kenney (the pack has no version number) |
+| Download URL | https://kenney.nl/assets/rpg-audio |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by Kenney. FeelKit Pro ships 4 of its sounds (S_FK_Whoosh, S_FK_Heartbeat, S_FK_Weapon_Switch, S_FK_Door_Creak), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
+
+#### TPS #5: UI Audio
+
+| Field | Answer |
+|---|---|
+| Software Name and Version | UI Audio by Kenney (the pack has no version number) |
+| Download URL | https://kenney.nl/assets/ui-audio |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by Kenney. FeelKit Pro ships 2 of its sounds (S_FK_UI_Hover, S_FK_UI_Click), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
+
+#### TPS #6: Swishes Sound Pack
+
+| Field | Answer |
+|---|---|
+| Software Name and Version | Swishes Sound Pack by artisticdude (the pack has no version number) |
+| Download URL | https://opengameart.org/content/swishes-sound-pack |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by artisticdude. FeelKit Pro ships 2 of its sounds (S_FK_Jump_Whoosh, S_FK_Dash_Whoosh), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
 
 ### Notes to the reviewer (paste when resubmitting)
 

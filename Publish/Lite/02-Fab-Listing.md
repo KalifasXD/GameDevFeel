@@ -186,22 +186,34 @@ from 3 source packs, so the form gets one entry per pack.
 | Plugin Name | FeelKit Lite |
 | Total Number of TPS | 3 |
 
-The same answers for every entry, apart from the pack name, link and the sounds it gives:
+Each entry asks for four fields. Paste them as they are.
 
-| Question | Answer |
+#### TPS #1: Impact Sounds
+
+| Field | Answer |
 |---|---|
-| License | CC0 1.0 Universal (public domain dedication), https://creativecommons.org/publicdomain/zero/1.0/ |
-| Version | The pack as published on its page (the pack has no version number) |
-| What does this software do? | It is not code. It is a pack of sound effect recordings. FeelKit ships the sounds listed for the entry below, imported as Unreal Sound Wave assets in `Content/Samples/Sounds`. |
-| Why does your plugin need it? | The sample recipes play these sounds, so a recipe is audible the first time a buyer previews it. Buyers can swap every sound for their own. |
-| Is the library statically or dynamically linked? | Neither. No library or code is linked. The sounds are content assets (.uasset) that the engine loads like any other sound. |
-| Will this software send data back to the creator? | No. They are audio files, with no code and no network access. |
+| Software Name and Version | Impact Sounds by Kenney (the pack has no version number) |
+| Download URL | https://kenney.nl/assets/impact-sounds |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by Kenney. FeelKit Lite ships 4 of its sounds (S_FK_Hit_Light, S_FK_Hit_Heavy, S_FK_Hit_Crit, S_FK_Land_Thud), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
 
-| Entry | Name | Author | Link | Sounds in FeelKit Lite |
-|---|---|---|---|---|
-| 1 | Impact Sounds | Kenney | https://kenney.nl/assets/impact-sounds | 4: S_FK_Hit_Light, S_FK_Hit_Heavy, S_FK_Hit_Crit, S_FK_Land_Thud |
-| 2 | Interface Sounds | Kenney | https://kenney.nl/assets/interface-sounds | 2: S_FK_Pickup, S_FK_Denied |
-| 3 | Sci-fi Sounds | Kenney | https://kenney.nl/assets/sci-fi-sounds | 1: S_FK_Alarm |
+#### TPS #2: Interface Sounds
+
+| Field | Answer |
+|---|---|
+| Software Name and Version | Interface Sounds by Kenney (the pack has no version number) |
+| Download URL | https://kenney.nl/assets/interface-sounds |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by Kenney. FeelKit Lite ships 2 of its sounds (S_FK_Pickup, S_FK_Denied), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
+
+#### TPS #3: Sci-fi Sounds
+
+| Field | Answer |
+|---|---|
+| Software Name and Version | Sci-fi Sounds by Kenney (the pack has no version number) |
+| Download URL | https://kenney.nl/assets/sci-fi-sounds |
+| License File Link | https://creativecommons.org/publicdomain/zero/1.0/legalcode |
+| Description | Not code: a pack of CC0 sound effect recordings by Kenney. FeelKit Lite ships 1 of its sounds (S_FK_Alarm), imported as Unreal Sound Wave assets in Content/Samples/Sounds. The plugin needs them so its sample recipes play a sound the first time a buyer previews them; buyers can replace every sound with their own. It is neither statically nor dynamically linked, because no code or library is included, only audio assets that the engine loads like any other sound. It sends no data back to the creator: the files are audio only, with no code and no network access. |
 
 ### Notes to the reviewer (paste when resubmitting)
 
