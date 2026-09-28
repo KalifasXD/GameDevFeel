@@ -74,7 +74,7 @@ Players start with **Default Comfort Scales** until they change their settings o
 | >> Comfort |  |  |
 | **Default Comfort Scales** | every scale 1 (see the comfort scale tables) | Comfort scales new players start with. Also the Default preset. |
 | **Channel Comfort Groups** | nine entries (see the table below) | Which comfort group scales each channel. Child tags are included; the most specific tag wins. |
-| **Comfort Menu Class** | FSoftClassPath(TEXT("/FeelKit/UI/WBP_FeelComfortMenu.WBP_FeelComfortMenu_C")) | Menu opened by Show Feel Comfort Menu when the node is given no menu class. To restyle the menu, copy WBP_FeelComfortMenu into your project (Copy to Project) and select the copy here. |
+| **Comfort Menu Class** | `WBP_FeelComfortMenu` (in **FeelKit Content** > **UI**) | Menu opened by Show Feel Comfort Menu when the node is given no menu class. To restyle the menu, copy WBP_FeelComfortMenu into your project (Copy to Project) and select the copy here. |
 | **Apply Comfort to Engine Camera Shakes** | On | Applies each player's Camera Shake comfort scale (and Master) to camera shakes the game plays through the engine, not only to FeelKit recipes, so one comfort setting reduces every shake. |
 | **Apply Comfort to Engine Force Feedback** | On | Applies each player's Haptics comfort scale (and Master) to all controller vibration through the player controller's force feedback scale, not only to FeelKit recipes. |
 | >> Comfort > Presets |  |  |

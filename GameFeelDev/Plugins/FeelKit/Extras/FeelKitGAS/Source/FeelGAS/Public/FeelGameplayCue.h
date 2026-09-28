@@ -73,7 +73,7 @@ public:
 
 /**
  * Gameplay Cue notify actor that plays a FeelKit recipe while its gameplay cue is active: it starts when the cue is added
- * and ends when the cue is removed (see Stop On Remove). Use a recipe with a sustain region for feedback that loops for as
+ * and ends when the cue is removed (see Stop on Remove). Use a recipe with a sustain region for feedback that loops for as
  * long as the effect lasts.
  */
 UCLASS(Blueprintable, meta = (DisplayName = "Feel Gameplay Cue Notify (Actor)"))

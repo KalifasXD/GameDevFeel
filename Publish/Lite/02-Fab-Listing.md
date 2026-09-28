@@ -99,7 +99,7 @@ Lite is a complete tool, not a trial: no time limit, no watermark, and you can s
 **Comfort for players**
 
 - Settings per local player: master, camera shake, camera motion, flashes, hitstop and slow motion, screen distortion, controller vibration
-- Presets: Default, Reduced Motion, Reduced Flashing, No Vibration, plus your own preset assets
+- Presets: Default, Reduced Motion, Reduced Flashing, No Haptics, plus your own preset assets
 - Flash limiter, camera roll on or off, zoom speed limit
 - The engine's own camera shakes and force feedback follow the settings too
 - Essential tracks play a substitute, a vignette in place of a flash for example, when a player turns that effect off
@@ -149,13 +149,13 @@ Four demo levels show what FeelKit does in a game. They are built with FeelKit P
 Yes. It is free under Fab's Standard License, with no time limit and no watermark, and you can ship games made with it.
 
 **Do I need C++?**
-No. Every feature has Blueprint nodes or assets, and C++ projects can call the same functions. Packaging a Blueprint-only project with FeelKit needs Visual Studio installed, because Unreal builds a small C++ target for any code plugin.
+No. Every feature has Blueprint nodes or assets, and C++ projects can call the same functions. Packaging a Blueprint-only project with FeelKit needs Visual Studio installed, because Unreal builds the project's own game executable whenever a project uses a code plugin.
 
 **Which engine versions and platforms are supported?**
 Unreal Engine 5.6, 5.7 and 5.8. FeelKit is built and tested on Windows. The plugin allows Mac, Linux, Android and iOS, but those have not been built or tested.
 
 **Will the effects look the same in the editor and in my game?**
-Yes. The recipe editor's preview and the game run the same evaluation code, and hitstops and camera effects use real time, so a recipe plays the same at any frame rate.
+Yes, for every effect the preview shows: the recipe editor's preview and the game run the same evaluation code, and recipes use real time, so they play the same at any frame rate. Hitstop, slow motion, controller vibration and Blueprint events need a running game; Play in PIE plays the recipe there.
 
 **Does FeelKit replace my camera shakes or force feedback?**
 No. It adds its own camera modifier and leaves your camera shakes and force feedback as they are. The comfort settings scale the engine's camera shakes and force feedback as well, so the player's choices apply to everything.

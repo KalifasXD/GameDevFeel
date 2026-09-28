@@ -81,7 +81,7 @@ public:
 	 * Responds to one binding as if its action fired. Used by the input bindings; callable to simulate input.
 	 * @param BindingIndex		Index of the binding in Bindings, starting at 0.
 	 * @param TriggerEvent		The input event to respond to, such as Started or Completed. Only bindings set to play on it respond.
-	 * @param ActionMagnitude	Strength of the input, 0 to 1 for most actions. Scales the intensity when the binding uses Scale Intensity By Value.
+	 * @param ActionMagnitude	Strength of the input, 0 to 1 for most actions. Scales the intensity when the binding uses Scale Intensity by Value.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Feel|Input")
 	void HandleInput(int32 BindingIndex, ETriggerEvent TriggerEvent, float ActionMagnitude = 1.0f);

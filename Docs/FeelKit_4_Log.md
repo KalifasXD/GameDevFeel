@@ -40,7 +40,17 @@ editor by script). Fixed: chapter 3 told every buyer the Tools menu holds the Fe
 install path now says "usually `Engine/Plugins/Marketplace`" and the GAS steps find the folder by searching for
 `FeelKit.uplugin` (the 2026-09-23 Fab research quoted `Engine/Plugins/Fab`; web sources say Marketplace); Based On is
 named as Pro (hidden in Lite) in chapters 4 and 9; both subsystem delegates are named as Pro; the C++ sample says what
-`HitRecipe` and `HitHandle` are. Video boxes say the video will be added after publishing.
+`HitRecipe` and `HitHandle` are. Video boxes say the video will be added after publishing. AI-trace audit (rule 9, same day, a
+separate reviewer reading every manual source, the build's page text, both listings and Credits.md): no em dashes,
+emoji or stock phrases; 36 findings, all verified against the code and applied: the video box symbol removed; four
+library recipe descriptions promised what the recipes do not do (ComboStep and ScoreTick "the pitch climbs", Heartbeat
+"faster", SprintStart vague), corrected in `gen_library.py`, the JSON and chapter 9 (the recipe assets need a
+re-import on the development PC, hard rule 2); Credits.md "out of the box" and "because the work deserves it"; names
+written two ways (Try it, FEEL: ON / FEEL: OFF, "to"/"by" in field names, Part One/Two names); the comfort menu class
+default printed as C++; No Vibration in the listings is No Haptics; listing FAQ overclaim on preview; GAS listing text;
+Based On tooltip now names Copy to Project. Plugin text changes are in comments, tooltips and one log message only
+(both copies of every linked folder changed alike); they ship with the FabURL rebuild. Reference chapters regenerated;
+lint 0 errors, build 0 warnings.
 
 **As of 2026-09-26:** the Fab publishing package is ready in `Publish/` (Lite and Pro, six checked packages and
 upload zips, galleries, both listings with every form field); what only the user can do is listed in

@@ -171,6 +171,7 @@ pro_fields:
 
 # Defaults the headers cannot show on their own. Keys are Class.Property.
 defaults:
+  UFeelSettings.ComfortMenuClass: "`WBP_FeelComfortMenu` (in **FeelKit Content** > **UI**)"
   UFeelRecipe.Tracks: "empty (edited on the timeline)"
   FFeelTrack.Step: "None (chosen with **+ Track**)"
   FFeelTrack.Channel: "the step's default channel"

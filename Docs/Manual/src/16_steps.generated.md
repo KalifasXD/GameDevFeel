@@ -29,7 +29,7 @@ The recipe editor's **Details** tab shows these fields. **Tracks** is hidden the
 | **Feeling** | None | **Pro.** What this recipe makes the player feel. It groups the recipe browser and the recipe library, for example Feel.Feeling.Impact. Projects can add their own tags under Feel.Feeling. Editor only: not included in packaged games. |
 | **Genres** | empty | **Pro.** Kinds of game this recipe suits, for example Feel.Genre.Shooter. Used by the recipe browser filters. Editor only: not included in packaged games. |
 | **Description** | empty | **Pro.** One or two sentences describing the recipe, shown in the recipe browser and the Content Browser tooltip. Editor only: not included in packaged games. |
-| **Based On** | None | **Pro.** The library recipe this one was copied from, when it was created with Recipe from Template. Read only. Editor only: not included in packaged games. |
+| **Based On** | None | **Pro.** The library recipe this one was copied from, with Copy to Project, the Recipe Browser or Recipe from Template. Read only. Editor only: not included in packaged games. |
 | >> Preview |  |  |
 | **Preview Mesh** | None | Mesh shown in the recipe editor preview. Static or skeletal; empty shows a cube. Editor only: not included in packaged games. |
 
@@ -196,7 +196,7 @@ Pushes and turns the camera to a peak and back along the motion shape; with the 
 | **Location Punch** | (-10, 0, -4) cm | Camera-space location offset at the peak (X forward, Y right, Z up). |
 | **Rotation Punch** | Pitch -2.5, Yaw 0, Roll 0 (degrees) | Rotation offset at the peak, in degrees. |
 | **Direction Source** | Step Settings | Where the punch direction comes from. With a play direction or location, the punch keeps the strength of Location Punch and Rotation Punch but points along that direction, as seen from the camera when the play started. |
-| **Direction Jitter** | 0° | Varies the punch direction per play by up to this angle, so repeated plays never look identical. Range 0 to 90. |
+| **Direction Jitter** | 0° | Varies the punch direction per play by up to this angle, so repeated plays point in slightly different directions. Range 0 to 90. |
 
 ### FOV Kick {#step_fov_kick}
 
@@ -444,7 +444,7 @@ Multiplies the scene toward **Tint Color** and back. **Strength** sets how far t
 
 [edition: Pro]
 
-Fades the view to **Fade Color**, holds, and fades back: the first **Fade In Fraction** of the track fades in, the last **Fade Out Fraction** fades out, and the view holds at **Max Opacity** in between. With **Fade Out Fraction** at 0 the view stays faded until the track ends. The fade is drawn under flashes, so a flash during a fade stays visible.
+Fades the view to **Fade Color**, holds, and fades back: the first **Fade in Fraction** of the track fades in, the last **Fade Out Fraction** fades out, and the view holds at **Max Opacity** in between. With **Fade Out Fraction** at 0 the view stays faded until the track ends. The fade is drawn under flashes, so a flash during a fade stays visible.
 
 - **Class:** `UFeelStep_ScreenFade`, module FeelCore.
 - **Default channel:** `Feel.Screen.Fade`.
@@ -644,7 +644,7 @@ Audio steps play sounds or change the mix. They have no comfort group under the 
 
 [edition: Lite and Pro]
 
-Plays **Sound** when the track starts, in 2D, attached to the target (at **Attach Socket Name** when set) or at the target's location. **Attached to Target** falls back to the target's location when the target has no component. Each play varies the volume and pitch at random by up to **Volume Variation** and **Pitch Variation**. With **Scale Volume with Intensity** on, the volume follows the track's intensity at the moment the track starts, comfort included. On a track with a length, **Stop at Track End** and **Stop when Recipe Stops** fade the sound out over **Fade Out Time**; on an instant track the sound simply plays to its end. The sound is audible in the editor preview.
+Plays **Sound** when the track starts, in 2D, attached to the target (at **Attach Socket Name** when set) or at the target's location. **Attached to Target** falls back to the target's location when the target has no component. Each play varies the volume and pitch at random by up to **Volume Variation** and **Pitch Variation**. With **Scale Volume with Intensity** on, the volume follows the track's intensity at the moment the track starts, comfort included. On a track with a length, **Stop at Track End** and **Stop when Recipe Stops** fade the sound out over **Fade Out Time**; on an instant track the sound plays to its end. The sound is audible in the editor preview.
 
 - **Class:** `UFeelStep_PlaySound`, module FeelCore.
 - **Default channel:** `Feel.Audio`.
@@ -923,7 +923,7 @@ Spawns **Decal Material** at the play's Location, or at the target when the play
 | **Location** | Play Location or Target | Where the decal appears. |
 | **Lifetime** | 5 s | Seconds before the decal starts fading. At least 0. |
 | **Fade Out Time** | 1 s | Fade-out length. At least 0. |
-| **Random Rotation** | On | Rotate the decal randomly around the normal for variety. |
+| **Random Rotation** | On | Turn each decal by a random angle around the normal, so repeated decals do not line up. |
 | **Find Surface** | On | Looks for a surface from the spawn point along the direction the decal projects (down, unless the play gives a Normal), and places the decal on it with that surface's orientation. Useful because actor locations are usually above the ground: a character's location is the middle of its capsule. Off places the decal exactly at the spawn point. |
 | **Surface Search Distance** | 500 cm | How far to look for a surface, beyond the edge of the target (for a character: below its feet). At least 0. Editable only when **Find Surface** is on. |
 
@@ -935,7 +935,7 @@ Checks when the recipe is saved:
 
 [edition: Pro]
 
-Spawns the Niagara system **System** at the play's Location or at the target, or attached to the target at **Attach Socket Name** when **Attach To Target** is on. **Orient to Normal** turns the system's up axis to the play's Normal. **Parameters** pass values into float user parameters of the system when it spawns: the value of a recipe parameter, or the track's intensity when **Recipe Parameter** is empty. With **Deactivate with Track** on and a track length, the system stops spawning new particles when the track ends or the recipe stops. The step is in the FeelNiagara module, which is enabled with FeelKit.
+Spawns the Niagara system **System** at the play's Location or at the target, or attached to the target at **Attach Socket Name** when **Attach to Target** is on. **Orient to Normal** turns the system's up axis to the play's Normal. **Parameters** pass values into float user parameters of the system when it spawns: the value of a recipe parameter, or the track's intensity when **Recipe Parameter** is empty. With **Deactivate with Track** on and a track length, the system stops spawning new particles when the track ends or the recipe stops. The step is in the FeelNiagara module, which is enabled with FeelKit.
 
 - **Class:** `UFeelStep_SpawnParticle`, module FeelNiagara.
 - **Default channel:** `Feel.Spawn`.

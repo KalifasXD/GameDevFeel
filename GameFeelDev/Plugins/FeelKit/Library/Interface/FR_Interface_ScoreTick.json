@@ -116,7 +116,7 @@
 				}
 			]
 		},
-		"description": "A score counting up: numbers pop and the pitch climbs with the total.",
+		"description": "A score counting up: the points pop up, the counter punches and a short click plays.",
 		"parameters": [
 			{
 				"name": "Combo",

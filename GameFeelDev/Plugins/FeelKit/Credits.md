@@ -1,9 +1,9 @@
 # FeelKit sample content credits
 
-FeelKit ships a small sample pack so the recipe library and the demo recipes work out of the box.
+FeelKit ships a small sample pack so the library and demo recipes play with sound and materials as soon as FeelKit is installed.
 
 - **Sounds:** all from other authors, all released under **CC0 (public domain)**. They can be used, changed and shipped in a
-  commercial product, and no credit is required. They are credited anyway, because the work deserves it.
+  commercial product, and no credit is required. They are credited anyway.
 - **Materials:** made for FeelKit and covered by the FeelKit license (see Materials below).
 
 ## Sounds

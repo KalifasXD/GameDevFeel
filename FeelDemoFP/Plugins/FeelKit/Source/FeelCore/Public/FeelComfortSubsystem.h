@@ -99,7 +99,7 @@ public:
 
 	/**
 	 * How much of the game's controller vibration reaches the player right now: the player's Haptics and Master comfort
-	 * combined, or 1 when Apply Comfort To Engine Force Feedback is off in the project settings. 0 means the controller
+	 * combined, or 1 when Apply Comfort to Engine Force Feedback is off in the project settings. 0 means the controller
 	 * stays still, whatever plays.
 	 * @return	Scale from 0 to 1 applied to the game's controller vibration.
 	 */

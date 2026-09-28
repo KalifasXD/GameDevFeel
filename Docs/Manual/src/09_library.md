@@ -61,7 +61,7 @@ Resting the pointer on a tile shows a tooltip with the recipe's **Description**,
 
 ## The 38 library recipes at a glance {#ch09_recipes}
 
-The descriptions are those shown in the Recipe Browser. Recipes labeled Pro are in FeelKit Pro only; the other eleven are in both editions. Recipes marked sustained keep playing until they are released ([Ref: ch07_sustain]); parameters are listed where a recipe takes one.
+The descriptions are those shown in the Recipe Browser. Recipes marked **PRO** are in FeelKit Pro only; the other eleven are in both editions. Recipes marked sustained keep playing until they are released ([Ref: ch07_sustain]); parameters are listed where a recipe takes one.
 
 {widths: 34,52,14}
 | Recipe | Description | Parameter |
@@ -85,10 +85,10 @@ The descriptions are those shown in the Recipe Browser. Recipes labeled Pro are 
 | >> Speed | | |
 | `FR_Speed_Boost` | **Pro.** Sustained speed: the view widens and the edges blur while the boost lasts. Sustained. | |
 | `FR_Speed_Dash` | **Pro.** A burst of speed in the direction of travel: a camera push, a widening view and a whoosh. | |
-| `FR_Speed_SprintStart` | Breaking into a sprint: a short lean and a rising sense of pace. | |
+| `FR_Speed_SprintStart` | Breaking into a sprint: a short lean forward, a widening view and a brief shake. | |
 | `FR_Speed_Whoosh` | **Pro.** Something fast passing close by: a light camera turn and a sweep of sound. | |
 | >> Reward | | |
-| `FR_Reward_ComboStep` | **Pro.** Each step of a streak feels bigger than the last, and the pitch climbs with it. | `Combo` |
+| `FR_Reward_ComboStep` | **Pro.** Each step of a streak hits harder than the last: the pop, the camera bump and the rumble grow with the combo, and the count pops up on screen. | `Combo` |
 | `FR_Reward_KillConfirm` | Confirmation that something went down: a crisp double tick and a short freeze. | |
 | `FR_Reward_LevelUp` | **Pro.** A milestone reached: a warm flash, a lift of the camera and a triumphant sound. | |
 | `FR_Reward_Pickup` | Collecting something: a bright, short pop with a rising sound. | |
@@ -99,7 +99,7 @@ The descriptions are those shown in the Recipe Browser. Recipes labeled Pro are 
 | `FR_Danger_LowHealth` | **Pro.** Running low: a slow pulse at the edges and a heartbeat that rises as health falls. Sustained. | `Health` |
 | >> Dread | | |
 | `FR_Dread_FailingLight` | **Pro.** A light about to die: irregular flicker with a dip in color. Sustained. | |
-| `FR_Dread_Heartbeat` | **Pro.** A heartbeat that follows fear: faster and heavier the closer the threat. Sustained. | `Fear` |
+| `FR_Dread_Heartbeat` | **Pro.** A heartbeat that follows fear: the beat, the pulse at the edges, the rumble and a slight zoom grow stronger the closer the threat. Sustained. | `Fear` |
 | `FR_Dread_JumpScare` | A sudden scare: one hard flash and a stab of sound, with a safe substitute when flashes are turned down. | |
 | `FR_Dread_Unease` | **Pro.** Creeping unease: color drains, the edges close in and the world sounds muffled. Sustained. | |
 | >> Denial | | |
@@ -111,7 +111,7 @@ The descriptions are those shown in the Recipe Browser. Recipes labeled Pro are 
 | `FR_Interface_ButtonHover` | **Pro.** The cursor arrives on a button: a small lift and a soft tick. | |
 | `FR_Interface_ButtonPress` | **Pro.** A button taking the press: a squash inward, then a bounce back. | |
 | `FR_Interface_Notification` | **Pro.** Something arrives on screen: it slides in, settles and chimes. | |
-| `FR_Interface_ScoreTick` | **Pro.** A score counting up: numbers pop and the pitch climbs with the total. | `Combo` |
+| `FR_Interface_ScoreTick` | **Pro.** A score counting up: the points pop up, the counter punches and a short click plays. | `Combo` |
 | `FR_Interface_ScreenTransition` | **Pro.** Moving between screens: a quick fade out and back in. | |
 
 **Shared parameter names.** Library recipes use the same names for the same kind of value, so one game value can drive several recipes: `Damage`, `FallSpeed`, `Health`, `Fear`, `Charge` and `Distance`. `Distance` is filled in automatically with the distance from the play to the nearest local camera ([Ref: ch07_distance]).

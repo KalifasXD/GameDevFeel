@@ -9,7 +9,7 @@ Four demo levels show FeelKit in games of different kinds. Each is built on one 
 - **Source projects.** Owners of FeelKit can ask for the Unreal Engine 5.6 projects behind the levels, on the FeelKit Discord or by email ([Ref: ch14_help]). They need FeelKit Pro installed in the engine.
 - **Engine version.** The levels use Epic's 5.6 template content, whose levels crash in Play In Editor on 5.7 and 5.8 even without FeelKit. The source projects are therefore for 5.6 only. On 5.7 and 5.8, the recipes themselves work; they can be hooked into that engine's own templates in the same way.
 
-In every level, **Tab** or the controller's **View** button turns FeelKit off and on, and **O** or the controller's **Menu** button opens the comfort menu ([Ref: ch08_menu]). Each level lists its controls under the FEEL ON / OFF badge.
+In every level, **Tab** or the controller's **View** button turns FeelKit off and on, and **O** or the controller's **Menu** button opens the comfort menu ([Ref: ch08_menu]). Each level lists its controls under the **FEEL: ON** / **FEEL: OFF** badge.
 
 ## Action/RPG: Weight Class {#ch13_arpg}
 [edition: Pro]

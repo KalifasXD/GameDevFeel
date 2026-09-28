@@ -51,7 +51,7 @@ A property left out of the file keeps its default value on import, so a hand-wri
 ## Editor scripting {#ch21_scripting}
 [edition: Pro]
 
-These functions are in the category **FeelKit | Editor Scripting**. They run in the editor only, from Python, from Editor Utility Blueprints, or from C++ editor code.
+These functions are in the category **FeelKit** > **Editor Scripting**. They run in the editor only, from Python, from Editor Utility Blueprints, or from C++ editor code.
 
 | Function | What it does |
 |---|---|
@@ -73,7 +73,7 @@ unreal.log(message)
 # Import into an existing recipe: returns the message, or None when the import failed.
 message = unreal.FeelEditorScripting.import_recipe_from_json_file(recipe, "C:/Recipes/FR_Denial_Locked.json")
 
-# Project settings.
+# Accumulator Combo: maximum 10, decay 1 per second after 1.5 s.
 unreal.FeelEditorScripting.set_accumulator_in_project_settings("Combo", 10.0, 1.0, 1.5)
 ```
 

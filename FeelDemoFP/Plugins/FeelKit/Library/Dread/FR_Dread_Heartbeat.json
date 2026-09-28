@@ -180,7 +180,7 @@
 				}
 			]
 		},
-		"description": "A heartbeat that follows fear: faster and heavier the closer the threat.",
+		"description": "A heartbeat that follows fear: the beat, the pulse at the edges, the rumble and a slight zoom grow stronger the closer the threat.",
 		"parameters": [
 			{
 				"name": "Fear",

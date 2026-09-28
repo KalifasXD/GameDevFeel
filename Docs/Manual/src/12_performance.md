@@ -1,6 +1,6 @@
 # Performance {#ch12}
 
-FeelKit runs a few short timelines at a time, so its cost is small next to the rendering and gameplay it decorates. The sections below show where the cost is, how to see it, and how to keep large numbers of plays in check. It gives no timing figures: FeelKit's cost depends on the recipes and the machine, and `stat Feel` measures it for any game.
+FeelKit runs a few short timelines at a time, so its cost is small next to the rendering and gameplay it decorates. The sections below show where the cost is, how to see it, and how to keep large numbers of plays in check. This chapter gives no timing figures: FeelKit's cost depends on the recipes and the machine, and `stat Feel` measures it for any game.
 
 ## When FeelKit runs {#ch12_idle}
 

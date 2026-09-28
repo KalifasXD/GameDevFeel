@@ -603,7 +603,7 @@ Routes loading and saving to your own save system, then loads from it.
 
 [edition: Lite and Pro]
 
-How much of the game's controller vibration reaches the player right now: the player's Haptics and Master comfort combined, or 1 when Apply Comfort To Engine Force Feedback is off in the project settings. 0 means the controller stays still, whatever plays.
+How much of the game's controller vibration reaches the player right now: the player's Haptics and Master comfort combined, or 1 when Apply Comfort to Engine Force Feedback is off in the project settings. 0 means the controller stays still, whatever plays.
 
 - **Node:** Pure node, no execution pins.
 - **Target:** Feel Comfort Subsystem, from Get Feel Comfort.
@@ -875,7 +875,7 @@ Fires every entry for an event, as if it happened. Useful for events the compone
 |---|---|---|---|---|
 | **Event** | In | Feel Trigger Event |  | Which entries to fire: those set to this event. |
 | **Event Value** | In | Float |  | The event's value, passed to each entry's Value Parameter (for example a fall speed or damage). |
-| **Other Actor** | In | Actor |  | The other actor of the event, used by Other Actor As Instigator and Play On Other Actor. Can be empty. |
+| **Other Actor** | In | Actor |  | The other actor of the event, used by Other Actor as Instigator and by Play On set to Other Actor. Can be empty. |
 
 Values of **Event**, with the event value each one passes:
 
@@ -934,7 +934,7 @@ Responds to one binding as if its action fired. Used by the input bindings; call
 |---|---|---|---|---|
 | **Binding Index** | In | Integer |  | Index of the binding in Bindings, starting at 0. |
 | **Trigger Event** | In | Trigger Event |  | The input event to respond to, such as Started or Completed. Only bindings set to play on it respond. |
-| **Action Magnitude** | In | Float | 1 | Strength of the input, 0 to 1 for most actions. Scales the intensity when the binding uses Scale Intensity By Value. |
+| **Action Magnitude** | In | Float | 1 | Strength of the input, 0 to 1 for most actions. Scales the intensity when the binding uses Scale Intensity by Value. |
 
 ## Feel Replication component {#ref_nodes_replication}
 
@@ -944,7 +944,7 @@ Responds to one binding as if its action fired. Used by the input bindings; call
 
 Plays recipes and sends Feel Events on several machines in a networked game. Add it to a replicated actor, such as a character or a weapon. Called on the server, the request goes to the machines the mode selects. Called on the client that owns the actor, the client plays at once (no wait for the server) and the server forwards the play to everyone else. Called on any other client, the play stays local. Only the request is sent; each machine evaluates the recipe with its own comfort settings. Plays are cosmetic and unreliable: under heavy packet loss a remote machine may miss one.
 
-Add it to a replicated actor, such as a character or a weapon. The component is replicated by default.
+The component is replicated by default.
 
 #### Play Feel Networked
 
@@ -1021,7 +1021,7 @@ Gameplay Cue notify that plays a FeelKit recipe or sends a Feel Event when the c
 
 [edition: Pro]
 
-Gameplay Cue notify actor that plays a FeelKit recipe while its gameplay cue is active: it starts when the cue is added and ends when the cue is removed (see Stop On Remove). Use a recipe with a sustain region for feedback that loops for as long as the effect lasts.
+Gameplay Cue notify actor that plays a FeelKit recipe while its gameplay cue is active: it starts when the cue is added and ends when the cue is removed (see Stop on Remove). Use a recipe with a sustain region for feedback that loops for as long as the effect lasts.
 
 {widths: 26,20,54}
 | Property | Default | Description |
@@ -1105,7 +1105,7 @@ Adds an accumulator to Project Settings > Plugins > FeelKit > Accumulators, or u
 {widths: 20,9,17,11,43}
 | Pin | In or out | Type | Default | Description |
 |---|---|---|---|---|
-| **Name** | In | Name |  | Accumulator name, as used by Add To Feel Accumulator and recipe parameters. |
+| **Name** | In | Name |  | Accumulator name, as used by Add to Feel Accumulator and recipe parameters. |
 | **Max Value** | In | Float |  | Highest value it can reach. |
 | **Decay Per Second** | In | Float |  | How much it loses per second once it starts decaying. |
 | **Decay Delay** | In | Float |  | Seconds after the last add before it starts decaying. |

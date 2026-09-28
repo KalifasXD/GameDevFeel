@@ -137,7 +137,7 @@ public:
 	 * Fires every entry for an event, as if it happened. Useful for events the component does not bind itself.
 	 * @param Event			Which entries to fire: those set to this event.
 	 * @param EventValue	The event's value, passed to each entry's Value Parameter (for example a fall speed or damage).
-	 * @param OtherActor	The other actor of the event, used by Other Actor As Instigator and Play On Other Actor. Can be empty.
+	 * @param OtherActor	The other actor of the event, used by Other Actor as Instigator and by Play On set to Other Actor. Can be empty.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Feel")
 	void FireEvent(EFeelTriggerEvent Event, float EventValue, AActor* OtherActor);

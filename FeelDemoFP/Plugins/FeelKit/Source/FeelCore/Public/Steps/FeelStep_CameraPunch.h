@@ -42,7 +42,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Punch")
 	EFeelDirectionSource DirectionSource = EFeelDirectionSource::StepSettings;
 
-	/** Varies the punch direction per play by up to this angle, so repeated plays never look identical. */
+	/** Varies the punch direction per play by up to this angle, so repeated plays point in slightly different directions. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Punch", meta = (ClampMin = "0", ClampMax = "90", Units = "Degrees"))
 	float DirectionJitter = 0.0f;
 

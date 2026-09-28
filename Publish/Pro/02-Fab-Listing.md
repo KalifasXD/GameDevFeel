@@ -113,7 +113,7 @@ Owners of FeelKit can request the Unreal Engine 5.6 projects behind the playable
 **Hooking it up**
 
 - Feel Maps: send an event such as Feel.Event.Hit with context tags, and the most specific row picks the recipe (heavy, critical, by surface)
-- Anim notifies on montages: Play Feel, Play Feel Window, Set Feel Value, Send Feel Event
+- Anim notifies on montages: Play Feel, Play Feel (Window), Set Feel Value, Send Feel Event
 - Feel Trigger component: jumped, air jumped, launched, landed, damage taken, hits and overlaps, with no Blueprint code
 - Enhanced Input: play recipes from input actions
 - Gameplay Ability System: a Gameplay Cue that plays a recipe, in an optional add-on plugin
@@ -122,7 +122,7 @@ Owners of FeelKit can request the Unreal Engine 5.6 projects behind the playable
 **Comfort for players**
 
 - Settings per local player: master, camera shake, camera motion, flashes, hitstop and slow motion, screen distortion, controller vibration
-- Presets: Default, Reduced Motion, Reduced Flashing, No Vibration, plus your own preset assets
+- Presets: Default, Reduced Motion, Reduced Flashing, No Haptics, plus your own preset assets
 - Flash limiter, camera roll on or off, zoom speed limit
 - The engine's own camera shakes and force feedback follow the settings too
 - Essential tracks play a substitute, a vignette in place of a flash for example, when a player turns that effect off
@@ -151,7 +151,7 @@ Owners of FeelKit can request the Unreal Engine 5.6 projects behind the playable
 
 **Technical details**
 
-- Code modules: FeelCore (Runtime), FeelEditor (Editor), FeelNiagara (Runtime), FeelEnhancedInput (Runtime); the GAS add-on FeelKitGAS (Runtime) is in the plugin's Extras folder
+- Code modules: FeelCore (Runtime), FeelEditor (Editor), FeelNiagara (Runtime), FeelEnhancedInput (Runtime); the GAS add-on plugin FeelKitGAS (module FeelGAS, Runtime) is in the plugin's Extras folder
 - FeelCore uses only stock engine modules. FeelKit turns on the engine plugins Niagara and Enhanced Input
 - Engine versions: 5.6, 5.7, 5.8
 - Platforms: built and tested on Windows. The plugin allows Mac, Linux, Android and iOS, which have not been built or tested
@@ -167,13 +167,13 @@ Owners of FeelKit can request the Unreal Engine 5.6 projects behind the playable
 ### 2.2 FAQs
 
 **Do I need C++?**
-No. Every feature has Blueprint nodes, components or assets, and C++ projects can call the same functions. Packaging a Blueprint-only project with FeelKit needs Visual Studio installed, because Unreal builds a small C++ target for any code plugin.
+No. Every feature has Blueprint nodes, components or assets, and C++ projects can call the same functions. Packaging a Blueprint-only project with FeelKit needs Visual Studio installed, because Unreal builds the project's own game executable whenever a project uses a code plugin.
 
 **Which engine versions and platforms are supported?**
 Unreal Engine 5.6, 5.7 and 5.8. FeelKit is built and tested on Windows. The plugin allows Mac, Linux, Android and iOS, but those have not been built or tested.
 
 **Will the effects look the same in the editor and in my game?**
-Yes. The recipe editor's preview and the game run the same evaluation code, and hitstops and camera effects use real time, so a recipe plays the same at any frame rate.
+Yes, for every effect the preview shows: the recipe editor's preview and the game run the same evaluation code, and recipes use real time, so they play the same at any frame rate. Hitstop, slow motion, controller vibration, Blueprint events and UI steps need a running game; Play in PIE plays the recipe there.
 
 **Does FeelKit replace my camera shakes or force feedback?**
 No. It adds its own camera modifier and leaves your camera shakes and force feedback as they are. The comfort settings scale the engine's camera shakes and force feedback as well, so the player's choices apply to everything.
@@ -185,7 +185,7 @@ Yes. Effects are cosmetic and play locally. Add the Feel Replication component t
 On Windows, Unreal sends vibration only to Xbox-style controllers. PlayStation, Switch and other controllers vibrate when the game runs through Steam with Steam Input on.
 
 **How do I use FeelKit with the Gameplay Ability System?**
-Copy Extras/FeelKitGAS from the FeelKit folder in your engine (Engine/Plugins/Marketplace) into your project's Plugins folder and turn it on. It adds a Gameplay Cue that plays a recipe. Projects without the add-on never load GAS.
+Copy Extras/FeelKitGAS from the FeelKit folder in your engine (usually under Engine/Plugins/Marketplace) into your project's Plugins folder; it is on as soon as it is there. It adds two Gameplay Cue notify classes that play recipes. Projects without the add-on never load GAS.
 
 **Can I move a project from FeelKit Lite to Pro?**
 Yes. Remove Lite from your engine, install Pro, and your recipes open unchanged. Both editions use the plugin name FeelKit, so install one of them per engine.

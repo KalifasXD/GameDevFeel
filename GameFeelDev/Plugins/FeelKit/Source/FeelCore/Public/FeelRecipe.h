@@ -123,7 +123,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Library", meta = (MultiLine = true))
 	FText Description;
 
-	/** The library recipe this one was copied from, when it was created with Recipe from Template. */
+	/** The library recipe this one was copied from, with Copy to Project, the Recipe Browser or Recipe from Template. */
 	UPROPERTY(VisibleAnywhere, Category = "Library")
 	FSoftObjectPath BasedOn;
 

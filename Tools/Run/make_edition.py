@@ -162,7 +162,7 @@ def write_lite_credits(path: Path) -> None:
     text = "\n".join([
         "# FeelKit Lite sample content credits",
         "",
-        "FeelKit Lite ships a few sample sounds so the library recipes work out of the box. They come from Kenney's audio",
+        "FeelKit Lite ships a few sample sounds so the library recipes play with sound as soon as it is installed. They come from Kenney's audio",
         "packs and are released under **CC0 (public domain)**: they can be used, changed and shipped in a commercial",
         "product, and no credit is required. They are credited anyway, because the work deserves it.",
         "",

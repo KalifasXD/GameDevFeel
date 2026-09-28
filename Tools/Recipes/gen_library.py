@@ -290,7 +290,7 @@ recipe('Speed', 'Whoosh', 'Something fast passing close by: a light camera turn 
     track(step('PlaySound', sound=SOUND.format('Whoosh'), placement='AtTargetLocation'), 0.0, 0.35, FLAT),
 ])
 
-recipe('Speed', 'SprintStart', 'Breaking into a sprint: a short lean and a rising sense of pace.', ['Action', 'Shooter'], [
+recipe('Speed', 'SprintStart', 'Breaking into a sprint: a short lean forward, a widening view and a brief shake.', ['Action', 'Shooter'], [
     track(step('FOVKick', fieldOfViewKick=6.0, shape='Smooth', frequency=4.0, damping=6.0), 0.0, 0.5),
     track(step('CameraPunch', locationPunch=vec(6, 0, -2), rotationPunch=rot(1.0, 0, 0), frequency=6.0, damping=8.0), 0.0, 0.35),
     track(step('ProceduralShake', frequency=18.0, rotationAmplitude=rot(0.4, 0.4, 0.2), locationAmplitude=vec(0, 1, 2)), 0.0, 0.5),
@@ -306,7 +306,7 @@ recipe('Reward', 'Pickup', 'Collecting something: a bright, short pop with a ris
     track(step('ForceFeedbackCurve', leftLarge=0.0, rightLarge=0.0, leftSmall=0.35, rightSmall=0.35, shape='Kick'), 0.0, 0.1),
 ])
 
-recipe('Reward', 'ComboStep', 'Each step of a streak feels bigger than the last, and the pitch climbs with it.',
+recipe('Reward', 'ComboStep', 'Each step of a streak hits harder than the last: the pop, the camera bump and the rumble grow with the combo, and the count pops up on screen.',
        ['Platformer', 'Action', 'UI'], [
     track(step('ScalePunch', amount=vec(0.18, 0.18, 0.18), bounces=1), 0.0, 0.25,
           parameterMappings=[mapping('Combo', [(0, 0.6), (1, 1.4)])]),
@@ -377,7 +377,7 @@ recipe('Danger', 'Alarm', 'An alarm going off: a repeating red wash and a warnin
 
 # --------------------------------------------------------------------------------------- Dread
 
-recipe('Dread', 'Heartbeat', 'A heartbeat that follows fear: faster and heavier the closer the threat.', ['Horror'], [
+recipe('Dread', 'Heartbeat', 'A heartbeat that follows fear: the beat, the pulse at the edges, the rumble and a slight zoom grow stronger the closer the threat.', ['Horror'], [
     track(step('PlaySound', sound=SOUND.format('Heartbeat'), placement='TwoD', bStopAtTrackEnd=True, fadeOutTime=0.5), 0.0, 1.5, FLAT,
           parameterMappings=[mapping('Fear')]),
     track(step('VignettePulse', vignetteIntensity=1.0, shape='Smooth', frequency=1.8, damping=0.4, repeats=3), 0.0, 1.5, FLAT,
@@ -457,7 +457,7 @@ recipe('Interface', 'Notification', 'Something arrives on screen: it slides in, 
     track(step('PlaySound', sound=SOUND.format('Pickup'), placement='TwoD', pitchMultiplier=1.1), 0.0, 0.35, FLAT),
 ])
 
-recipe('Interface', 'ScoreTick', 'A score counting up: numbers pop and the pitch climbs with the total.', ['UI'], [
+recipe('Interface', 'ScoreTick', 'A score counting up: the points pop up, the counter punches and a short click plays.', ['UI'], [
     track(step('NumberPop', valueParameter='Combo', prefix='+', color=color(1, 0.92, 0.5), fontSize=26.0, popScale=1.5, riseDistance=40.0), 0.0, 0.6, FLAT),
     track(step('WidgetPunch', scaleChange={'x': 0.08, 'y': 0.08}, frequency=13.0, damping=10.0), 0.0, 0.2),
     track(step('PlaySound', sound=SOUND.format('UI_Click'), placement='TwoD', pitchMultiplier=1.2, pitchVariation=0.0), 0.0, 0.15, FLAT),

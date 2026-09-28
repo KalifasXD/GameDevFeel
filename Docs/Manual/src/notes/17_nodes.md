@@ -49,7 +49,7 @@ The component ticks only when one of its entries uses Jumped, Air Jumped or Laun
 The input actions must be in an input mapping context that the player has added.
 
 @@ type:UFeelReplicationComponent
-Add it to a replicated actor, such as a character or a weapon. The component is replicated by default.
+The component is replicated by default.
 
 @@ section.ref_nodes_gas
 These classes are in the GAS add-on, the separate plugin FeelKit GAS with the module FeelGAS. It is not active until you copy it into your project. To use one in Blueprint, create a Blueprint class with the class below as its parent and set its **Gameplay Cue Tag** as for any other gameplay cue notify.

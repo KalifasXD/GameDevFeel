@@ -1371,7 +1371,7 @@ class Builder:
         info = self.videos.get(b.anchor)
         if info is None:
             raise BuildError(f"{self.chapter.path.name}: video {b.anchor} is not in the video table of the Manual Plan")
-        lines = [(f"\u25B6  Video: {info['title']} (YouTube, about {info['minutes']} minutes)", True)]
+        lines = [(f"Video: {info['title']} (YouTube, about {info['minutes']} minutes)", True)]
         if info.get("url"):
             lines.append((f"[{info['url']}]({info['url']})", False))
         else:

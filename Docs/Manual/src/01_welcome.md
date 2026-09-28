@@ -38,8 +38,8 @@ Playable builds of the four demo levels show FeelKit in finished scenes, with a 
 
 The manual has two parts:
 
-- **Part One, the guide** (chapters 1 to 15), explains how to work with FeelKit, task by task, in the order in which a project usually uses it. Chapters 2 to 4 are worth reading in full; the others can be read when their topic comes up.
-- **Part Two, the reference** (chapters 16 onwards), lists every step, node, component, setting and console command with its default values. It is meant for looking things up, not for reading from start to end. Its entries are generated from FeelKit's source code, so they always match the version they describe.
+- **Part One, Using FeelKit** (chapters 1 to 15), explains how to work with FeelKit, task by task, in the order in which a project usually uses it. Chapters 2 to 4 are worth reading in full; the others can be read when their topic comes up.
+- **Part Two, Reference** (chapters 16 to 23), lists every step, node, component, setting and console command with its default values. It is meant for looking things up, not for reading from start to end. Its entries are generated from FeelKit's source code, so they always match the version they describe.
 
 **Finding a topic.** The table below points to the section for the most common tasks. In the PDF, the bookmarks panel lists every section, and all references in the text are links.
 

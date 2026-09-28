@@ -63,8 +63,8 @@ The handle that Play Feel returns refers to one play of a recipe. Store it in a 
 |---|---|---|
 | **Stop Feel** | Stops the play. With **Blend Out** on (the default), its effects fade over the project's **Blend Out Time** (0.2 s). | Lite and Pro |
 | **Stop All Feel** | Stops every play, or only the plays on one actor. | Lite and Pro |
-| **Release Feel** | Ends the sustain loop of a sustained recipe, so that it plays its ending ([Ref: ch07_sustain]). | **Pro.** |
-| **Set Feel Parameter** | Changes a parameter of the play while it runs, for example a charge that grows while a button is held. | **Pro.** |
+| **Release Feel** | Ends the sustain loop of a sustained recipe, so that it plays its ending ([Ref: ch07_sustain]). | Pro |
+| **Set Feel Parameter** | Changes a parameter of the play while it runs, for example a charge that grows while a button is held. | Pro |
 | **Is Feel Playing** | Whether the play is still running, including while it fades out. | Lite and Pro |
 | **Is Valid (Feel Handle)** | Whether the handle came from a play that started. The play may have finished since. | Lite and Pro |
 

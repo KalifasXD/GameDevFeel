@@ -57,7 +57,7 @@ public:
 	/**
 	 * Adds an accumulator to Project Settings > Plugins > FeelKit > Accumulators, or updates the one with the same name, and saves
 	 * the project settings.
-	 * @param Name				Accumulator name, as used by Add To Feel Accumulator and recipe parameters.
+	 * @param Name				Accumulator name, as used by Add to Feel Accumulator and recipe parameters.
 	 * @param MaxValue			Highest value it can reach.
 	 * @param DecayPerSecond	How much it loses per second once it starts decaying.
 	 * @param DecayDelay		Seconds after the last add before it starts decaying.

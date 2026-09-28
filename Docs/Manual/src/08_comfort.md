@@ -155,7 +155,7 @@ The copy opens in the UI designer and can be changed freely.
 | Buttons | `DefaultPresetButton`, `ReducedMotionPresetButton`, `ReducedFlashingPresetButton`, `NoHapticsPresetButton`, `TryButton`, `ResetButton`, `CloseButton` |
 | Texts | `DescriptionText` (the explanation line), `SaveStatusText`, `CloseHintText` |
 
-The menu's **Class Defaults** hold its remaining settings: the explanation of each row, the recipes played by **Try** and by each slider, the keys that close it, the row colors and the texts for "No limit", "Saved" and "Saving...".
+The menu's **Class Defaults** hold its remaining settings: the explanation of each row, the recipes played by **Try it** and by each slider, the keys that close it, the row colors and the texts for "No limit", "Saved" and "Saving...".
 
 Editing FeelKit's own menu also works, but only until the next FeelKit update.
 

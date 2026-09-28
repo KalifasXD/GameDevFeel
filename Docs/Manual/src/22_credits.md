@@ -8,7 +8,7 @@ Both editions are distributed on Fab under Fab's Standard License. FeelKit Lite 
 
 ## Sample sounds {#ch22_sounds}
 
-FeelKit Pro ships 43 sample sounds; FeelKit Lite ships the 7 marked **Lite** below, which its library recipes use. Where a sound was renamed, the name in its source pack is given in brackets. License text: https://creativecommons.org/publicdomain/zero/1.0/
+FeelKit Pro ships 43 sample sounds; FeelKit Lite ships the 7 marked **Lite** below, which its library recipes use. Where a sound was renamed, the name in its source pack is given in parentheses. License text: https://creativecommons.org/publicdomain/zero/1.0/
 
 **Library sounds**
 

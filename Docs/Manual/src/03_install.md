@@ -53,7 +53,7 @@ The Content Browser hides plugin content until it is asked to show it:
 | Folder | Contents |
 |---|---|
 | **Library** | The ready-made recipes, one folder per feeling ([Ref: ch09]): 38 in Pro, 11 in Lite. Read-only; a project uses its own copies. |
-| **Demos** | Pro. The recipes of the Shooter, Horror and Platformer demo levels ([Ref: ch13]). |
+| **Demos** | **Pro.** The recipes of the Shooter, Horror and Platformer demo levels ([Ref: ch13]). |
 | **Samples** | The sounds and materials the library and demo recipes use. Pro: 43 sounds, one sound attenuation asset and three materials. Lite: the 7 sounds its library recipes use. |
 | **UI** | The comfort menu `WBP_FeelComfortMenu` and the short recipes its sliders play as previews ([Ref: ch08]). |
 

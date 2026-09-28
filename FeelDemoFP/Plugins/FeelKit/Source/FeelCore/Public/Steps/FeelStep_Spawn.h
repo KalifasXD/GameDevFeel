@@ -119,7 +119,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Decal", meta = (ClampMin = "0", Units = "Seconds"))
 	float FadeOutTime = 1.0f;
 
-	/** Rotate the decal randomly around the normal for variety. */
+	/** Turn each decal by a random angle around the normal, so repeated decals do not line up. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Decal")
 	bool bRandomRotation = true;
 

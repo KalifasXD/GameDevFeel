@@ -94,7 +94,7 @@ void UFeelComfortSubsystem::ApplyEngineForceFeedbackScale()
 		if (!bWarnedAboutSilencedHaptics)
 		{
 			bWarnedAboutSilencedHaptics = true;
-			UE_LOG(LogFeel, Warning, TEXT("Controller vibration is off for this player: Haptics comfort %.2f x Master comfort %.2f. Every effect still runs, but no vibration reaches the controller. Set the Haptics comfort scale above 0, or turn off Apply Comfort To Engine Force Feedback in Project Settings > Plugins > FeelKit."),
+			UE_LOG(LogFeel, Warning, TEXT("Controller vibration is off for this player: Haptics comfort %.2f x Master comfort %.2f. Every effect still runs, but no vibration reaches the controller. Set the Haptics comfort scale above 0, or turn off Apply Comfort to Engine Force Feedback in Project Settings > Plugins > FeelKit."),
 				Scales.Haptics, Scales.Master);
 		}
 	}
