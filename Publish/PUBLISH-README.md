@@ -50,13 +50,14 @@ six zips anyway, and carries the new address.
 
 ### 2.2 Documentation: the manual
 
-Fab's first review (2026-09-28) failed both listings on documentation, so the manual goes online before the
-resubmission. Build the final PDF on the development PC with Word closed:
-`python B:\NewUE5Project\Tools\Manual\build_manual.py --release --pdf`. Upload
-`Docs/Manual/out/FeelKit_Manual_1.0.0.pdf` to Google Drive, share it with "Anyone with the link", check the link in a
-private browser window, and put it in place of `<MANUAL LINK>` in both listings: the "Manual (PDF)" line under
-"Documentation and support", the "Documentation" sentence in the technical details, and the notes to the reviewer
-(section 3). A later rebuild replaces the file on Drive with Manage versions > Upload new version, which keeps the link.
+**Online (2026-09-28):** https://drive.google.com/file/d/1OlIEERggkVAoG0rnG2FBbLPwHgKcjn_R/view?usp=sharing
+
+Fab's first review (2026-09-28) failed both listings on documentation. The manual PDF is now on Google Drive and the
+link is in both listings: the "Manual (PDF)" line under "Documentation and support", the "Documentation" sentence in
+the technical details, and the notes to the reviewer (section 3). It is also the `DocsURL` of FeelKit and FeelKit GAS,
+so the next package build (the FabURL rebuild, 2.4) shows it in **Edit** > **Plugins**. A later rebuild of the manual
+(`python B:\NewUE5Project\Tools\Manual\build_manual.py --release --pdf`) replaces the file on Drive with **Manage
+versions** > **Upload new version**, which keeps the link.
 
 ### 2.3 Create the two listings
 

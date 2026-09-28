@@ -52,7 +52,7 @@ do; `PUBLISH-README.md` (one folder up) explains each one.
 | Tool type | Plugin |
 | Blueprints | 1 (the comfort menu, WBP_FeelComfortMenu) |
 | C++ classes | 58 |
-| Additional information | Built and tested on Windows with Unreal Engine 5.6, 5.7 and 5.8. Needs no other plugin. Packaging a Blueprint-only project with FeelKit needs Visual Studio, as with any code plugin. On Windows, PlayStation and other non-Xbox controllers vibrate through Steam Input. Documentation: the FeelKit Manual (PDF), <MANUAL LINK>. Support: https://discord.gg/AtJ6RdwaxA and billoue4@gmail.com |
+| Additional information | Built and tested on Windows with Unreal Engine 5.6, 5.7 and 5.8. Needs no other plugin. Packaging a Blueprint-only project with FeelKit needs Visual Studio, as with any code plugin. On Windows, PlayStation and other non-Xbox controllers vibrate through Steam Input. Documentation: the FeelKit Manual (PDF), https://drive.google.com/file/d/1OlIEERggkVAoG0rnG2FBbLPwHgKcjn_R/view?usp=sharing. Support: https://discord.gg/AtJ6RdwaxA and billoue4@gmail.com |
 
 ## 2. Text to paste
 
@@ -125,7 +125,7 @@ Four demo levels show what FeelKit does in a game. They are built with FeelKit P
 
 **Documentation and support**
 
-- Manual (PDF): <MANUAL LINK>
+- Manual (PDF): https://drive.google.com/file/d/1OlIEERggkVAoG0rnG2FBbLPwHgKcjn_R/view?usp=sharing
 - Discord: https://discord.gg/AtJ6RdwaxA
 - Email: billoue4@gmail.com
 
@@ -219,7 +219,7 @@ Each entry asks for four fields. Paste them as they are.
 
 ---
 
-Documentation: the manual is online at <MANUAL LINK>. It is linked from the description and from the technical details of each engine version.
+Documentation: the manual is online at https://drive.google.com/file/d/1OlIEERggkVAoG0rnG2FBbLPwHgKcjn_R/view?usp=sharing. It is linked from the description and from the technical details of each engine version.
 
 Third-party software: the Third Party Software form is filled in for FeelKit Lite (3 entries). FeelKit contains no third-party code or libraries: every file under Source is our own code and carries the Billo copyright notice. The only third-party content is 7 sample sounds under CC0 1.0 by Kenney, imported as Sound Wave assets in Content/Samples/Sounds and listed file by file, with their source packs, in Credits.md at the plugin root. There is no ThirdParty folder under Source because there is no third-party code to put in it.
 
