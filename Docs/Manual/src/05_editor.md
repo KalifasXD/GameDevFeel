@@ -39,7 +39,7 @@ The toolbar at the top of the **Timeline** tab controls playback and the preview
 |---|---|
 | **Play** / **Pause** | Plays or pauses the preview. Space does the same while the timeline has keyboard focus. |
 | **Stop** | Stops and returns the playhead to the start. |
-| **Release** | Ends the sustain loop of a sustained recipe, as **Release Feel** does in the game. Shown only for recipes with **Sustain** on, and enabled while the loop plays ([see: ch05_preview]). |
+| **Release** | **Pro.** Ends the sustain loop of a sustained recipe, as **Release Feel** does in the game. Shown only for recipes with **Sustain** on, and enabled while the loop plays ([see: ch05_preview]). |
 | **Loop** | Repeats the preview. |
 | **Snap** | Snaps track edits to frames. Holding Shift while dragging ignores snapping. |
 | Frame rate | The frame rate that snapping uses: 60 fps by default, with common rates and a custom value in the menu. The choice is a personal editor preference ([see: ch18]). |
@@ -111,7 +111,7 @@ With no track selected, **Details** shows the recipe's settings. With a track se
 | **Library** | | **Pro.** Feeling, genres and description, used by the Recipe Browser and in Content Browser tooltips ([Ref: ch09_tagging]). |
 | **Preview Mesh** | None | The mesh shown in the preview: any static or skeletal mesh, or a cube when empty. It is saved with the recipe but used only by the editor. |
 
-**Track settings.** The **Track N** category holds **Step**, **Start Time**, **Duration**, **Channel**, **Intensity Curve**, **Seed**, **Applies To** and **Enabled**. **Step** unfolds to the settings of the step itself, such as a shake's amplitude and frequency; these are documented per step in [Ref: ch16]. The remaining categories are:
+**Track settings.** The **Track N** category holds **Step**, **Start Time**, **Duration**, **Channel**, **Intensity Curve**, **Seed**, **Applies To** (Pro) and **Enabled**. **Step** unfolds to the settings of the step itself, such as a shake's amplitude and frequency; these are documented per step in [Ref: ch16]. The remaining categories are:
 
 | Category | Contents |
 |---|---|
@@ -204,16 +204,16 @@ When a recipe is saved, FeelKit checks it through Unreal's data validation and r
 | Message | Meaning |
 |---|---|
 | Recipe has no tracks. | The recipe plays nothing. |
-| Sustain is on, but Sustain End is not after Sustain Start, so nothing loops. | The sustain region is empty. |
-| Sustain End is after the last track ends, so part of the loop is silent. | The loop includes time in which no track plays. |
+| Sustain is on, but Sustain End is not after Sustain Start, so nothing loops. | **Pro.** The sustain region is empty. |
+| Sustain End is after the last track ends, so part of the loop is silent. | **Pro.** The loop includes time in which no track plays. |
 | ... has no step, so it is skipped. | A track without a step. |
 | ... has a length of 0, but this step needs a length to produce output. | Only steps that act once can be instant. |
 | ... intensity curve has keys outside 0 to 1. | The curve is read over the track's time from 0 to 1, so those keys never play. |
 | ... intensity curve never rises above 0, so the track produces no output. | The track is silent. |
 | ... is essential but has no substitute step and an essential floor of 0, so comfort settings can remove it completely. | See [Ref: ch08_essential]. |
 | ... has a substitute step but is not essential, so the substitute never plays. | Turn on **Essential**, or remove the substitute. |
-| ... has a chance of 0, so it never plays. | The track's **Chance** condition is 0. |
-| ... maps parameter N, which the recipe does not declare, so the mapping is ignored. | A parameter mapping names a parameter the recipe does not have. |
-| Parameter N reads accumulator A, which is not defined in Project Settings > Plugins > FeelKit, so it uses its default value. | Add the accumulator to the project settings ([Ref: ch07_accumulators]). |
+| ... has a chance of 0, so it never plays. | **Pro.** The track's **Chance** condition is 0. |
+| ... maps parameter N, which the recipe does not declare, so the mapping is ignored. | **Pro.** A parameter mapping names a parameter the recipe does not have. |
+| Parameter N reads accumulator A, which is not defined in Project Settings > Plugins > FeelKit, so it uses its default value. | **Pro.** Add the accumulator to the project settings ([Ref: ch07_accumulators]). |
 
 Steps add checks of their own, such as a Play Sound track without a sound; [Ref: ch16] lists them under each step.

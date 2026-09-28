@@ -24,11 +24,11 @@ A few steps create objects when their track starts, because the effect needs one
 | Step | Creates |
 |---|---|
 | **Play Sound** | An audio component, or a one-shot sound, as Unreal's own sound nodes do. |
-| **Spawn Decal**, **Spawn Particle** | A decal or a Niagara system, removed after its lifetime. |
-| **Number Pop** | Nothing per number: all numbers are drawn by one layer over the game view, added the first time a number appears. |
-| **Material Parameter Pulse** | A dynamic material instance for each material it changes that has none, unless the step writes custom primitive data instead. The original materials are put back afterwards. |
-| **Hit Flash** | A dynamic instance of its flash material, set as the mesh's overlay material while the flash plays. The mesh's own overlay material is put back afterwards. |
-| **Post Process Material Pulse** | A dynamic instance of its material, kept for later plays. |
+| **Spawn Decal**, **Spawn Particle** | **Pro.** A decal or a Niagara system, removed after its lifetime. |
+| **Number Pop** | **Pro.** Nothing per number: all numbers are drawn by one layer over the game view, added the first time a number appears. |
+| **Material Parameter Pulse** | **Pro.** A dynamic material instance for each material it changes that has none, unless the step writes custom primitive data instead. The original materials are put back afterwards. |
+| **Hit Flash** | **Pro.** A dynamic instance of its flash material, set as the mesh's overlay material while the flash plays. The mesh's own overlay material is put back afterwards. |
+| **Post Process Material Pulse** | **Pro.** A dynamic instance of its material, kept for later plays. |
 
 Every other step creates nothing.
 

@@ -6,6 +6,7 @@ A fixed recipe plays the same way every time. Parameters, accumulators and the p
 [video: V2]
 
 ## Parameters and track mappings {#ch07_parameters}
+[edition: Pro]
 
 A **parameter** is a named number that the game passes each time a recipe plays, such as the damage of a hit. Tracks read it through **parameter mappings**, which turn the parameter into a multiplier for the track's intensity.
 
@@ -30,12 +31,14 @@ A **parameter** is a named number that the game passes each time a recipe plays,
 **Example.** `FR_Impact_ScalableHit` declares `Damage` from 0 to 100 (default 50), and maps its shake, punch, flash and rumble to it: one recipe covers a graze and a critical blow. `FR_Weight_Land` declares `FallSpeed` from 0 to 1600 cm/s; a Feel Trigger entry for **Landed** passes the landing speed to it.
 
 ## The Distance parameter {#ch07_distance}
+[edition: Pro]
 
 A parameter named `Distance` is filled in automatically when the game does not pass it: FeelKit sets it to the distance, in centimeters, from the play's target to the nearest local player's camera. Map tracks to it with a curve that falls from 1 to 0 to make an effect weaken with distance.
 
 `FR_Power_Explosion` uses it: its flash, camera punch, shake, chromatic aberration, muffled sound and rumble are strong close to the blast and fade with distance. For a hard cut-off instead, use the **Max Distance** condition of a track ([see: ch07_random]).
 
 ## Accumulators: effects that build up with repeated plays {#ch07_accumulators}
+[edition: Pro]
 
 An **accumulator** is a named value that builds up as the game adds to it and decays over time, such as a combo counter or heat that rises with each shot. Recipes read it through a parameter, so feedback grows with a streak without any bookkeeping in the game.
 
@@ -59,6 +62,7 @@ An **accumulator** is a named value that builds up as the game adds to it and de
 A parameter that names an accumulator the project does not define plays with its default value, and saving the recipe reports it.
 
 ## Sustained recipes {#ch07_sustain}
+[edition: Pro]
 
 A sustained recipe keeps playing for as long as a condition lasts: a charge held down, an alarm, low health. In **Details**, turn on **Sustain** and set **Sustain Start** and **Sustain End**. When the play reaches **Sustain End**, time returns to **Sustain Start** and the region loops. When the play is released, it continues past the region and plays the rest of the recipe, its ending.
 
@@ -74,6 +78,7 @@ A sustained play is released by:
 **Example.** `FR_Power_ChargeUp` loops from 0.35 s to 0.95 s. Combined with **Set Feel Parameter** on its `Charge` parameter, the hum, the tightening view and the rumble grow while the charge is held, and the release plays its ending. Seven library recipes are sustained ([Ref: ch09_recipes]).
 
 ## The instigator, and the Applies To setting {#ch07_instigator}
+[edition: Pro]
 
 Many moments involve two actors: the attacker and the one hit, the player and the pickup. The play's target is one of them; the **Instigator** in the play context can be the other ([Ref: ch06_context]). A Feel Trigger passes the other actor of the event as the instigator by default.
 
@@ -85,6 +90,7 @@ Each track chooses which of the two its actor effects apply to, with **Applies T
 **Example.** `FR_ARPG_Parry` plays on the parrying player. Its Hit Flash and Actor Hitstop tracks are set to Instigator, so the attacker whose blow was parried flashes and freezes, from the same recipe.
 
 ## Directions and locations {#ch07_directions}
+[edition: Pro]
 
 The play context can carry a **Direction**, a **Location** and a surface **Normal**. Some steps use them:
 
@@ -99,6 +105,7 @@ The play context can carry a **Direction**, a **Location** and a surface **Norma
 Each step falls back to its own settings or to the target when the play passes no direction or location. `FR_Danger_DirectionalDamage` uses **Away From Play Location**: passing the attacker's location pushes the camera away from where the damage came from.
 
 ## Randomness, conditions and Random Choice {#ch07_random}
+[edition: Pro]
 
 **Random ranges.** The **Randomness** category of a track holds **Random Intensity** and **Random Duration Scale**, each a range from **Min** to **Max**. Every play picks a value in each range: 0.8 to 1.2 makes each play between 80 and 120 percent as strong. 1 to 1, the default, means no variation. Steps with noise, such as Procedural Shake, also change pattern with the track's **Seed**, and Camera Punch has a **Direction Jitter**.
 
@@ -118,6 +125,7 @@ The rolls are made when the play starts and kept for its whole length, so scrubb
 [shot: S07-03 | A Random Choice track with three Play Sound options and their weights]
 
 ## Recipes inside recipes {#ch07_nested}
+[edition: Pro]
 
 The **Play Recipe** step plays another recipe inside a track, with the same target, context and parameters. **Intensity Scale** multiplies the inner recipe on top of the track's intensity, and the inner recipe's tracks keep their own channels and comfort settings. Give the track at least the length of the inner recipe, which stops when the track ends.
 

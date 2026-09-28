@@ -21,7 +21,16 @@ is "under construction") and the third-party declaration (the box is ticked for 
 Party Software form). Everything else passed, including code plugin rules and media. Fix: publish the manual PDF and
 link it; fill in the form, one entry per sound pack (Lite 3, Pro 6), answers and reviewer notes in
 `Publish/<Edition>/02-Fab-Listing.md` section 3 (D-109). Both forms submitted by the user on 2026-09-28. The Feel for Unity appendix is dropped from the manual
-(D-108). The project is on GitHub (`KalifasXD/GameDevFeel`, pushed by the user) from 2026-09-28.
+(D-108). The project is on GitHub (`KalifasXD/GameDevFeel`, pushed by the user) from 2026-09-28. Manual Pro-label audit
+(same day): the key promises that anything without the label is in Lite, so every Pro-only class, node, field, editor
+tool and console variable of the code (`check_package.py`, `make_edition.py`, the `FEELKIT_PRO` regions) was looked up
+in the written chapters. Fixed: chapters 7, 13 and 21 were marked Pro only at chapter level, which the builder does not
+show, so their 15 sections now carry the label; 45 table rows gained it (Release, sustain and accumulator validation
+messages, parameter mappings, random intensity and `feel.GlobalScale` in the intensity table, demo recipes, Feel Map log
+messages, Pro step costs, the 27 Pro-only library recipes); Applies To, the Debugger mentions and the troubleshooting
+answers now say Pro, and troubleshooting gives the Lite route first (Get Comfort Scales, Get Effective Force Feedback
+Scale). Reference chapters 16 to 19 take editions from the code and needed nothing. Build: 94 labeled headings (79
+before), 72 labeled cells (27 before), 0 warnings; lint 0 errors.
 
 **As of 2026-09-26:** the Fab publishing package is ready in `Publish/` (Lite and Pro, six checked packages and
 upload zips, galleries, both listings with every form field); what only the user can do is listed in

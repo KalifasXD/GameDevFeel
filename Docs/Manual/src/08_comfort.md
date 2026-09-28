@@ -99,7 +99,7 @@ A game usually has camera shakes and controller vibration of its own, played wit
 - **Apply Comfort to Engine Camera Shakes** (on) scales the game's own Unreal camera shakes by the player's Camera Shake and Master scales.
 - **Apply Comfort to Engine Force Feedback** (on) scales the game's own controller vibration by the player's Haptics and Master scales. FeelKit multiplies the game's own force feedback scale rather than replacing it, and restores it when the setting changes.
 
-When a player's settings silence the controller completely, the Output Log says so once, with the scales responsible. **Get Effective Force Feedback Scale** returns the combined scale, and the FeelKit Debugger shows it in the **Controller vibration** row ([Ref: ch10]). On Windows, Unreal sends vibration only to Xbox-style controllers; [Ref: ch14] explains how PlayStation controllers are handled.
+When a player's settings silence the controller completely, the Output Log says so once, with the scales responsible. **Get Effective Force Feedback Scale** returns the combined scale, and in Pro the FeelKit Debugger shows it in the **Controller vibration** row ([Ref: ch10]). On Windows, Unreal sends vibration only to Xbox-style controllers; [Ref: ch14] explains how PlayStation controllers are handled.
 
 ## Saving settings, or using your own save system {#ch08_storage}
 

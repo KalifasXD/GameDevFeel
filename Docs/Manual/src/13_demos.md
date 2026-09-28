@@ -12,6 +12,7 @@ Four demo levels show FeelKit in games of different kinds. Each is built on one 
 In every level, **Tab** or the controller's **View** button turns FeelKit off and on, and **O** or the controller's **Menu** button opens the comfort menu ([Ref: ch08_menu]). Each level lists its controls under the FEEL ON / OFF badge.
 
 ## Action/RPG: Weight Class {#ch13_arpg}
+[edition: Pro]
 
 [shot: S13-01 | Action/RPG: a combo hit lands on the training dummy]
 
@@ -40,6 +41,7 @@ The player fights training dummies and enemies with a three-hit combo and a char
 **Project setup it relies on:** the accumulators `Combo` (maximum 10, decay 1 per second after 1.5 s), `Swing`, `Charged` and `ChargeLevel` (maximum 1, no decay), `FM_ARPG` in the project's Feel Maps, and the Combat template's `NS_Damage` particle system for the sparks. In the source project these recipes live in the project, under `/Game/FeelKitDemos/ActionRPG`, because they refer to the template's content.
 
 ## Platformer: Bounce Feel {#ch13_platformer}
+[edition: Pro]
 
 [shot: S13-02 | Platformer: a dash]
 
@@ -58,6 +60,7 @@ Every movement has its own response, and landings scale with the fall: a hop lan
 | `FR_PLAT_Land` | Landing, scaled by the fall: a light step after a hop; a squash, a dip of the view and a thud after a real jump; a deep drop of the view after a long fall. |
 
 ## Shooter: Every Bullet Has an Opinion {#ch13_shooter}
+[edition: Pro]
 
 [shot: S13-03 | Shooter: firing the rifle]
 
@@ -93,6 +96,7 @@ Each weapon feels different, hits and kills confirm themselves, grenades shake t
 **Project setup it relies on:** the accumulator `ShotHeat` (maximum 8, decay 10 per second after 0.12 s), which the rifle's shake reads, and the C++ changes to the template.
 
 ## Horror: Heartbeat {#ch13_horror}
+[edition: Pro]
 
 [shot: S13-04 | Horror: sprinting through the corridor]
 

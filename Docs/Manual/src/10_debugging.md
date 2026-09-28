@@ -89,9 +89,9 @@ FeelKit writes to the Output Log under **LogFeel**, and the Blueprint Event step
 | Message begins with | Cause | What to do |
 |---|---|---|
 | `PlayFeel: ... was given an actor or component target that is not valid` | The target actor or component was destroyed, or never set. | Check the value passed to the target node ([Ref: ch06_play]). |
-| `Send Feel Event ...: no Feel Map entry matches, so nothing plays` | No row of any Feel Map matches the event and its context tags. The message counts the maps that were searched. Shown once per event. | Add a row for the event, or check its required tags ([Ref: ch06_events]). |
-| `Send Feel Event ...: the matching Feel Map entry has no recipe` | A row matched, but its **Recipe** is empty. | Set the recipe on that row. |
-| `Accumulator ... is not defined` | A node or notify names an accumulator the project settings do not define. | Add it under **Accumulators** ([Ref: ch07_accumulators]). |
+| `Send Feel Event ...: no Feel Map entry matches, so nothing plays` | **Pro.** No row of any Feel Map matches the event and its context tags. The message counts the maps that were searched. Shown once per event. | Add a row for the event, or check its required tags ([Ref: ch06_events]). |
+| `Send Feel Event ...: the matching Feel Map entry has no recipe` | **Pro.** A row matched, but its **Recipe** is empty. | Set the recipe on that row. |
+| `Accumulator ... is not defined` | **Pro.** A node or notify names an accumulator the project settings do not define. | Add it under **Accumulators** ([Ref: ch07_accumulators]). |
 | `Controller vibration is off for this player` | The player's **Haptics** or **Master** comfort is 0, so no vibration reaches the controller. Shown once, with the scales responsible. | Nothing, if the player chose it; otherwise check the comfort settings ([Ref: ch08_engine]). |
 | `Show Feel Comfort Menu needs a local player controller` | The node was given a controller that is not a local player's. | Pass the local player's controller. |
 | `Show Feel Comfort Menu: no comfort menu to open` | **Comfort Menu Class** is empty and the node passed no menu. | Set the class in the project settings ([Ref: ch08_menu]). |

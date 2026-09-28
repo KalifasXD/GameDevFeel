@@ -4,6 +4,7 @@
 A recipe can be written out as a JSON text file and read back in. Text is easy to review in version control, to share on a forum or in a bug report, to edit in bulk with a script, and to move between projects. FeelKit Pro also offers a few editor scripting functions for setting up recipes and project settings from Python or Editor Utility Blueprints.
 
 ## Exporting and importing in the Content Browser {#ch21_menu}
+[edition: Pro]
 
 **Exporting.** Select one or more recipes in the Content Browser, right-click, and choose **Export to JSON...**. FeelKit asks where to save each recipe and names the file after it. A notification confirms each file.
 
@@ -14,6 +15,7 @@ A recipe can be written out as a JSON text file and read back in. Text is easy t
 - A file that is not valid JSON, or not a FeelKit recipe, changes nothing. A file written by a newer version of FeelKit, with a newer recipe format, is refused with a message saying so.
 
 ## The file format {#ch21_format}
+[edition: Pro]
 
 A recipe file is JSON with a short header and the recipe's properties:
 
@@ -47,6 +49,7 @@ A recipe file is JSON with a short header and the recipe's properties:
 A property left out of the file keeps its default value on import, so a hand-written file needs only what differs from the defaults. The recipes of the FeelKit library ship in this format, in the plugin's `Library` folder, and make good starting points.
 
 ## Editor scripting {#ch21_scripting}
+[edition: Pro]
 
 These functions are in the category **FeelKit | Editor Scripting**. They run in the editor only, from Python, from Editor Utility Blueprints, or from C++ editor code.
 

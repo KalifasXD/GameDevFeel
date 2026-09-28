@@ -61,58 +61,58 @@ Resting the pointer on a tile shows a tooltip with the recipe's **Description**,
 
 ## The 38 library recipes at a glance {#ch09_recipes}
 
-The descriptions are those shown in the Recipe Browser. Recipes marked sustained keep playing until they are released ([Ref: ch07_sustain]); parameters are listed where a recipe takes one.
+The descriptions are those shown in the Recipe Browser. Recipes labeled Pro are in FeelKit Pro only; the other eleven are in both editions. Recipes marked sustained keep playing until they are released ([Ref: ch07_sustain]); parameters are listed where a recipe takes one.
 
 {widths: 34,52,14}
 | Recipe | Description | Parameter |
 |---|---|---|
 | >> Impact | | |
-| `FR_Impact_BulletImpact` | A shot landing on a surface: a small punch, a mark on the surface and a short rumble. | |
-| `FR_Impact_CriticalHit` | A critical hit: a longer freeze, a slow-motion beat, a bright flash and a color push. | |
+| `FR_Impact_BulletImpact` | **Pro.** A shot landing on a surface: a small punch, a mark on the surface and a short rumble. | |
+| `FR_Impact_CriticalHit` | **Pro.** A critical hit: a longer freeze, a slow-motion beat, a bright flash and a color push. | |
 | `FR_Impact_HeavyHit` | A heavy blow: a longer freeze, a deep camera punch, a flash and a strong rumble. | |
 | `FR_Impact_LightHit` | A quick, light hit: a short shake, a small punch and a brief freeze. | |
-| `FR_Impact_ScalableHit` | One hit that covers light to heavy: Damage drives how hard everything lands. | `Damage` |
+| `FR_Impact_ScalableHit` | **Pro.** One hit that covers light to heavy: Damage drives how hard everything lands. | `Damage` |
 | >> Weight | | |
 | `FR_Weight_HeavyFootstep` | Each step of something big: a small ground shake felt more than seen. | |
-| `FR_Weight_Land` | Landing on the ground, scaled by how fast the fall was. | `FallSpeed` |
-| `FR_Weight_Slam` | Something heavy hitting the ground nearby: a hard shake and a mark left behind. | |
+| `FR_Weight_Land` | **Pro.** Landing on the ground, scaled by how fast the fall was. | `FallSpeed` |
+| `FR_Weight_Slam` | **Pro.** Something heavy hitting the ground nearby: a hard shake and a mark left behind. | |
 | `FR_Weight_Stomp` | A deliberate, heavy stomp: a freeze, a drop of the camera and a long rumble. | |
 | >> Power | | |
-| `FR_Power_AbilityCast` | Casting an ability: a short wind-up, a colored wash and a firm rumble. | |
-| `FR_Power_ChargeUp` | Holding a charge: a rising hum, a tightening view and a growing rumble that keeps going until released. Sustained. | `Charge` |
-| `FR_Power_ChargedRelease` | The charge let go: a flash, a wide camera kick and a heavy rumble. | |
-| `FR_Power_Explosion` | A blast going off nearby: the closer it is, the harder it hits. | `Distance` |
+| `FR_Power_AbilityCast` | **Pro.** Casting an ability: a short wind-up, a colored wash and a firm rumble. | |
+| `FR_Power_ChargeUp` | **Pro.** Holding a charge: a rising hum, a tightening view and a growing rumble that keeps going until released. Sustained. | `Charge` |
+| `FR_Power_ChargedRelease` | **Pro.** The charge let go: a flash, a wide camera kick and a heavy rumble. | |
+| `FR_Power_Explosion` | **Pro.** A blast going off nearby: the closer it is, the harder it hits. | `Distance` |
 | >> Speed | | |
-| `FR_Speed_Boost` | Sustained speed: the view widens and the edges blur while the boost lasts. Sustained. | |
-| `FR_Speed_Dash` | A burst of speed in the direction of travel: a camera push, a widening view and a whoosh. | |
+| `FR_Speed_Boost` | **Pro.** Sustained speed: the view widens and the edges blur while the boost lasts. Sustained. | |
+| `FR_Speed_Dash` | **Pro.** A burst of speed in the direction of travel: a camera push, a widening view and a whoosh. | |
 | `FR_Speed_SprintStart` | Breaking into a sprint: a short lean and a rising sense of pace. | |
-| `FR_Speed_Whoosh` | Something fast passing close by: a light camera turn and a sweep of sound. | |
+| `FR_Speed_Whoosh` | **Pro.** Something fast passing close by: a light camera turn and a sweep of sound. | |
 | >> Reward | | |
-| `FR_Reward_ComboStep` | Each step of a streak feels bigger than the last, and the pitch climbs with it. | `Combo` |
+| `FR_Reward_ComboStep` | **Pro.** Each step of a streak feels bigger than the last, and the pitch climbs with it. | `Combo` |
 | `FR_Reward_KillConfirm` | Confirmation that something went down: a crisp double tick and a short freeze. | |
-| `FR_Reward_LevelUp` | A milestone reached: a warm flash, a lift of the camera and a triumphant sound. | |
+| `FR_Reward_LevelUp` | **Pro.** A milestone reached: a warm flash, a lift of the camera and a triumphant sound. | |
 | `FR_Reward_Pickup` | Collecting something: a bright, short pop with a rising sound. | |
 | >> Danger | | |
-| `FR_Danger_Alarm` | An alarm going off: a repeating red wash and a warning tone. Sustained. | |
+| `FR_Danger_Alarm` | **Pro.** An alarm going off: a repeating red wash and a warning tone. Sustained. | |
 | `FR_Danger_DamageTaken` | Being hurt: a red wash at the edges, a jolt and a low rumble. | |
-| `FR_Danger_DirectionalDamage` | Being hurt from a direction: the camera is pushed away from where it came from. | |
-| `FR_Danger_LowHealth` | Running low: a slow pulse at the edges and a heartbeat that rises as health falls. Sustained. | `Health` |
+| `FR_Danger_DirectionalDamage` | **Pro.** Being hurt from a direction: the camera is pushed away from where it came from. | |
+| `FR_Danger_LowHealth` | **Pro.** Running low: a slow pulse at the edges and a heartbeat that rises as health falls. Sustained. | `Health` |
 | >> Dread | | |
-| `FR_Dread_FailingLight` | A light about to die: irregular flicker with a dip in color. Sustained. | |
-| `FR_Dread_Heartbeat` | A heartbeat that follows fear: faster and heavier the closer the threat. Sustained. | `Fear` |
+| `FR_Dread_FailingLight` | **Pro.** A light about to die: irregular flicker with a dip in color. Sustained. | |
+| `FR_Dread_Heartbeat` | **Pro.** A heartbeat that follows fear: faster and heavier the closer the threat. Sustained. | `Fear` |
 | `FR_Dread_JumpScare` | A sudden scare: one hard flash and a stab of sound, with a safe substitute when flashes are turned down. | |
-| `FR_Dread_Unease` | Creeping unease: color drains, the edges close in and the world sounds muffled. Sustained. | |
+| `FR_Dread_Unease` | **Pro.** Creeping unease: color drains, the edges close in and the world sounds muffled. Sustained. | |
 | >> Denial | | |
 | `FR_Denial_Blocked` | An action that will not happen: a short stop and a dull thud. | |
 | `FR_Denial_Locked` | Something that will not open: a heavy rattle that goes nowhere. | |
-| `FR_Denial_OutOfAmmo` | Nothing left to fire: a dry click and a small shake of refusal. | |
-| `FR_Denial_WrongInput` | The wrong button: a red shake on the element that refused it. | |
+| `FR_Denial_OutOfAmmo` | **Pro.** Nothing left to fire: a dry click and a small shake of refusal. | |
+| `FR_Denial_WrongInput` | **Pro.** The wrong button: a red shake on the element that refused it. | |
 | >> Interface | | |
-| `FR_Interface_ButtonHover` | The cursor arrives on a button: a small lift and a soft tick. | |
-| `FR_Interface_ButtonPress` | A button taking the press: a squash inward, then a bounce back. | |
-| `FR_Interface_Notification` | Something arrives on screen: it slides in, settles and chimes. | |
-| `FR_Interface_ScoreTick` | A score counting up: numbers pop and the pitch climbs with the total. | `Combo` |
-| `FR_Interface_ScreenTransition` | Moving between screens: a quick fade out and back in. | |
+| `FR_Interface_ButtonHover` | **Pro.** The cursor arrives on a button: a small lift and a soft tick. | |
+| `FR_Interface_ButtonPress` | **Pro.** A button taking the press: a squash inward, then a bounce back. | |
+| `FR_Interface_Notification` | **Pro.** Something arrives on screen: it slides in, settles and chimes. | |
+| `FR_Interface_ScoreTick` | **Pro.** A score counting up: numbers pop and the pitch climbs with the total. | `Combo` |
+| `FR_Interface_ScreenTransition` | **Pro.** Moving between screens: a quick fade out and back in. | |
 
 **Shared parameter names.** Library recipes use the same names for the same kind of value, so one game value can drive several recipes: `Damage`, `FallSpeed`, `Health`, `Fear`, `Charge` and `Distance`. `Distance` is filled in automatically with the distance from the play to the nearest local camera ([Ref: ch07_distance]).
 

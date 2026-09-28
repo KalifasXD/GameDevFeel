@@ -79,10 +79,10 @@ A track's intensity is the product of the following factors:
 | Call intensity | The **Intensity** pin of Play Feel and the other play nodes. A Feel Map row multiplies it by its **Intensity Scale**. | 1 |
 | Default intensity | The recipe's **Default Intensity**. | 1 |
 | Intensity curve | The track's **Intensity Curve**, read over the track from 0 at its start to 1 at its end. | A new track fades from 1 to 0; tracks of steps that shape their own motion start flat at 1. An empty curve counts as 1. |
-| Parameter mappings | One multiplier for each of the track's parameter mappings ([see: ch02_parameters]). | none |
-| Random intensity | A value between the track's **Random Intensity** Min and Max, picked once per play. | 1 |
+| Parameter mappings | **Pro.** One multiplier for each of the track's parameter mappings ([see: ch02_parameters]). | none |
+| Random intensity | **Pro.** A value between the track's **Random Intensity** Min and Max, picked once per play. | 1 |
 | Comfort | The player's scale for the track's comfort group, times their Master scale ([see: ch02_comfort]). | 1 |
-| Global scale | The console variable `feel.GlobalScale` ([see: con_feel_globalscale]). | 1 |
+| Global scale | **Pro.** The console variable `feel.GlobalScale` ([see: con_feel_globalscale]). | 1 |
 
 Two more factors apply only at times: during a blend out after **Stop Feel** the intensity fades to 0 over **Blend Out Time**, and a flash above the rate the flash limiter allows is softened or suppressed.
 

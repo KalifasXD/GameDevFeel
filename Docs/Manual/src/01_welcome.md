@@ -17,11 +17,11 @@ In a game that uses FeelKit, gameplay code states what happened, and FeelKit dec
 
 | Part | Contents |
 |---|---|
-| Plugin modules | **FeelCore** (runtime), **FeelEditor** (the recipe editor and editor tools), **FeelNiagara** (the particle step) and **FeelEnhancedInput** (the Feel Input component). Full C++ source is included. |
-| Steps | 37 effects for the camera, the screen, actors, game time, audio, controller vibration, UI and spawned effects ([Ref: ch16]). |
-| Recipe library | 38 ready-made recipes, grouped by feeling: Impact, Weight, Power, Speed, Reward, Danger, Dread, Denial and Interface ([Ref: ch09]). |
-| Demo recipes | The recipes of the Shooter (20), Horror (8) and Platformer (5) demo levels ([Ref: ch13]). |
-| Samples | 43 sounds, one sound attenuation asset and three materials, used by the library and the demos. |
+| Plugin modules | **FeelCore** (runtime), **FeelEditor** (the recipe editor and editor tools), **FeelNiagara** (the particle step, Pro only) and **FeelEnhancedInput** (the Feel Input component, Pro only). Full C++ source is included. |
+| Steps | 37 effects (twelve in Lite) for the camera, the screen, actors, game time, audio, controller vibration, UI and spawned effects ([Ref: ch16]). |
+| Recipe library | 38 ready-made recipes (eleven in Lite), grouped by feeling: Impact, Weight, Power, Speed, Reward, Danger, Dread, Denial and Interface ([Ref: ch09]). |
+| Demo recipes | **Pro.** The recipes of the Shooter (20), Horror (8) and Platformer (5) demo levels ([Ref: ch13]). |
+| Samples | 43 sounds (seven in Lite), one sound attenuation asset and three materials, used by the library and the demos. |
 | Comfort menu | A player menu for the comfort settings, ready to use and to restyle ([Ref: ch08]). |
 | GAS add-on | **Pro.** A separate plugin in the `Extras` folder that plays recipes from Gameplay Cues ([Ref: ch03_gas]). |
 

@@ -61,6 +61,6 @@ So in networked games, **Global Hitstop** and **Slow-mo Ramp** slow only the pla
 
 A dedicated server has no players to show feedback to, so FeelKit plays nothing there: **Play Feel** returns no play, and the Feel Replication component forwards requests without playing them. Code shared between server and clients can call FeelKit without checking where it runs.
 
-**Testing.** Play In Editor with **Net Mode** set to **Play As Listen Server** or **Play As Client** and two or more players runs a networked game on one computer. The FeelKit Debugger shows each world as its own row, labeled **Listen server**, **Client** or **Dedicated server**, with the plays of each ([Ref: ch10_debugger]).
+**Testing.** Play In Editor with **Net Mode** set to **Play As Listen Server** or **Play As Client** and two or more players runs a networked game on one computer. In Pro, the FeelKit Debugger shows each world as its own row, labeled **Listen server**, **Client** or **Dedicated server**, with the plays of each ([Ref: ch10_debugger]).
 
 Split-screen, with several local players on one machine, has not been tested.

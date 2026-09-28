@@ -7,18 +7,18 @@ The questions below are the ones that come up most often, grouped by what the pr
 **A recipe plays in the recipe editor but not in the game.** Work through these in order:
 
 1. FeelKit is switched on. The console variable `feel.Enabled` at 0 stops every play and refuses new ones ([Ref: ch19]); a Feel Switch showing **FEEL: OFF** does the same while the game runs ([Ref: ch06_switch]).
-2. The call is reached. Put a **Print String** next to **Play Feel**, or look for the recipe under **Playing** in the Debugger.
+2. The call is reached. Put a **Print String** next to **Play Feel**. In Pro, the recipe also shows under **Playing** in the Debugger.
 3. The target is valid. A destroyed or empty target makes **Play Feel** refuse the play, and the log says so.
 4. The recipe is not held back by its own limits: **Cooldown** refuses a second play on the same target within that many seconds, and **Max Concurrent** refuses a play once that many copies play on the target (0 means no limit).
-5. The player's comfort does not remove the tracks. A group at 0 skips its tracks; the Debugger's **Player N comfort** rows show the scales.
+5. The player's comfort does not remove the tracks. A group at 0 skips its tracks. **Get Comfort Scales** on the player's **Get Feel Comfort** returns the scales; in Pro, the Debugger's **Player N comfort** rows show them too.
 
-**Some tracks play in the editor but not in the game.** The recipe editor's preview passes the **Local Player Only** and **Max Distance** conditions, since it has no real distance or player. In the game they apply. Open the play from **Recent plays** in the Debugger: the replay labels each skipped track with the reason ([Ref: ch10_labels]).
+**Some tracks play in the editor but not in the game** (Pro). The recipe editor's preview passes the **Local Player Only** and **Max Distance** conditions, since it has no real distance or player. In the game they apply. Open the play from **Recent plays** in the Debugger: the replay labels each skipped track with the reason ([Ref: ch10_labels]).
 
 **Some tracks play in the game but not in the editor.** Tracks marked **No preview**, such as hitstops, slow motion, controller vibration and Blueprint events, act only in a running game ([Ref: ch05_tracks]).
 
-**Send Feel Event plays nothing.** No Feel Map row matches the event and its context tags, or the matching row has no recipe. The log names the event and the number of maps searched, once per event ([Ref: ch06_events]).
+**Send Feel Event plays nothing** (Pro). No Feel Map row matches the event and its context tags, or the matching row has no recipe. The log names the event and the number of maps searched, once per event ([Ref: ch06_events]).
 
-**A parameter or accumulator stays at its default.** The accumulator's name is not defined under **Project Settings** > **Plugins** > **FeelKit** > **Accumulators**, or the parameter's name in the recipe differs from the name the game passes. Names are compared exactly ([Ref: ch07_accumulators]).
+**A parameter or accumulator stays at its default** (Pro). The accumulator's name is not defined under **Project Settings** > **Plugins** > **FeelKit** > **Accumulators**, or the parameter's name in the recipe differs from the name the game passes. Names are compared exactly ([Ref: ch07_accumulators]).
 
 ## Controllers and vibration {#ch14_vibration}
 
@@ -26,8 +26,8 @@ The questions below are the ones that come up most often, grouped by what the pr
 
 **An Xbox controller does not vibrate either.** Check, in this order:
 
-- The player's **Haptics** or **Master** comfort is 0. The log says so once, with the scales, and the Debugger's **Controller vibration** row shows a warning ([Ref: ch08_engine]).
-- The game has set the player controller's own **Force Feedback Scale** to 0. The same Debugger row shows it as the controller scale.
+- The player's **Haptics** or **Master** comfort is 0. The log says so once, with the scales, and **Get Effective Force Feedback Scale** on the player's **Get Feel Comfort** returns the combined scale. In Pro, the Debugger's **Controller vibration** row also shows a warning ([Ref: ch08_engine]).
+- The game has set the player controller's own **Force Feedback Scale** to 0. In Pro, the same Debugger row shows it as the controller scale.
 - The console command `showdebug forcefeedback` lists every running force feedback effect with its values, before the controller's scale is applied. FeelKit's effects appear there while they play.
 
 ## Camera and screen effects {#ch14_camera}
