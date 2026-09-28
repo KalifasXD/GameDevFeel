@@ -20,7 +20,7 @@ What is left before launch: `FeelKit_2_Launch.md`. Documents named in older entr
 is "under construction") and the third-party declaration (the box is ticked for the CC0 sounds, so Fab wants its Third
 Party Software form). Everything else passed, including code plugin rules and media. Fix: publish the manual PDF and
 link it; fill in the form, one entry per sound pack (Lite 3, Pro 6), answers and reviewer notes in
-`Publish/<Edition>/02-Fab-Listing.md` section 3 (D-109). The Feel for Unity appendix is dropped from the manual
+`Publish/<Edition>/02-Fab-Listing.md` section 3 (D-109). Both forms submitted by the user on 2026-09-28. The Feel for Unity appendix is dropped from the manual
 (D-108). The project is on GitHub (`KalifasXD/GameDevFeel`, pushed by the user) from 2026-09-28.
 
 **As of 2026-09-26:** the Fab publishing package is ready in `Publish/` (Lite and Pro, six checked packages and
