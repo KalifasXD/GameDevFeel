@@ -37,12 +37,15 @@ struct FEELCORE_API FFeelPlayCapture
 	/** Per-track strength decided at run time, such as flashes softened or suppressed by the flash limiter. */
 	TArray<float> TrackScales;
 
+	/** The same for the release recipe's tracks. */
+	TArray<float> ReleaseTrackScales;
+
 	/** Seconds the play lasted and how it ended. */
 	float PlayedSeconds = 0.0f;
 	bool bReleased = false;
 	bool bInterrupted = false;
 
-	/** Whether the recipe's Release Parameter released the play, which decides the Release condition of tracks in a replay. */
+	/** Whether the recipe's Release Parameter released the play, which picks the release recipe in a replay. */
 	bool bReleaseReached = false;
 };
 

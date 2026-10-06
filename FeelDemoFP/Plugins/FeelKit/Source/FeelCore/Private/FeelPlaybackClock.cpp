@@ -31,7 +31,9 @@ bool FFeelPlaybackClock::ApplyPendingJump(const UFeelRecipe& Recipe)
 
 bool FFeelPlaybackClock::GetReleaseJumpTime(const UFeelRecipe& Recipe, float Time, float& OutTime)
 {
-	if (!Recipe.bJumpToEndOnRelease || !HasSustain(Recipe) || Time >= Recipe.SustainEnd)
+	// A release recipe answers the release, so it always starts at once.
+	const bool bJump = Recipe.bJumpToEndOnRelease || Recipe.FullReleaseRecipe || Recipe.EarlyReleaseRecipe;
+	if (!bJump || !HasSustain(Recipe) || Time >= Recipe.SustainEnd)
 	{
 		return false;
 	}

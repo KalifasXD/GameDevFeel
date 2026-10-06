@@ -65,6 +65,12 @@ public:
 	/** Evaluation settings the preview uses: solo, preview seed, preview parameter values and the preview comfort preset. */
 	FFeelEvalParams GetPreviewParams() const;
 
+	/**
+	 * GetPreviewParams, and when the preview is paused or scrubbed past Sustain End before any release, the release the
+	 * play would get: from the recorded play when replaying, otherwise from the parameter sliders. The preview output uses it.
+	 */
+	FFeelEvalParams GetOutputParams() const;
+
 	/** Value the preview uses for a recipe parameter: the slider value, or the parameter's default. */
 	float GetPreviewParameterValue(FName ParameterName) const;
 
@@ -104,6 +110,13 @@ public:
 	 * random choice picked. Empty when the track plays normally. bOutSilenced says whether the track produces no output.
 	 */
 	FText GetTrackDecision(int32 TrackIndex, bool* bOutSilenced = nullptr) const;
+
+	/**
+	 * What the current preview play does with On Full Release (bFullRelease) or On Early Release: when it would play, or
+	 * whether it plays or is skipped once the play is released. Empty when the setting is empty. bOutSilenced says whether
+	 * the release recipe produces no output in this play.
+	 */
+	FText GetReleaseDecision(bool bFullRelease, bool* bOutSilenced = nullptr) const;
 
 	/** While bypassed the preview shows no FeelKit output, for Off/On comparisons. */
 	void SetOutputBypassed(bool bBypassed);
@@ -151,7 +164,7 @@ public:
 
 	/**
 	 * Ends the sustain loop, like Release Feel at runtime: the preview plays the rest of the recipe, jumping straight to
-	 * Sustain End when the recipe has Jump to End on Release.
+	 * Sustain End when the recipe has Jump to End on Release or a release recipe.
 	 */
 	void ReleaseSustain();
 	bool IsPlaying() const { return bPlaying; }
@@ -197,7 +210,7 @@ private:
 	bool bStopped = true;
 	bool bSustainReleased = false;
 
-	/** Whether the recipe's Release Parameter released the preview (rather than the Release button). */
+	/** Whether the recipe's Release Parameter released the preview (rather than the Release button): On Full Release plays. */
 	bool bReleaseReached = false;
 	FFeelFrameOutput Output;
 
@@ -218,6 +231,7 @@ private:
 
 	TOptional<FFeelPlayCapture> ActiveCapture;
 	TArray<float> PreviewTrackScales;
+	TArray<float> PreviewReleaseTrackScales;
 	FFeelFlashLimiter PreviewFlashLimiter;
 	double PreviewClock = 0.0;
 	float LastTickSeconds = 0.0f;

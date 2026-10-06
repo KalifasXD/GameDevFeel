@@ -188,7 +188,8 @@ void FFeelRecipeEditorState::ReleaseSustain()
 {
 	bSustainReleased = true;
 
-	// Jump to End on Release: the same jump as the runtime clock, and the lifecycle skips the rest of the loop.
+	// Jump to End on Release or a release recipe: the same jump as the runtime clock, and the lifecycle skips the rest of
+	// the loop.
 	const UFeelRecipe* CurrentRecipe = GetRecipe();
 	float JumpTime = Time;
 	if (CurrentRecipe && FFeelPlaybackClock::GetReleaseJumpTime(*CurrentRecipe, Time, JumpTime))
@@ -435,7 +436,7 @@ void FFeelRecipeEditorState::EvaluateOutput()
 	}
 
 	FFeelOutputAccumulator Accumulator;
-	const FFeelEvalParams Params = GetPreviewParams();
+	const FFeelEvalParams Params = GetOutputParams();
 	FFeelEvaluator::Evaluate(*CurrentRecipe, Time, Params, Accumulator);
 	Output = Accumulator.Output;
 
@@ -483,6 +484,22 @@ void FFeelRecipeEditorState::ApplyPreviewFlashLimiter()
 			PreviewTrackScales[StartedTrack] = PreviewFlashLimiter.RegisterFlash(PreviewClock, *Params.Comfort.Scales);
 		}
 	}
+
+	// The release recipe's flashes too, as at runtime.
+	if (const UFeelRecipe* ReleaseRecipe = Lifecycle.GetStartedReleaseRecipe())
+	{
+		if (PreviewReleaseTrackScales.Num() != ReleaseRecipe->Tracks.Num())
+		{
+			PreviewReleaseTrackScales.Init(1.0f, ReleaseRecipe->Tracks.Num());
+		}
+		for (int32 StartedTrack : Lifecycle.GetReleaseStartedThisUpdate())
+		{
+			if (Params.Comfort.GetGroup(ReleaseRecipe->Tracks[StartedTrack].Channel) == EFeelComfortGroup::Flashes)
+			{
+				PreviewReleaseTrackScales[StartedTrack] = PreviewFlashLimiter.RegisterFlash(PreviewClock, *Params.Comfort.Scales);
+			}
+		}
+	}
 }
 
 void FFeelRecipeEditorState::UpdateTrackLifecycle()
@@ -514,6 +531,7 @@ void FFeelRecipeEditorState::RestartTrackLifecycle(float FromTime)
 	const UFeelRecipe* CurrentRecipe = GetRecipe();
 	Lifecycle.Reset(CurrentRecipe ? CurrentRecipe->Tracks.Num() : 0, FromTime);
 	PreviewTrackScales.Init(1.0f, CurrentRecipe ? CurrentRecipe->Tracks.Num() : 0);
+	PreviewReleaseTrackScales.Reset();
 }
 
 FFeelContext FFeelRecipeEditorState::MakePreviewContext(int32 TrackIndex, float TrackIntensity) const
@@ -772,9 +790,10 @@ FFeelEvalParams FFeelRecipeEditorState::GetPreviewParams() const
 	Params.bHasInstigator = true;
 	Params.TrackScales = PreviewTrackScales;
 
-	// Release outcome for the Release condition of tracks, as at runtime.
+	// Release outcome, which picks the release recipe, as at runtime.
 	Params.bReleased = bSustainReleased;
 	Params.bReleaseReached = bSustainReleased && bReleaseReached;
+	Params.ReleaseTrackScales = PreviewReleaseTrackScales;
 
 	const UFeelSettings* Settings = GetDefault<UFeelSettings>();
 	if (ActiveCapture.IsSet())
@@ -790,6 +809,7 @@ FFeelEvalParams FFeelRecipeEditorState::GetPreviewParams() const
 		Params.ViewDirection = Capture.ViewDirection;
 		Params.ViewDirectionFromLocation = Capture.ViewDirectionFromLocation;
 		Params.TrackScales = Capture.TrackScales;
+		Params.ReleaseTrackScales = Capture.ReleaseTrackScales;
 		// Released with the Release button, a replay ends the way the recorded play did.
 		Params.bReleaseReached = bSustainReleased && Capture.bReleaseReached;
 		if (Capture.bHasComfort)
@@ -806,6 +826,18 @@ FFeelEvalParams FFeelRecipeEditorState::GetPreviewParams() const
 		PreviewComfortScales = Settings->GetPresetScales(PreviewComfortPreset.GetValue());
 		Params.Comfort.Scales = &PreviewComfortScales;
 		Params.Comfort.Mappings = Settings->ChannelComfortGroups;
+	}
+	return Params;
+}
+
+FFeelEvalParams FFeelRecipeEditorState::GetOutputParams() const
+{
+	FFeelEvalParams Params = GetPreviewParams();
+	const UFeelRecipe* CurrentRecipe = GetRecipe();
+	if (CurrentRecipe && !bPlaying && !bSustainReleased && FFeelPlaybackClock::HasSustain(*CurrentRecipe) && Time >= CurrentRecipe->SustainEnd)
+	{
+		Params.bReleased = true;
+		Params.bReleaseReached = ActiveCapture.IsSet() ? ActiveCapture->bReleaseReached : FFeelEvaluator::IsReleaseParameterReached(*CurrentRecipe, Params);
 	}
 	return Params;
 }
@@ -903,6 +935,62 @@ void FFeelRecipeEditorState::ClearCapture()
 	}
 }
 
+FText FFeelRecipeEditorState::GetReleaseDecision(bool bFullRelease, bool* bOutSilenced) const
+{
+	bool bSilencedStorage = false;
+	bool& bSilenced = bOutSilenced ? *bOutSilenced : bSilencedStorage;
+	bSilenced = true;
+	const UFeelRecipe* CurrentRecipe = GetRecipe();
+	const UFeelRecipe* ReleaseRecipe = CurrentRecipe ? (bFullRelease ? CurrentRecipe->FullReleaseRecipe.Get() : CurrentRecipe->EarlyReleaseRecipe.Get()) : nullptr;
+	if (!ReleaseRecipe)
+	{
+		return FText::GetEmpty();
+	}
+	if (ReleaseRecipe == CurrentRecipe)
+	{
+		return LOCTEXT("ReleaseDecisionSelf", "Skipped: this is the recipe itself");
+	}
+	if (!FFeelPlaybackClock::HasSustain(*CurrentRecipe))
+	{
+		return LOCTEXT("ReleaseDecisionNoSustain", "Never plays: no sustain region");
+	}
+
+	const bool bHasParameter = CurrentRecipe->FindParameter(CurrentRecipe->ReleaseParameter) != nullptr;
+	if (bFullRelease && !bHasParameter)
+	{
+		return LOCTEXT("ReleaseDecisionNoParameter", "Never plays: no Release Parameter");
+	}
+
+	const FText Parameter = FText::FromName(CurrentRecipe->ReleaseParameter);
+	const FFeelEvalParams Params = GetOutputParams();
+	if (!Params.bReleased)
+	{
+		bSilenced = false;
+		if (bFullRelease)
+		{
+			return FText::Format(LOCTEXT("ReleaseDecisionWaitsFull", "Plays if {0} reaches Release At"), Parameter);
+		}
+		return bHasParameter
+			? FText::Format(LOCTEXT("ReleaseDecisionWaitsEarly", "Plays if released before {0} reaches Release At"), Parameter)
+			: LOCTEXT("ReleaseDecisionWaitsAny", "Plays on release");
+	}
+
+	if (Params.bReleaseReached == bFullRelease)
+	{
+		bSilenced = false;
+		if (bFullRelease)
+		{
+			return FText::Format(LOCTEXT("ReleaseDecisionPlaysFull", "Plays: {0} reached Release At"), Parameter);
+		}
+		return bHasParameter
+			? FText::Format(LOCTEXT("ReleaseDecisionPlaysEarly", "Plays: released before {0} reached Release At"), Parameter)
+			: LOCTEXT("ReleaseDecisionPlaysAny", "Plays: released");
+	}
+	return bFullRelease
+		? FText::Format(LOCTEXT("ReleaseDecisionSkippedFull", "Skipped: released before {0} reached Release At"), Parameter)
+		: FText::Format(LOCTEXT("ReleaseDecisionSkippedEarly", "Skipped: {0} reached Release At"), Parameter);
+}
+
 FText FFeelRecipeEditorState::GetTrackDecision(int32 TrackIndex, bool* bOutSilenced) const
 {
 	bool bSilencedStorage = false;
@@ -943,22 +1031,6 @@ FText FFeelRecipeEditorState::GetTrackDecision(int32 TrackIndex, bool* bOutSilen
 		if (Conditions.MaxDistance > 0.0f && Params.TargetDistance > Conditions.MaxDistance)
 		{
 			return FText::Format(LOCTEXT("DecisionDistance", "Skipped: target {0} cm away"), FText::AsNumber(FMath::RoundToInt32(Params.TargetDistance)));
-		}
-		if (!FFeelEvaluator::PassesReleaseCondition(Conditions.Release, Params))
-		{
-			const bool bWantsReached = Conditions.Release == EFeelReleaseCondition::WhenReleaseParameterReached;
-			const FText Parameter = CurrentRecipe->ReleaseParameter.IsNone()
-				? LOCTEXT("DecisionNoReleaseParameter", "the Release Parameter")
-				: FText::FromName(CurrentRecipe->ReleaseParameter);
-			if (!Params.bReleased)
-			{
-				return bWantsReached
-					? FText::Format(LOCTEXT("DecisionWaitsReached", "Plays if {0} reaches Release At"), Parameter)
-					: FText::Format(LOCTEXT("DecisionWaitsEarly", "Plays if released before {0} reaches Release At"), Parameter);
-			}
-			return bWantsReached
-				? FText::Format(LOCTEXT("DecisionReleasedEarly", "Skipped: released before {0} reached Release At"), Parameter)
-				: FText::Format(LOCTEXT("DecisionReleaseReached", "Skipped: {0} reached Release At"), Parameter);
 		}
 		return FText::Format(LOCTEXT("DecisionChance", "Skipped this play (chance {0}%)"), FText::AsNumber(FMath::RoundToInt32(Conditions.Chance * 100.0f)));
 	}

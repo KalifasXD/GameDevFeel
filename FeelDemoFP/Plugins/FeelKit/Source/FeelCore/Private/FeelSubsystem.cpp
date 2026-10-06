@@ -882,8 +882,8 @@ void UFeelSubsystem::AdvanceInstance(FFeelInstance& Instance, float RealDeltaSec
 	};
 
 	// Side effects (OnStart / OnStop) through the lifecycle shared with the editor preview. A release with Jump to End on
-	// Release first moves time to Sustain End, skipping the rest of the loop. A sustain loop first finishes the region,
-	// then rewinds so tracks inside it start again.
+	// Release or a release recipe first moves time to Sustain End, skipping the rest of the loop. A sustain loop first
+	// finishes the region, then rewinds so tracks inside it start again.
 	if (Instance.Clock.ApplyPendingJump(Recipe))
 	{
 		Instance.Lifecycle.JumpForward(Recipe, Instance.Clock.RecipeTime);
@@ -895,17 +895,30 @@ void UFeelSubsystem::AdvanceInstance(FFeelInstance& Instance, float RealDeltaSec
 	const float Time = Instance.Clock.RecipeTime;
 	Instance.Lifecycle.Update(Recipe, Time, Params, MakeTrackContext);
 
-	// Flashes that just started pass through their player's flash limiter.
-	for (int32 StartedTrack : Instance.Lifecycle.GetStartedThisUpdate())
+	// Flashes that just started, the release recipe's included, pass through their player's flash limiter.
+	auto LimitStartedFlashes = [this, &Instance, &Params](const UFeelRecipe& StartedRecipe, TConstArrayView<int32> StartedTracks, TArray<float>& InOutScales)
 	{
-		const FFeelTrack& Track = Recipe.Tracks[StartedTrack];
-		if (!Params.Comfort.Scales || Params.Comfort.GetGroup(Track.Channel) != EFeelComfortGroup::Flashes)
+		if (InOutScales.Num() != StartedRecipe.Tracks.Num())
 		{
-			continue;
+			InOutScales.Init(1.0f, StartedRecipe.Tracks.Num());
 		}
-		const APlayerController* PlayerController = Instance.MakeTarget().ResolvePlayerController(GetWorld());
-		FFeelFlashLimiter& Limiter = FlashLimiters.FindOrAdd(FObjectKey(PlayerController));
-		Instance.TrackScales[StartedTrack] = Limiter.RegisterFlash(AccumulatorTime, *Params.Comfort.Scales);
+		for (int32 StartedTrack : StartedTracks)
+		{
+			const FFeelTrack& Track = StartedRecipe.Tracks[StartedTrack];
+			if (!Params.Comfort.Scales || Params.Comfort.GetGroup(Track.Channel) != EFeelComfortGroup::Flashes)
+			{
+				continue;
+			}
+			const APlayerController* PlayerController = Instance.MakeTarget().ResolvePlayerController(GetWorld());
+			FFeelFlashLimiter& Limiter = FlashLimiters.FindOrAdd(FObjectKey(PlayerController));
+			InOutScales[StartedTrack] = Limiter.RegisterFlash(AccumulatorTime, *Params.Comfort.Scales);
+		}
+	};
+	LimitStartedFlashes(Recipe, Instance.Lifecycle.GetStartedThisUpdate(), Instance.TrackScales);
+	if (const UFeelRecipe* ReleaseRecipe = Instance.Lifecycle.GetStartedReleaseRecipe())
+	{
+		LimitStartedFlashes(*ReleaseRecipe, Instance.Lifecycle.GetReleaseStartedThisUpdate(), Instance.ReleaseTrackScales);
+		Params.ReleaseTrackScales = Instance.ReleaseTrackScales;
 	}
 
 	// Recipe edits during PIE (such as a longer track) apply even to instances already playing.
@@ -975,6 +988,7 @@ void UFeelSubsystem::FinishInstance(FFeelInstance& Instance, bool bInterrupted, 
 		Capture.bHasComfort = Instance.bHasComfortSnapshot;
 		Capture.ComfortScales = Instance.ComfortSnapshot;
 		Capture.TrackScales = Instance.TrackScales;
+		Capture.ReleaseTrackScales = Instance.ReleaseTrackScales;
 		Capture.PlayedSeconds = static_cast<float>(Instance.Elapsed);
 		Capture.bReleased = Instance.Clock.bReleased;
 		Capture.bReleaseReached = Instance.bReleaseReached;
@@ -1323,8 +1337,9 @@ FFeelEvalParams UFeelSubsystem::MakeEvalParams(const FFeelInstance& Instance, fl
 	Params.ParameterValues = &Instance.ParameterValues;
 	Params.bHasInstigator = Instance.Instigator.IsValid();
 	Params.TrackScales = Instance.TrackScales;
+	Params.ReleaseTrackScales = Instance.ReleaseTrackScales;
 	Params.Comfort = MakeComfortContext(Instance);
-	// Release outcome for the Release condition of tracks. Only a sustained recipe can be released.
+	// Release outcome, which picks the release recipe. Only a sustained recipe can be released.
 	Params.bReleased = Instance.Recipe && FFeelPlaybackClock::HasSustain(*Instance.Recipe) && Instance.Clock.bReleased;
 	Params.bReleaseReached = Params.bReleased && Instance.bReleaseReached;
 	return Params;

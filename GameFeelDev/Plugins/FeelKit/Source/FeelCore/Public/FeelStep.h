@@ -108,7 +108,10 @@ struct FEELCORE_API FFeelContext
 	UPROPERTY(BlueprintReadOnly, Category = "Feel")
 	int32 InstanceId = 0;
 
-	/** Index of this track in the recipe. */
+	/**
+	 * Index of this track in the recipe. Tracks of recipes played by Play Recipe tracks get numbers from 10000 up, and
+	 * tracks of a release recipe negative numbers, so every track of a play has a number of its own.
+	 */
 	UPROPERTY(BlueprintReadOnly, Category = "Feel")
 	int32 TrackIndex = INDEX_NONE;
 };

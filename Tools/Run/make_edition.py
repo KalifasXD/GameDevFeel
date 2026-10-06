@@ -74,7 +74,8 @@ LITE_HIDDEN_STRUCTS = []
 # Pro-only fields: kept in the data, not shown in the Lite editor or to Lite Blueprints.
 LITE_HIDDEN_FIELDS = {
     "Source/FeelCore/Public/FeelRecipe.h": ["Parameters", "bSustain", "SustainStart", "SustainEnd", "bJumpToEndOnRelease",
-                                            "ReleaseParameter", "ReleaseAt", "Feeling", "Genres", "Description", "BasedOn"],
+                                            "ReleaseParameter", "ReleaseAt", "FullReleaseRecipe", "EarlyReleaseRecipe",
+                                            "Feeling", "Genres", "Description", "BasedOn"],
     "Source/FeelCore/Public/FeelTrack.h": ["AppliesTo", "ParameterMappings", "RandomIntensity", "RandomDurationScale",
                                            "Conditions"],
     "Source/FeelCore/Public/FeelSettings.h": ["bAllowGlobalTimeDilationInMultiplayer", "Accumulators"],

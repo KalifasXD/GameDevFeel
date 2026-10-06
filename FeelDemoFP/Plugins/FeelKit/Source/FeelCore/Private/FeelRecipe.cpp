@@ -4,6 +4,7 @@
 
 #include "UObject/AssetRegistryTagsContext.h"
 
+#include "FeelPlaybackClock.h"
 #include "FeelSettings.h"
 
 #include "FeelStep.h"
@@ -30,12 +31,34 @@ const FName UFeelRecipe::SustainedTagName(TEXT("FeelSustained"));
 
 float UFeelRecipe::GetDuration() const
 {
+	float Duration = GetTracksLength();
+	if (HasReleaseRecipes())
+	{
+		// A release recipe plays straight through, without release recipes of its own.
+		for (const UFeelRecipe* ReleaseRecipe : { FullReleaseRecipe.Get(), EarlyReleaseRecipe.Get() })
+		{
+			if (ReleaseRecipe && ReleaseRecipe != this)
+			{
+				Duration = FMath::Max(Duration, SustainEnd + ReleaseRecipe->GetTracksLength());
+			}
+		}
+	}
+	return Duration;
+}
+
+float UFeelRecipe::GetTracksLength() const
+{
 	float Duration = 0.0f;
 	for (const FFeelTrack& Track : Tracks)
 	{
 		Duration = FMath::Max(Duration, Track.GetEndTime());
 	}
 	return Duration;
+}
+
+bool UFeelRecipe::HasReleaseRecipes() const
+{
+	return FFeelPlaybackClock::HasSustain(*this) && (FullReleaseRecipe || EarlyReleaseRecipe);
 }
 
 const FFeelRecipeParameter* UFeelRecipe::FindParameter(FName ParameterName) const
@@ -131,7 +154,7 @@ EDataValidationResult UFeelRecipe::IsDataValid(FDataValidationContext& Context) 
 			Context.AddError(LOCTEXT("SustainRegionEmpty", "Sustain is on, but Sustain End is not after Sustain Start, so nothing loops."));
 			bHasErrors = true;
 		}
-		else if (SustainEnd > GetDuration() + UE_KINDA_SMALL_NUMBER)
+		else if (SustainEnd > GetTracksLength() + UE_KINDA_SMALL_NUMBER)
 		{
 			Context.AddWarning(LOCTEXT("SustainRegionPastEnd", "Sustain End is after the last track ends, so part of the loop is silent."));
 		}
@@ -152,6 +175,29 @@ EDataValidationResult UFeelRecipe::IsDataValid(FDataValidationContext& Context) 
 		{
 			Context.AddWarning(FText::Format(LOCTEXT("ReleaseAtZero", "Release At is 0, so the play releases itself as soon as it starts, before {0} can change."), FText::FromName(ReleaseParameter)));
 		}
+	}
+
+	const auto CheckReleaseRecipe = [this, &Context, &bHasErrors](const UFeelRecipe* ReleaseRecipe, const FText& SettingName)
+	{
+		if (!ReleaseRecipe)
+		{
+			return;
+		}
+		if (ReleaseRecipe == this)
+		{
+			Context.AddError(FText::Format(LOCTEXT("ReleaseRecipeSelf", "{0} plays this recipe itself, which is skipped. Pick another recipe."), SettingName));
+			bHasErrors = true;
+		}
+		else if (!bSustain)
+		{
+			Context.AddWarning(FText::Format(LOCTEXT("ReleaseRecipeNoSustain", "{0} is set, but Sustain is off, so the play is never released and {1} never plays."), SettingName, FText::FromString(ReleaseRecipe->GetName())));
+		}
+	};
+	CheckReleaseRecipe(FullReleaseRecipe, LOCTEXT("FullReleaseName", "On Full Release"));
+	CheckReleaseRecipe(EarlyReleaseRecipe, LOCTEXT("EarlyReleaseName", "On Early Release"));
+	if (FullReleaseRecipe && FullReleaseRecipe.Get() != this && bSustain && !FindParameter(ReleaseParameter))
+	{
+		Context.AddWarning(FText::Format(LOCTEXT("FullReleaseNoParameter", "On Full Release is set, but the recipe has no declared Release Parameter, so the play is never fully released and {0} never plays."), FText::FromString(FullReleaseRecipe->GetName())));
 	}
 
 	TSet<FName> SeenParameterNames;
@@ -266,28 +312,12 @@ EDataValidationResult UFeelRecipe::IsDataValid(FDataValidationContext& Context) 
 			AddWarning(LOCTEXT("ChanceZero", "has a chance of 0, so it never plays."));
 		}
 
-		if (Track.Conditions.Release != EFeelReleaseCondition::Any)
-		{
-			if (!bSustain)
-			{
-				AddWarning(LOCTEXT("ReleaseConditionNoSustain", "depends on the release, but Sustain is off, so the play is never released and the track never plays."));
-			}
-			else if (Track.Conditions.Release == EFeelReleaseCondition::WhenReleaseParameterReached && !FindParameter(ReleaseParameter))
-			{
-				AddWarning(LOCTEXT("ReleaseConditionNoParameter", "plays only when the Release Parameter is reached, but the recipe has no declared Release Parameter, so it never plays."));
-			}
-			else if (Track.StartTime + UE_KINDA_SMALL_NUMBER < SustainEnd)
-			{
-				AddWarning(LOCTEXT("ReleaseConditionTooEarly", "depends on the release but starts before Sustain End, so it can start before the play is released and is then skipped. Start it at Sustain End or later."));
-			}
-		}
-
 		if (const UFeelStep_Recipe* RecipeStep = Cast<UFeelStep_Recipe>(Track.Step))
 		{
-			if (RecipeStep->Recipe && RecipeStep->Recipe != this && Track.Duration + UE_KINDA_SMALL_NUMBER < RecipeStep->Recipe->GetDuration())
+			if (RecipeStep->Recipe && RecipeStep->Recipe != this && Track.Duration + UE_KINDA_SMALL_NUMBER < RecipeStep->Recipe->GetTracksLength())
 			{
 				AddWarning(FText::Format(LOCTEXT("RecipeStepTooShort", "is shorter ({0} s) than the recipe it plays ({1} s), so the end of that recipe is cut off."),
-					FText::AsNumber(Track.Duration), FText::AsNumber(RecipeStep->Recipe->GetDuration())));
+					FText::AsNumber(Track.Duration), FText::AsNumber(RecipeStep->Recipe->GetTracksLength())));
 			}
 		}
 
@@ -384,6 +414,18 @@ void UFeelRecipe::GatherChannels(TSet<FGameplayTag>& OutChannels, int32 Depth) c
 				{
 					OutChannels.Add(Option.Step->GetDefaultChannel());
 				}
+			}
+		}
+	}
+
+	// Release recipes play after Sustain End, for the recipe the game played only.
+	if (Depth == 0 && HasReleaseRecipes())
+	{
+		for (const UFeelRecipe* ReleaseRecipe : { FullReleaseRecipe.Get(), EarlyReleaseRecipe.Get() })
+		{
+			if (ReleaseRecipe && ReleaseRecipe != this)
+			{
+				ReleaseRecipe->GatherChannels(OutChannels, Depth + 1);
 			}
 		}
 	}

@@ -29,8 +29,9 @@ struct FEELCORE_API FFeelPlaybackClock
 	void Release();
 
 	/**
-	 * After a release, moves time to Sustain End when the recipe has Jump to End on Release. Call once per frame before
-	 * Advance. Returns true when time jumped; the caller then moves its track lifecycle forward to the new time.
+	 * After a release, moves time to Sustain End when the recipe has Jump to End on Release or a release recipe. Call once
+	 * per frame before Advance. Returns true when time jumped; the caller then moves its track lifecycle forward to the new
+	 * time.
 	 */
 	bool ApplyPendingJump(const UFeelRecipe& Recipe);
 
@@ -41,8 +42,8 @@ struct FEELCORE_API FFeelPlaybackClock
 	static bool WrapIntoSustain(const UFeelRecipe& Recipe, float& InOutTime);
 
 	/**
-	 * Where a release at Time jumps to: Sustain End, when the recipe has a sustain region, Jump to End on Release is on and
-	 * Time is before Sustain End. Returns false when the play keeps its time.
+	 * Where a release at Time jumps to: Sustain End, when the recipe has a sustain region, Jump to End on Release is on or a
+	 * release recipe is set, and Time is before Sustain End. Returns false when the play keeps its time.
 	 */
 	static bool GetReleaseJumpTime(const UFeelRecipe& Recipe, float Time, float& OutTime);
 };

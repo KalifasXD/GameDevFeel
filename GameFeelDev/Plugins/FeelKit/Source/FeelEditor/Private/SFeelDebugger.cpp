@@ -8,6 +8,7 @@
 #include "Engine/World.h"
 #include "FeelComfortSubsystem.h"
 #include "FeelPlayCapture.h"
+#include "FeelEvaluator.h"
 #include "FeelPlaybackClock.h"
 #include "FeelRecipe.h"
 #include "FeelRecipeEditorState.h"
@@ -456,6 +457,16 @@ void SFeelDebugger::Refresh()
 					{
 						Details.Add(FString::Printf(TEXT("released by %s"), *Instance.Recipe->ReleaseParameter.ToString()));
 					}
+					if (Instance.Clock.bReleased)
+					{
+						FFeelEvalParams Outcome;
+						Outcome.bReleased = true;
+						Outcome.bReleaseReached = Instance.bReleaseReached;
+						if (const UFeelRecipe* ReleaseRecipe = FFeelEvaluator::GetReleaseRecipe(*Instance.Recipe, Outcome))
+						{
+							Details.Add(FString::Printf(TEXT("then %s"), *ReleaseRecipe->GetName()));
+						}
+					}
 					for (const TPair<FName, float>& Pair : Instance.ParameterValues)
 					{
 						Details.Add(FString::Printf(TEXT("%s %.2f"), *Pair.Key.ToString(), Pair.Value));
@@ -577,6 +588,14 @@ void SFeelDebugger::Refresh()
 		if (Capture.bReleased)
 		{
 			Details.Add(Capture.bReleaseReached ? TEXT("released by its Release Parameter") : TEXT("released"));
+			FFeelEvalParams Outcome;
+			Outcome.bReleased = true;
+			Outcome.bReleaseReached = Capture.bReleaseReached;
+			const UFeelRecipe* ReleaseRecipe = Capture.Recipe.IsValid() ? FFeelEvaluator::GetReleaseRecipe(*Capture.Recipe, Outcome) : nullptr;
+			if (ReleaseRecipe)
+			{
+				Details.Add(FString::Printf(TEXT("then %s"), *ReleaseRecipe->GetName()));
+			}
 		}
 		if (Capture.bInterrupted)
 		{
