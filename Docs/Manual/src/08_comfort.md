@@ -79,7 +79,7 @@ In the recipe editor, the **Comfort** menu of the preview plays a recipe with a 
 
 ## The flash limiter {#ch08_flash_limiter}
 
-The flash limiter counts how many flashes start within a second: every track on a channel mapped to the **Flashes** group. When more start than **Max Flashes Per Second** allows (3 by default), the extra flashes are softened to **Softened Flash Scale** (0.3) or, in **Suppress** mode, not played. The limiter is on by default and is part of each player's settings, so a player can make it stricter.
+The flash limiter counts how many flashes start within a second: every track on a channel mapped to the **Flashes** group, including the tracks of a sustained recipe's release recipe ([Ref: ch07_sustain]). When more start than **Max Flashes Per Second** allows (3 by default), the extra flashes are softened to **Softened Flash Scale** (0.3) or, in **Suppress** mode, not played. The limiter is on by default and is part of each player's settings, so a player can make it stricter.
 
 In the recipe editor, flash tracks that the limiter changes say **Flash softened by the flash limiter** or **Flash suppressed by the flash limiter**.
 

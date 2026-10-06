@@ -48,6 +48,17 @@ The Pro zips online were made before the support email changed, so their plugin 
 address. The listings and the manual use billoue4@gmail.com. The FabURL rebuild after Fab's review (2.4) replaces all
 six zips anyway, and carries the new address.
 
+**The plugin changed on 2026-10-06** (release recipes, D-114, and the import fix, I-049). The six zips in `03-Upload`
+are older than that. Before the next upload, rebuild them after the tests pass, with the editor closed (without the
+FabURL arguments while Fab has not sent the links; with them as in 2.4 once it has):
+```
+powershell -File B:\NewUE5Project\Tools\Run\package_all.ps1
+powershell -File B:\NewUE5Project\Tools\Run\check_packages.ps1
+powershell -File B:\NewUE5Project\Tools\Run\check_upgrade.ps1
+python B:\NewUE5Project\Tools\Run\make_uploads.py
+```
+Then replace the zips online (same links) and resubmit.
+
 ### 2.2 Documentation: the manual
 
 **Online (2026-09-28):** https://drive.google.com/file/d/1OlIEERggkVAoG0rnG2FBbLPwHgKcjn_R/view?usp=sharing

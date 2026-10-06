@@ -42,6 +42,7 @@
 | Real time | Time that hitstops and slow motion do not slow. Recipes are timed in real time. |
 | Recipe | Asset that describes how one moment feels, as timed tracks of steps. [See: ch02_recipes]. |
 | Release | Ending the sustain loop of a sustained play so that it plays the rest of the recipe: by the game, or by the recipe's own Release Parameter. |
+| Release recipe | Recipe that a sustained recipe plays from Sustain End once released: On Full Release when its Release Parameter released it, On Early Release when the game did. [See: ch07_sustain]. |
 | Seed | Track field that fixes the noise and random choices of the step, so the same seed gives the same result. |
 | Step | The effect a track plays, such as Camera Punch or Play Sound. [See: ch16]. |
 | Strongest Wins | The default camera arbitration mode: for location, rotation and field of view, the strongest play wins. [See: set_camera]. |
