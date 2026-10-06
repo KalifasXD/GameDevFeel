@@ -314,6 +314,12 @@ bool FFeelGuideShotsCommand::Update()
 				Test->AddError(TEXT("FR_Power_ChargeUp is missing."));
 				return true;
 			}
+			if (!Library->FullReleaseRecipe)
+			{
+				// The pictures show the On Full Release row; an asset imported before that setting existed shows the old layout.
+				Test->AddError(TEXT("FR_Power_ChargeUp has no On Full Release recipe, so the asset is older than its JSON. Re-import Library/Power/FR_Power_ChargeUp.json with Tools/Unreal/import_recipe_json.py, then take the pictures again."));
+				return true;
+			}
 			UPackage* Package = CreatePackage(TEXT("/Temp/FeelKitManual/ChargeUp"));
 			UFeelRecipe* Copy = DuplicateObject<UFeelRecipe>(Library, Package, TEXT("ChargeUp"));
 			Copy->SetFlags(RF_Public | RF_Standalone | RF_Transactional);

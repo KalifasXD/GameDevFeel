@@ -48,8 +48,9 @@ SHOTS = {
     "S05-04": dict(src="Guide_TrackSelected.png", crop=(1368, 205, 1885, 520)),
     "S05-05": dict(src="Guide_Sustain.png", crop=(8, 684, 1368, 762),
                    spotlight=[(10, 730, 470, 757)]),
-    "S05-06": dict(src="Guide_Sustain.png", crop=(8, 684, 1368, 1000),
-                   spotlight=[(217, 690, 312, 717), (660, 775, 1245, 800)]),
+    # Five tracks and the On Full Release row; the sustain region (0.35 to 0.95 s) on the ruler; the release row.
+    "S05-06": dict(src="Guide_Sustain.png", crop=(8, 684, 1368, 1012),
+                   spotlight=[(217, 690, 312, 717), (545, 775, 925, 800), (10, 979, 1295, 1006)]),
     "S05-07": dict(src="Editor_HeavyHitRest.png", crop=(8, 740, 1368, 1015),
                    spotlight=[(332, 946, 1297, 977)]),
     "S05-08": dict(src="Guide_ComfortMenu.png", crop=(340, 675, 1368, 900),
