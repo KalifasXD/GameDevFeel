@@ -860,6 +860,17 @@ void UFeelSubsystem::AdvanceInstance(FFeelInstance& Instance, float RealDeltaSec
 		Instance.TrackScales.Init(1.0f, Recipe.Tracks.Num());
 	}
 	FFeelEvalParams Params = MakeEvalParams(Instance, BlendWeight);
+
+	// Release Parameter: the play releases itself once the parameter reaches Release At. Checked after the accumulator
+	// refresh above, so values from Set Feel Parameter and from accumulators both count.
+	if (!Instance.Clock.bReleased && FFeelEvaluator::IsReleaseParameterReached(Recipe, Params))
+	{
+		Instance.Clock.Release();
+		Instance.bReleaseReached = true;
+		Params.bReleased = true;
+		Params.bReleaseReached = true;
+	}
+
 	Instance.bHasComfortSnapshot = Params.Comfort.Scales != nullptr;
 	if (Params.Comfort.Scales)
 	{
@@ -870,12 +881,16 @@ void UFeelSubsystem::AdvanceInstance(FFeelInstance& Instance, float RealDeltaSec
 		return MakeContext(Instance, TrackIndex, TrackIntensity);
 	};
 
-	// Side effects (OnStart / OnStop) through the lifecycle shared with the editor preview. A sustain loop first finishes
-	// the region, then rewinds so tracks inside it start again.
+	// Side effects (OnStart / OnStop) through the lifecycle shared with the editor preview. A release with Jump to End on
+	// Release first moves time to Sustain End, skipping the rest of the loop. A sustain loop first finishes the region,
+	// then rewinds so tracks inside it start again.
+	if (Instance.Clock.ApplyPendingJump(Recipe))
+	{
+		Instance.Lifecycle.JumpForward(Recipe, Instance.Clock.RecipeTime);
+	}
 	if (Instance.Clock.Advance(Recipe, RealDeltaSeconds))
 	{
-		Instance.Lifecycle.Update(Recipe, Recipe.SustainEnd, Params, MakeTrackContext);
-		Instance.Lifecycle.Rewind(Recipe, Recipe.SustainStart, MakeTrackContext);
+		Instance.Lifecycle.WrapSustain(Recipe, Params, MakeTrackContext);
 	}
 	const float Time = Instance.Clock.RecipeTime;
 	Instance.Lifecycle.Update(Recipe, Time, Params, MakeTrackContext);
@@ -962,6 +977,7 @@ void UFeelSubsystem::FinishInstance(FFeelInstance& Instance, bool bInterrupted, 
 		Capture.TrackScales = Instance.TrackScales;
 		Capture.PlayedSeconds = static_cast<float>(Instance.Elapsed);
 		Capture.bReleased = Instance.Clock.bReleased;
+		Capture.bReleaseReached = Instance.bReleaseReached;
 		Capture.bInterrupted = bInterrupted;
 		FFeelPlayCaptureStore::Get().Add(MoveTemp(Capture));
 	}
@@ -1308,6 +1324,9 @@ FFeelEvalParams UFeelSubsystem::MakeEvalParams(const FFeelInstance& Instance, fl
 	Params.bHasInstigator = Instance.Instigator.IsValid();
 	Params.TrackScales = Instance.TrackScales;
 	Params.Comfort = MakeComfortContext(Instance);
+	// Release outcome for the Release condition of tracks. Only a sustained recipe can be released.
+	Params.bReleased = Instance.Recipe && FFeelPlaybackClock::HasSustain(*Instance.Recipe) && Instance.Clock.bReleased;
+	Params.bReleaseReached = Params.bReleased && Instance.bReleaseReached;
 	return Params;
 }
 

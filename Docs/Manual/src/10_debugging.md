@@ -15,12 +15,12 @@ Each running world is one row, named after its level, with its role in the **Det
 
 | Folder | Row | Columns |
 |---|---|---|
-| **Playing** | One row per play. | **Target**: the actor it plays on. **Time**: how far the play is, out of its length, such as `0.21 / 0.50 s`. **Value**: the play's intensity. **Details**: **Playing**, **Sustaining** while a sustained recipe waits in its loop, or **Stopping** during a blend out, followed by the play's parameters, such as `Damage 80.00`. |
+| **Playing** | One row per play. | **Target**: the actor it plays on. **Time**: how far the play is, out of its length, such as `0.21 / 0.50 s`. **Value**: the play's intensity. **Details**: **Playing**, **Sustaining** while a sustained recipe waits in its loop, **released by** and the parameter's name when its **Release Parameter** released it, or **Stopping** during a blend out, followed by the play's parameters, such as `Damage 80.00`. |
 | **Accumulators** | One row per accumulator value. | **Target**: the actor the value belongs to, or **Global**. **Value**: its current value. |
 | **Player N comfort** | One row per group, from **Master** to **Haptics**. | **Value**: the player's scale. Groups at 1 are dimmed, so changed ones stand out. The player row's **Details** show the flash limiter and whether camera roll is allowed. |
 | **Controller vibration** | Under each player. | **Value**: the scale that reaches the controller. **Details**: the comfort scale and the controller scale. When nothing reaches the controller, the row shows a warning icon and says so. |
 
-Below the worlds, **Recent plays** lists the plays that have ended, newest first ([see: ch10_replay]). Each row names the recipe, the target, the time the play ended, its intensity, and in **Details** how long it lasted, whether it was released or stopped early, and its parameters.
+Below the worlds, **Recent plays** lists the plays that have ended, newest first ([see: ch10_replay]). Each row names the recipe, the target, the time the play ended, its intensity, and in **Details** how long it lasted, whether it was released (and whether its **Release Parameter** did it) or stopped early, and its parameters.
 
 The search box at the top filters every folder by recipe, target and value. **Clear Recent Plays** empties the list of recent plays. With no game running, the Debugger says **Nothing running** and still shows the recent plays.
 
@@ -44,6 +44,8 @@ To open a recorded play:
 
 While a replay is active, the menu reads **Replaying a Recorded Play** and the preview uses the recorded inputs in place of its own settings: the **Comfort** menu and the parameter sliders make no difference. Edits to the recipe apply to the replay at once, which makes it the quickest way to fix a play that felt wrong in the game: open it, change a track, and watch the same moment again. **Back to Normal Preview** in the same menu ends the replay.
 
+A replayed sustained play loops until **Release** is clicked, because the moment the game released it is not recorded. Its ending then follows the recorded outcome, so tracks with a **Release** condition play as they did in the game.
+
 [shot: S10-02 | A replayed play of HeavyHit: the shake plays at a quarter because of the player's comfort, the camera punch was skipped by its distance condition, and the flash was softened by the flash limiter]
 
 FeelKit keeps the last 64 plays. The list lives until the editor closes, so plays from earlier Play In Editor sessions stay available. A replay needs its recipe: a play whose recipe asset has since been deleted is shown dimmed and cannot be opened.
@@ -61,6 +63,8 @@ A track bar in the recipe editor can carry a short label after its channel name.
 | **Skipped: target N cm away** | The target was farther from the local camera than the track's **Max Distance**. |
 | **Skipped this play (chance N%)** | The track's **Chance** roll failed for this play. |
 | **Skipped: the play had no instigator** | **Applies To** is **Instigator** and the play had none ([Ref: ch07_instigator]). |
+| **Plays if ... reaches Release At**, **Plays if released before ... reaches Release At** | A track with a **Release** condition while the play is still looping: it waits for the release ([Ref: ch07_sustain]). |
+| **Skipped: released before ... reached Release At**, **Skipped: ... reached Release At** | The play was released the other way than the track's **Release** condition asks. |
 | **Removed by comfort settings** | The player's scale for the track's group is 0 and the track is not essential ([Ref: ch08_essential]). |
 | **Substitute plays (comfort)** | The track is essential, its group's scale is 0, and its substitute step plays instead. |
 | **Flash suppressed by the flash limiter** | The flash came faster than the player's limit allows, and the limiter is set to suppress ([Ref: ch08_flash_limiter]). |

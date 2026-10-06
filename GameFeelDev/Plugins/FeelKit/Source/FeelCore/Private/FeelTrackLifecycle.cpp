@@ -148,6 +148,27 @@ void FFeelTrackLifecycle::Rewind(const UFeelRecipe& Recipe, float ToTime, FMakeC
 	LastTime = ToTime - UE_KINDA_SMALL_NUMBER;
 }
 
+void FFeelTrackLifecycle::WrapSustain(const UFeelRecipe& Recipe, const FFeelEvalParams& Params, FMakeContext MakeContext)
+{
+	Update(Recipe, Recipe.SustainEnd - UE_KINDA_SMALL_NUMBER, Params, MakeContext);
+	Rewind(Recipe, Recipe.SustainStart, MakeContext);
+}
+
+void FFeelTrackLifecycle::JumpForward(const UFeelRecipe& Recipe, float ToTime)
+{
+	// Tracks starting exactly at ToTime are still reached; tracks over before it count as already passed.
+	LastTime = FMath::Max(LastTime, ToTime - UE_KINDA_SMALL_NUMBER);
+
+	for (const TPair<int32, TSharedPtr<FFeelTrackLifecycle>>& Child : Children)
+	{
+		const UFeelStep_Recipe* RecipeStep = RunningSteps.IsValidIndex(Child.Key) ? Cast<UFeelStep_Recipe>(RunningSteps[Child.Key].Get()) : nullptr;
+		if (Child.Value.IsValid() && RecipeStep && RecipeStep->Recipe && Recipe.Tracks.IsValidIndex(Child.Key))
+		{
+			Child.Value->JumpForward(*RecipeStep->Recipe, ToTime - Recipe.Tracks[Child.Key].StartTime);
+		}
+	}
+}
+
 void FFeelTrackLifecycle::StopAll(const UFeelRecipe* Recipe, bool bInterrupted, FMakeContext MakeContext)
 {
 	for (int32 TrackIndex = 0; TrackIndex < States.Num(); ++TrackIndex)

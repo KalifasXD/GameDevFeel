@@ -102,7 +102,8 @@ def rot(pitch, yaw, roll):
 RECIPES = []
 
 
-def recipe(feeling, name, description, genres, tracks, parameters=None, sustain=None, cooldown=0.0, default_intensity=1.0):
+def recipe(feeling, name, description, genres, tracks, parameters=None, sustain=None, cooldown=0.0, default_intensity=1.0,
+           release=None, jump_on_release=False):
     body = {
         'tracks': tracks,
         'cooldown': cooldown,
@@ -117,7 +118,20 @@ def recipe(feeling, name, description, genres, tracks, parameters=None, sustain=
         body['bSustain'] = True
         body['sustainStart'] = sustain[0]
         body['sustainEnd'] = sustain[1]
+    if jump_on_release:
+        body['bJumpToEndOnRelease'] = True
+    if release:
+        # (parameter, point in its range from 0 to 1) at which the play releases itself.
+        body['releaseParameter'] = release[0]
+        body['releaseAt'] = release[1]
     RECIPES.append((feeling, 'FR_{0}_{1}'.format(feeling, name), body))
+
+
+def uses_release_settings(body):
+    """Whether a recipe needs schema 3: release by parameter, jump to end on release or a Release track condition."""
+    if 'releaseParameter' in body or 'bJumpToEndOnRelease' in body:
+        return True
+    return any('release' in track.get('conditions', {}) for track in body['tracks'])
 
 
 # --------------------------------------------------------------------------------------- Impact
@@ -217,7 +231,7 @@ recipe('Weight', 'Slam', 'Something heavy hitting the ground nearby: a hard shak
 
 # --------------------------------------------------------------------------------------- Power
 
-recipe('Power', 'ChargeUp', 'Holding a charge: a rising hum, a tightening view and a growing rumble that keeps going until released.',
+recipe('Power', 'ChargeUp', 'Holding a charge: a rising hum, a tightening view and a growing rumble. At full charge it releases itself with the burst of FR_Power_ChargedRelease; let go early and the hum fades out.',
        ['Action', 'Shooter'], [
     track(step('FOVKick', fieldOfViewKick=-6.0, shape='Smooth', frequency=2.0, damping=3.0), 0.0, 1.0, RISE,
           parameterMappings=[mapping('Charge', [(0, 0.35), (1, 1)])]),
@@ -229,7 +243,11 @@ recipe('Power', 'ChargeUp', 'Holding a charge: a rising hum, a tightening view a
           parameterMappings=[mapping('Charge', [(0, 0.6), (1, 1)])]),
     track(step('ForceFeedbackCurve', leftLarge=0.0, rightLarge=0.0, leftSmall=0.8, rightSmall=0.8, shape='Smooth'), 0.0, 1.0, RISE,
           parameterMappings=[mapping('Charge', [(0, 0.3), (1, 1)])]),
-], sustain=(0.35, 0.95), parameters=[parameter('Charge', 0.0, 0.0, 1.0, 'How far the charge has come, from 0 to 1.')])
+    # The ending: the burst plays only when Charge reached 1 and released the play.
+    track(step('Recipe', recipe='/FeelKit/Library/Power/FR_Power_ChargedRelease.FR_Power_ChargedRelease'), 0.95, 0.6, FLAT,
+          conditions={'release': 'WhenReleaseParameterReached'}),
+], sustain=(0.35, 0.95), parameters=[parameter('Charge', 0.0, 0.0, 1.0, 'How far the charge has come, from 0 to 1. At 1 the play releases itself.')],
+   release=('Charge', 1.0), jump_on_release=True)
 
 recipe('Power', 'ChargedRelease', 'The charge let go: a flash, a wide camera kick and a heavy rumble.', ['Action', 'Shooter'], [
     track(step('GlobalHitstop', timeDilation=0.05), 0.0, 0.07, FLAT),
@@ -480,7 +498,7 @@ def write():
     for feeling, name, body in RECIPES:
         folder = os.path.join(ROOT, feeling)
         os.makedirs(folder, exist_ok=True)
-        data = {'format': 'FeelKitRecipe', 'schemaVersion': 2, 'name': name, 'recipe': body}
+        data = {'format': 'FeelKitRecipe', 'schemaVersion': 3 if uses_release_settings(body) else 2, 'name': name, 'recipe': body}
         with open(os.path.join(folder, name + '.json'), 'w', encoding='utf-8') as file:
             json.dump(data, file, indent='\t')
             file.write('\n')

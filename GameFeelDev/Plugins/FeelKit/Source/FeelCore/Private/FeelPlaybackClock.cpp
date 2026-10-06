@@ -10,6 +10,35 @@ bool FFeelPlaybackClock::Advance(const UFeelRecipe& Recipe, float DeltaSeconds)
 	return !bReleased && WrapIntoSustain(Recipe, RecipeTime);
 }
 
+void FFeelPlaybackClock::Release()
+{
+	if (!bReleased)
+	{
+		bReleased = true;
+		bJumpPending = true;
+	}
+}
+
+bool FFeelPlaybackClock::ApplyPendingJump(const UFeelRecipe& Recipe)
+{
+	if (!bJumpPending)
+	{
+		return false;
+	}
+	bJumpPending = false;
+	return GetReleaseJumpTime(Recipe, RecipeTime, RecipeTime);
+}
+
+bool FFeelPlaybackClock::GetReleaseJumpTime(const UFeelRecipe& Recipe, float Time, float& OutTime)
+{
+	if (!Recipe.bJumpToEndOnRelease || !HasSustain(Recipe) || Time >= Recipe.SustainEnd)
+	{
+		return false;
+	}
+	OutTime = Recipe.SustainEnd;
+	return true;
+}
+
 bool FFeelPlaybackClock::HasSustain(const UFeelRecipe& Recipe)
 {
 	return Recipe.bSustain && Recipe.SustainEnd - Recipe.SustainStart >= UFeelRecipe::MinSustainLength;

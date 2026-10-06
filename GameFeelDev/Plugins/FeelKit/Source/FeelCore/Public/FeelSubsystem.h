@@ -74,6 +74,9 @@ struct FFeelInstance
 	/** Recipe time, including sustain looping and release. */
 	FFeelPlaybackClock Clock;
 
+	/** Whether the recipe's Release Parameter reaching Release At released this play (rather than the game). */
+	bool bReleaseReached = false;
+
 	/** Per-track strength decided at run time (flash limiter). Same length as the recipe's tracks. */
 	TArray<float> TrackScales;
 

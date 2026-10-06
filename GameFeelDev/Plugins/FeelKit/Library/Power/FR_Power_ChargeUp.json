@@ -1,6 +1,6 @@
 {
 	"format": "FeelKitRecipe",
-	"schemaVersion": 2,
+	"schemaVersion": 3,
 	"name": "FR_Power_ChargeUp",
 	"recipe": {
 		"tracks": [
@@ -264,6 +264,36 @@
 						}
 					}
 				]
+			},
+			{
+				"step": {
+					"_ClassName": "/Script/FeelCore.FeelStep_Recipe",
+					"recipe": "/FeelKit/Library/Power/FR_Power_ChargedRelease.FR_Power_ChargedRelease"
+				},
+				"startTime": 0.95,
+				"duration": 0.6,
+				"channel": {
+					"tagName": "Feel.Meta.Recipe"
+				},
+				"intensityCurve": {
+					"editorCurveData": {
+						"keys": [
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 0.0,
+								"value": 1.0
+							},
+							{
+								"interpMode": "RCIM_Linear",
+								"time": 1.0,
+								"value": 1.0
+							}
+						]
+					}
+				},
+				"conditions": {
+					"release": "WhenReleaseParameterReached"
+				}
 			}
 		],
 		"cooldown": 0.0,
@@ -281,18 +311,21 @@
 				}
 			]
 		},
-		"description": "Holding a charge: a rising hum, a tightening view and a growing rumble that keeps going until released.",
+		"description": "Holding a charge: a rising hum, a tightening view and a growing rumble. At full charge it releases itself with the burst of FR_Power_ChargedRelease; let go early and the hum fades out.",
 		"parameters": [
 			{
 				"name": "Charge",
 				"defaultValue": 0.0,
 				"minValue": 0.0,
 				"maxValue": 1.0,
-				"description": "How far the charge has come, from 0 to 1."
+				"description": "How far the charge has come, from 0 to 1. At 1 the play releases itself."
 			}
 		],
 		"bSustain": true,
 		"sustainStart": 0.35,
-		"sustainEnd": 0.95
+		"sustainEnd": 0.95,
+		"bJumpToEndOnRelease": true,
+		"releaseParameter": "Charge",
+		"releaseAt": 1.0
 	}
 }

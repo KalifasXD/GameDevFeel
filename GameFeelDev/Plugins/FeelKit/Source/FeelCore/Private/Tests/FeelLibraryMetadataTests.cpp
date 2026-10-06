@@ -96,7 +96,7 @@ bool FFeelLibraryMetadataTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Description tag"), FindTag(*Recipe, UFeelRecipe::DescriptionTagName), FString(TEXT("A sharp hit.")));
 #endif
 
-	TestEqual(TEXT("Schema version 2 marks library metadata"), UFeelRecipe::CurrentSchemaVersion, 2);
+	TestTrue(TEXT("Schema version 2 or later marks library metadata"), UFeelRecipe::CurrentSchemaVersion >= 2);
 	return true;
 }
 

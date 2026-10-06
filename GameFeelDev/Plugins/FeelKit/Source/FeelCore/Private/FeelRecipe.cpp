@@ -137,6 +137,23 @@ EDataValidationResult UFeelRecipe::IsDataValid(FDataValidationContext& Context) 
 		}
 	}
 
+	if (!ReleaseParameter.IsNone())
+	{
+		if (!bSustain)
+		{
+			Context.AddWarning(FText::Format(LOCTEXT("ReleaseParameterNoSustain", "Release Parameter {0} is set, but Sustain is off, so there is nothing to release."), FText::FromName(ReleaseParameter)));
+		}
+		else if (!FindParameter(ReleaseParameter))
+		{
+			Context.AddError(FText::Format(LOCTEXT("ReleaseParameterUnknown", "Release Parameter {0} is not declared, so the play never releases itself."), FText::FromName(ReleaseParameter)));
+			bHasErrors = true;
+		}
+		else if (ReleaseAt <= 0.0f)
+		{
+			Context.AddWarning(FText::Format(LOCTEXT("ReleaseAtZero", "Release At is 0, so the play releases itself as soon as it starts, before {0} can change."), FText::FromName(ReleaseParameter)));
+		}
+	}
+
 	TSet<FName> SeenParameterNames;
 	for (int32 ParameterIndex = 0; ParameterIndex < Parameters.Num(); ++ParameterIndex)
 	{
@@ -247,6 +264,22 @@ EDataValidationResult UFeelRecipe::IsDataValid(FDataValidationContext& Context) 
 		if (Track.Conditions.Chance <= 0.0f)
 		{
 			AddWarning(LOCTEXT("ChanceZero", "has a chance of 0, so it never plays."));
+		}
+
+		if (Track.Conditions.Release != EFeelReleaseCondition::Any)
+		{
+			if (!bSustain)
+			{
+				AddWarning(LOCTEXT("ReleaseConditionNoSustain", "depends on the release, but Sustain is off, so the play is never released and the track never plays."));
+			}
+			else if (Track.Conditions.Release == EFeelReleaseCondition::WhenReleaseParameterReached && !FindParameter(ReleaseParameter))
+			{
+				AddWarning(LOCTEXT("ReleaseConditionNoParameter", "plays only when the Release Parameter is reached, but the recipe has no declared Release Parameter, so it never plays."));
+			}
+			else if (Track.StartTime + UE_KINDA_SMALL_NUMBER < SustainEnd)
+			{
+				AddWarning(LOCTEXT("ReleaseConditionTooEarly", "depends on the release but starts before Sustain End, so it can start before the play is released and is then skipped. Start it at Sustain End or later."));
+			}
 		}
 
 		if (const UFeelStep_Recipe* RecipeStep = Cast<UFeelStep_Recipe>(Track.Step))
