@@ -10,6 +10,7 @@ class IFeelOutputSink;
 class UFeelRecipe;
 class UFeelStep;
 struct FFeelTrack;
+enum class EFeelReleaseCondition : uint8;
 
 /** Per-evaluation inputs that are not part of the recipe. */
 struct FEELCORE_API FFeelEvalParams
@@ -49,6 +50,12 @@ struct FEELCORE_API FFeelEvalParams
 
 	/** Direction from the play context's Location to the target, in the same view space. Zero when no location was passed. */
 	FVector ViewDirectionFromLocation = FVector::ZeroVector;
+
+	/** Whether the play has been released (sustained recipes only). Used by the Release condition of tracks. */
+	bool bReleased = false;
+
+	/** Whether the release came from the recipe's Release Parameter reaching Release At. Used by the Release condition of tracks. */
+	bool bReleaseReached = false;
 
 	/** Nesting depth when evaluating a recipe inside another recipe's track. */
 	int32 NestingDepth = 0;
@@ -109,6 +116,12 @@ public:
 	/** Value of a declared parameter for this play: the play's value or the default, clamped to the parameter's range. */
 	static float GetParameterValue(const FFeelRecipeParameter& Parameter, const FFeelEvalParams& Params);
 
+	/**
+	 * Whether the recipe's Release Parameter has reached Release At for this play. False without a sustain region, without
+	 * a Release Parameter, or when the parameter is not declared. The runtime and the editor preview both release with it.
+	 */
+	static bool IsReleaseParameterReached(const UFeelRecipe& Recipe, const FFeelEvalParams& Params);
+
 	/** Product of a track's parameter mapping multipliers. Mappings to undeclared parameters are ignored. */
 	static float ComputeParameterScale(const UFeelRecipe& Recipe, const FFeelTrack& Track, const FFeelEvalParams& Params);
 
@@ -127,6 +140,9 @@ public:
 	 * every frame and when scrubbing, while each new play rolls again.
 	 */
 	static bool PassesConditions(const FFeelTrack& Track, int32 TrackIndex, const FFeelEvalParams& Params);
+
+	/** Whether a track with this Release condition plays, given how the play was released so far. */
+	static bool PassesReleaseCondition(EFeelReleaseCondition Condition, const FFeelEvalParams& Params);
 
 	/** The chance roll of PassesConditions, in [0, 1). The track plays when the roll is below its Chance. */
 	static float GetChanceRoll(const FFeelTrack& Track, int32 TrackIndex, int32 InstanceSeed);

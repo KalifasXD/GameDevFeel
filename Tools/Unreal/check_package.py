@@ -33,7 +33,8 @@ LITE_FUNCTIONS = ["play_feel", "stop_feel", "stop_all_feel", "is_feel_playing", 
                   "get_feel_comfort", "set_feel_enabled", "toggle_feel", "is_feel_enabled"]
 PRO_FUNCTIONS = ["play_feel_with_context", "send_feel_event", "release_feel", "set_feel_parameter",
                  "add_to_feel_accumulator", "get_feel_accumulator"]
-PRO_RECIPE_FIELDS = ["parameters", "sustain", "feeling", "description"]
+PRO_RECIPE_FIELDS = ["parameters", "sustain", "jump_to_end_on_release", "release_parameter", "release_at", "feeling",
+                     "description"]
 
 
 def log(text):

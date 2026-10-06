@@ -22,9 +22,12 @@ The recipe editor's **Details** tab shows these fields. **Tracks** is hidden the
 | >> Parameters |  |  |
 | **Parameters** | empty | **Pro.** Named numbers the game can pass each time the recipe plays. Tracks can scale their intensity by them through parameter mappings, and the recipe editor shows a slider for each to preview the range. A parameter named Distance is filled in automatically when the game does not pass it. |
 | >> Sustain |  |  |
-| **Sustain** | Off | **Pro.** Keeps the recipe playing while a condition lasts: time loops between Sustain Start and Sustain End until the play is released (Release Feel, the end of an anim notify state, or Stop Feel), then plays the rest of the recipe. |
+| **Sustain** | Off | **Pro.** Keeps the recipe playing while a condition lasts: time loops between Sustain Start and Sustain End until the play is released (Release Feel, the end of an anim notify state, or the Release Parameter below), then plays the rest of the recipe. Stop Feel ends it at once. |
 | **Sustain Start** | 0 s | **Pro.** Start of the looping region, in seconds from the recipe start. At least 0. Editable only when **Sustain** is on. |
 | **Sustain End** | 1 s | **Pro.** End of the looping region, in seconds from the recipe start. At least 0. Editable only when **Sustain** is on. |
+| **Jump to End on Release** | Off | **Pro.** When the play is released, jump straight to Sustain End and play the ending at once, instead of finishing the current loop first. Use it when the ending answers the release, such as a charged attack letting go. Tracks that would have ended before Sustain End end at the jump; tracks that run past Sustain End carry on. Editable only when **Sustain** is on. |
+| **Release Parameter** | None | **Pro.** Parameter that releases the play on its own when it reaches Release At, as Release Feel would. It is read every frame, so values from Set Feel Parameter and from accumulators count. Leave empty to release only from the game: Release Feel, the end of an anim notify state, a Feel Input binding or a gameplay cue. Editable only when **Sustain** is on. |
+| **Release At** | 1 | **Pro.** Point in the Release Parameter's range where the play releases itself: 0 is the parameter's min, 1 its max. Range 0 to 1. Editable only when **Sustain** is on. |
 | >> Library |  |  |
 | **Feeling** | None | **Pro.** What this recipe makes the player feel. It groups the recipe browser and the recipe library, for example Feel.Feeling.Impact. Projects can add their own tags under Feel.Feeling. Editor only: not included in packaged games. |
 | **Genres** | empty | **Pro.** Kinds of game this recipe suits, for example Feel.Genre.Shooter. Used by the recipe browser filters. Editor only: not included in packaged games. |
@@ -74,6 +77,7 @@ Select a track on the timeline to see these fields in **Details**. The fields of
 | >> Conditions |  |  |
 | **Local Player Only** | Off | **Pro.** Only play when the target belongs to a local player. |
 | **Max Distance** | 0 cm | **Pro.** Skip when the target is farther than this from the local camera. 0 means unlimited. At least 0. |
+| **Release** | Any | **Pro.** Ties the track to how a sustained play was released. Meant for tracks in the recipe's ending, which starts at Sustain End: a full charge and a charge let go early can end differently. A track that starts before the play is released is skipped, because the release is not known yet. |
 | **Chance** | 1 | **Pro.** Probability that the track plays. Range 0 to 1. |
 | **Platforms** | empty | **Pro.** Platforms the track plays on. Empty means all platforms. |
 

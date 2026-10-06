@@ -149,7 +149,10 @@ public:
 	/** Whether the preview is looping a sustain region that can be released. */
 	bool CanReleaseSustain() const;
 
-	/** Ends the sustain loop, like Release Feel at runtime: the preview plays the rest of the recipe. */
+	/**
+	 * Ends the sustain loop, like Release Feel at runtime: the preview plays the rest of the recipe, jumping straight to
+	 * Sustain End when the recipe has Jump to End on Release.
+	 */
 	void ReleaseSustain();
 	bool IsPlaying() const { return bPlaying; }
 	bool IsLooping() const { return bLooping; }
@@ -193,6 +196,9 @@ private:
 	bool bLooping = false;
 	bool bStopped = true;
 	bool bSustainReleased = false;
+
+	/** Whether the recipe's Release Parameter released the preview (rather than the Release button). */
+	bool bReleaseReached = false;
 	FFeelFrameOutput Output;
 
 	FFeelTrackLifecycle Lifecycle;

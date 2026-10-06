@@ -41,6 +41,9 @@ struct FEELCORE_API FFeelPlayCapture
 	float PlayedSeconds = 0.0f;
 	bool bReleased = false;
 	bool bInterrupted = false;
+
+	/** Whether the recipe's Release Parameter released the play, which decides the Release condition of tracks in a replay. */
+	bool bReleaseReached = false;
 };
 
 /** Recent plays of every world, newest last, kept across play sessions so they can be opened after stopping play. */

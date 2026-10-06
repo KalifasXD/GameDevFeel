@@ -26,6 +26,7 @@ price research, and the marketing brief (originals in `Docs/Archive/`).
 | **Demo handout script:** copy of each 5.6 demo project without our development tools, test content or the plugin, plus a readme (D-091) | Not started | For the source offer | 4 to 8 h |
 | **Final builds and tests** on 5.6, 5.7 and 5.8 after all the above; the Fab zips | **Done 2026-09-26:** six zips in `Publish/<Edition>/03-Upload`; rebuild only if the plugin changes again | Yes | |
 | Add `FabURL` after Fab's first review and rebuild the zips (D-103) | After submission: `package_all.ps1 -FabUrlLite -FabUrlPro`, then `make_uploads.py` | Yes | 0.5 h |
+| **Release by parameter** (D-113): Release Parameter, Release At, Jump to End on Release, the Release track condition; ChargeUp releases itself at full charge | **Built 2026-10-06, not yet compiled:** the user builds, runs the tests (7 new) and re-imports ChargeUp on the development PC, then judges the charge in the editor and in play. On the launch branch, so the next package build (the FabURL rebuild) includes it | Yes, once built: it is in the next packages | |
 | Performance number for the listing (50 plays under 0.2 ms, NF-002) | Never measured | Advised | 2 to 4 h |
 | Split-screen check (DEL-004) | Never tested | Advised, or say "not tested" | 2 to 3 h |
 | Plugin icon (`Resources/Icon128.png`) | Deferred to the screenshot work | Advised | 1 to 2 h |
