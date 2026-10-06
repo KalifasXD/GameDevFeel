@@ -32,7 +32,28 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Charge",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.35
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
 			},
 			{
 				"step": {
@@ -60,7 +81,28 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Charge",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.3
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
 			},
 			{
 				"step": {
@@ -97,7 +139,28 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Charge",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.2
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
 			},
 			{
 				"step": {
@@ -127,7 +190,28 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Charge",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.6
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
 			},
 			{
 				"step": {
@@ -158,7 +242,28 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Charge",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.3
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.0
+									}
+								]
+							}
+						}
+					}
+				]
 			}
 		],
 		"cooldown": 0.0,

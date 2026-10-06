@@ -173,9 +173,12 @@ Yes. Remove Lite from your engine, install Pro, and your recipes open unchanged.
 
 First release of FeelKit Lite, 1.0.0. Built and tested on Windows.
 
-## 3. Third Party Software form (Fab review, 2026-09-28)
+## 3. Third Party Software form (Fab reviews, 2026-09-28 and 2026-09-30)
 
-Fab's first review failed the listing on the third-party declaration: the box "This product uses third party
+Fab's second review (2026-09-30) passed documentation and failed only the two third-party checks again; it points to the
+Formstack declaration on the product page (https://epicgames.formstack.com/forms/third_party_software_declaration_form),
+under the section where "This product uses third party software" is selected. Fill that one too, with the entries
+below. Fab's first review failed the listing on the third-party declaration: the box "This product uses third party
 software" is ticked, so Fab asks for its Third Party Software Submission Form (https://forms.gle/sgXJHReig6nSM1FE7).
 FeelKit Lite has no third-party code. The only third-party content is 7 CC0 sample sounds by Kenney,
 from 3 source packs, so the form gets one entry per pack.
@@ -221,6 +224,6 @@ Each entry asks for four fields. Paste them as they are.
 
 Documentation: the manual is online at https://drive.google.com/file/d/1OlIEERggkVAoG0rnG2FBbLPwHgKcjn_R/view?usp=sharing. It is linked from the description and from the technical details of each engine version.
 
-Third-party software: the Third Party Software form is filled in for FeelKit Lite (3 entries). FeelKit contains no third-party code or libraries: every file under Source is our own code and carries the Billo copyright notice. The only third-party content is 7 sample sounds under CC0 1.0 by Kenney, imported as Sound Wave assets in Content/Samples/Sounds and listed file by file, with their source packs, in Credits.md at the plugin root. There is no ThirdParty folder under Source because there is no third-party code to put in it.
+Third-party software: FeelKit Lite contains no third-party code or libraries, so there is nothing to place in a Source/ThirdParty folder; every C++ file is our own and carries the Billo copyright notice. The box "This product uses third party software" is ticked only because Fab's Technical Requirements (4.2.5) count sounds from other sources as third-party software: FeelKit Lite includes 7 CC0 sample sounds by Kenney, imported as Sound Wave assets in Content/Samples/Sounds and listed file by file in Credits.md at the plugin root. The Third Party Software Declaration for these sounds (3 entries, one per source pack) was submitted on 2026-09-28 and again through the declaration form on the product page. Please mark the ThirdParty folder check as not applicable, or tell us if CC0 audio should be declared differently.
 
 ---

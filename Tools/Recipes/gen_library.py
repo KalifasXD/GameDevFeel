@@ -219,11 +219,16 @@ recipe('Weight', 'Slam', 'Something heavy hitting the ground nearby: a hard shak
 
 recipe('Power', 'ChargeUp', 'Holding a charge: a rising hum, a tightening view and a growing rumble that keeps going until released.',
        ['Action', 'Shooter'], [
-    track(step('FOVKick', fieldOfViewKick=-6.0, shape='Smooth', frequency=2.0, damping=3.0), 0.0, 1.0, RISE),
-    track(step('VignettePulse', vignetteIntensity=0.8, shape='Smooth'), 0.0, 1.0, RISE),
-    track(step('ProceduralShake', frequency=20.0, rotationAmplitude=rot(0.4, 0.4, 0.2), locationAmplitude=vec(0, 1, 1)), 0.0, 1.0, RISE),
-    track(step('PlaySound', sound=SOUND.format('Charge_Loop'), placement='AttachedToTarget', bStopAtTrackEnd=True, fadeOutTime=0.2), 0.0, 1.0, FLAT),
-    track(step('ForceFeedbackCurve', leftLarge=0.0, rightLarge=0.0, leftSmall=0.8, rightSmall=0.8, shape='Smooth'), 0.0, 1.0, RISE),
+    track(step('FOVKick', fieldOfViewKick=-6.0, shape='Smooth', frequency=2.0, damping=3.0), 0.0, 1.0, RISE,
+          parameterMappings=[mapping('Charge', [(0, 0.35), (1, 1)])]),
+    track(step('VignettePulse', vignetteIntensity=0.8, shape='Smooth'), 0.0, 1.0, RISE,
+          parameterMappings=[mapping('Charge', [(0, 0.3), (1, 1)])]),
+    track(step('ProceduralShake', frequency=20.0, rotationAmplitude=rot(0.4, 0.4, 0.2), locationAmplitude=vec(0, 1, 1)), 0.0, 1.0, RISE,
+          parameterMappings=[mapping('Charge', [(0, 0.2), (1, 1)])]),
+    track(step('PlaySound', sound=SOUND.format('Charge_Loop'), placement='AttachedToTarget', bStopAtTrackEnd=True, fadeOutTime=0.2), 0.0, 1.0, FLAT,
+          parameterMappings=[mapping('Charge', [(0, 0.6), (1, 1)])]),
+    track(step('ForceFeedbackCurve', leftLarge=0.0, rightLarge=0.0, leftSmall=0.8, rightSmall=0.8, shape='Smooth'), 0.0, 1.0, RISE,
+          parameterMappings=[mapping('Charge', [(0, 0.3), (1, 1)])]),
 ], sustain=(0.35, 0.95), parameters=[parameter('Charge', 0.0, 0.0, 1.0, 'How far the charge has come, from 0 to 1.')])
 
 recipe('Power', 'ChargedRelease', 'The charge let go: a flash, a wide camera kick and a heavy rumble.', ['Action', 'Shooter'], [
