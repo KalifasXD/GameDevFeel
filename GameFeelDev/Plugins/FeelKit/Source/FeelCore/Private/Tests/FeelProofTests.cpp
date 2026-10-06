@@ -15,6 +15,7 @@
 #include "FeelSubsystem.h"
 #include "FeelTags.h"
 #include "Misc/App.h"
+#include "Steps/FeelStep_Meta.h"
 #include "Steps/FeelStep_ScreenFlash.h"
 #include "UObject/Package.h"
 #include "UObject/StrongObjectPtr.h"
@@ -267,6 +268,90 @@ bool FFeelRuntimeFlashLimiterCaptureTest::RunTest(const FString& Parameters)
 		FFeelEvaluator::Evaluate(*Recipe, 0.25f, Params, Replay);
 		const float ComfortScale = Extra.ComfortScales.Master * Extra.ComfortScales.Flashes;
 		TestEqual(TEXT("Replayed frame applies intensity, comfort and limiter"), Replay.Output.FlashAlpha, FMath::Min(0.8f * ExpectedExtra * ComfortScale, 1.0f), 0.001f);
+	}
+#endif
+	FFeelPlayCaptureStore::Get().Clear();
+	return true;
+}
+
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFeelRuntimeFlashLimiterNestedTest, "FeelKit.Runtime.FlashLimiterNested", FEEL_TEST_FLAGS)
+bool FFeelRuntimeFlashLimiterNestedTest::RunTest(const FString& Parameters)
+{
+	using namespace FeelProofTests;
+
+	const FFeelComfortScales& Defaults = GetDefault<UFeelSettings>()->DefaultComfortScales;
+	if (!Defaults.bLimitFlashes || Defaults.MaxFlashesPerSecond < 1.0f || Defaults.MaxFlashesPerSecond >= 4.0f)
+	{
+		AddInfo(TEXT("Project default comfort does not limit flashes to 1-3 per second; nested limiter checks skipped."));
+		return true;
+	}
+	const int32 Allowed = FMath::FloorToInt32(Defaults.MaxFlashesPerSecond + 0.001f);
+	const float ExpectedExtra = Defaults.FlashLimitMode == EFeelFlashLimitMode::Suppress ? 0.0f : Defaults.SoftenedFlashScale;
+
+	// One more Play Recipe track than the limiter allows, each playing a one-flash recipe at the same moment.
+	FFeelPlayCaptureStore::Get().Clear();
+	FScopedWorld TestWorld;
+	UFeelSubsystem* Subsystem = TestWorld.Subsystem();
+	TStrongObjectPtr<UFeelRecipe> Inner(MakeFlashRecipe(0.5f));
+	TStrongObjectPtr<UFeelRecipe> Outer(NewObject<UFeelRecipe>(GetTransientPackage()));
+	for (int32 TrackIndex = 0; TrackIndex <= Allowed; ++TrackIndex)
+	{
+		UFeelStep_Recipe* Step = NewObject<UFeelStep_Recipe>(Outer.Get());
+		Step->Recipe = Inner.Get();
+		FFeelTrack& Track = Outer->Tracks.AddDefaulted_GetRef();
+		Track.Step = Step;
+		Track.Channel = FeelTags::Meta_Recipe;
+		Track.Duration = 0.5f;
+		Track.IntensityCurve.GetRichCurve()->Reset();
+	}
+
+	Subsystem->PlayFeel(Outer.Get(), FFeelTarget(), 0.8f);
+	TestWorld.Step(0.02f);
+
+	const TArray<FFeelInstance>& Instances = Subsystem->GetInstances();
+	if (!TestEqual(TEXT("The play is running"), Instances.Num(), 1))
+	{
+		return false;
+	}
+	const FFeelInstance& Play = Instances[0];
+	TestEqual(TEXT("Every nested flash went through the limiter"), Play.NestedTrackScales.Num(), Allowed + 1);
+	for (int32 TrackIndex = 0; TrackIndex <= Allowed; ++TrackIndex)
+	{
+		const uint32 Key = FFeelEvaluator::MakeTrackScaleKey(FFeelEvaluator::MakeTrackScaleKey(0, TrackIndex), 0);
+		const float* Scale = Play.NestedTrackScales.Find(Key);
+		TestEqual(*FString::Printf(TEXT("Nested flash %d has the limiter's decision"), TrackIndex), Scale ? *Scale : -1.0f, TrackIndex < Allowed ? 1.0f : ExpectedExtra, 0.001f);
+	}
+
+	// The evaluator applies it: the softened flash alone is weaker than an unlimited one.
+	FFeelEvalParams Params;
+	Params.Intensity = 0.8f;
+	Params.InstanceSeed = Play.Seed;
+	Params.NestedTrackScales = &Play.NestedTrackScales;
+	for (FFeelTrack& Track : Outer->Tracks)
+	{
+		Track.bEnabled = false;
+	}
+	Outer->Tracks[Allowed].bEnabled = true;
+	FFeelOutputAccumulator Limited;
+	FFeelEvaluator::Evaluate(*Outer, 0.25f, Params, Limited);
+	TestEqual(TEXT("The limited nested flash plays at the limiter's scale"), Limited.Output.FlashAlpha, 0.8f * ExpectedExtra, 0.001f);
+	Outer->Tracks[0].bEnabled = true;
+	Outer->Tracks[Allowed].bEnabled = false;
+	FFeelOutputAccumulator Unlimited;
+	FFeelEvaluator::Evaluate(*Outer, 0.25f, Params, Unlimited);
+	TestEqual(TEXT("A nested flash within the rate plays at full strength"), Unlimited.Output.FlashAlpha, 0.8f, 0.001f);
+	for (FFeelTrack& Track : Outer->Tracks)
+	{
+		Track.bEnabled = true;
+	}
+
+	TestWorld.Step(0.1f, 10);
+#if !UE_BUILD_SHIPPING
+	const TArray<FFeelPlayCapture>& Captures = FFeelPlayCaptureStore::Get().GetCaptures();
+	if (TestEqual(TEXT("The play is recorded"), Captures.Num(), 1))
+	{
+		TestEqual(TEXT("The capture keeps the nested limiter decisions"), Captures[0].NestedTrackScales.Num(), Allowed + 1);
 	}
 #endif
 	FFeelPlayCaptureStore::Get().Clear();

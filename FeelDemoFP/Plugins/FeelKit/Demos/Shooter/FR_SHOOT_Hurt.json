@@ -41,7 +41,33 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Damage",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.65
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.25,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.4
+									}
+								]
+							}
+						}
+					}
+				]
 			},
 			{
 				"step": {
@@ -76,7 +102,33 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Damage",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.65
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.25,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.4
+									}
+								]
+							}
+						}
+					}
+				]
 			},
 			{
 				"step": {
@@ -105,7 +157,33 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Damage",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.65
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.25,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.4
+									}
+								]
+							}
+						}
+					}
+				]
 			},
 			{
 				"step": {
@@ -164,7 +242,33 @@
 							}
 						]
 					}
-				}
+				},
+				"parameterMappings": [
+					{
+						"parameter": "Damage",
+						"curve": {
+							"editorCurveData": {
+								"keys": [
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.0,
+										"value": 0.65
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 0.25,
+										"value": 1.0
+									},
+									{
+										"interpMode": "RCIM_Linear",
+										"time": 1.0,
+										"value": 1.4
+									}
+								]
+							}
+						}
+					}
+				]
 			}
 		],
 		"cooldown": 0.0,
@@ -179,14 +283,14 @@
 				}
 			]
 		},
-		"description": "The player is hit: the view is knocked away from the shot, a red pulse at the edges, a body hit and a rumble.",
+		"description": "The player is hit: the view is knocked away from the shot, a red pulse at the edges, a body hit and a rumble, all stronger for harder hits.",
 		"parameters": [
 			{
 				"name": "Damage",
 				"defaultValue": 25.0,
 				"minValue": 0.0,
 				"maxValue": 100.0,
-				"description": "Damage of the hit, passed by the hook. Shown as a number over the enemy."
+				"description": "Damage the player took, passed by the hook. At 25, the default damage of the template projectile, the recipe plays as tuned; harder hits knock and pulse harder."
 			}
 		]
 	}

@@ -539,7 +539,13 @@ bool FFeelReleaseRecipesTest::RunTest(const FString& Parameters)
 	Lifecycle.JumpForward(*Recipe, 0.6f);
 	Lifecycle.Update(*Recipe, 0.65f, Params, MakeContext);
 	TestTrue(TEXT("On Full Release starts at Sustain End"), Lifecycle.GetStartedReleaseRecipe() == FullRelease.Get());
-	TestEqual(TEXT("Its first track started this update"), Lifecycle.GetReleaseStartedThisUpdate().Num(), 1);
+	const TConstArrayView<FFeelNestedTrackStart> Started = Lifecycle.GetNestedStartedThisUpdate();
+	if (TestEqual(TEXT("Its first track started this update"), Started.Num(), 1))
+	{
+		TestTrue(TEXT("It is reported with its recipe"), Started[0].Recipe == FullRelease.Get() && Started[0].TrackIndex == 0);
+		TestEqual(TEXT("and the key the evaluator reads its flash limiter scale from"), Started[0].ScaleKey,
+			FFeelEvaluator::MakeTrackScaleKey(FFeelEvaluator::MakeTrackScaleKey(0, INDEX_NONE), 0));
+	}
 	TestTrue(TEXT("Its track is numbered apart from the recipe's tracks"), FFeelTrackLifecycle::MakeReleaseTrackKey(0) < INDEX_NONE);
 	TestTrue(TEXT("Its context comes from the play itself"), Requested.Contains(INDEX_NONE));
 	TestEqual(TEXT("It counts as running"), Lifecycle.GetNumRunning(), 1);

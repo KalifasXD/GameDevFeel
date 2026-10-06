@@ -62,8 +62,14 @@ struct FEELCORE_API FFeelEvalParams
 	/** Per-track strength multipliers decided at run time, such as the flash limiter's. Missing entries are 1. */
 	TConstArrayView<float> TrackScales;
 
-	/** The same multipliers for the tracks of the release recipe. */
-	TConstArrayView<float> ReleaseTrackScales;
+	/**
+	 * The same multipliers for the tracks of nested recipes (Play Recipe tracks and release recipes, at any depth), by
+	 * the key MakeTrackScaleKey gives each of them. Missing entries are 1.
+	 */
+	const TMap<uint32, float>* NestedTrackScales = nullptr;
+
+	/** Where this evaluation sits in the play: 0 for the recipe the game played, a key of its own for each nested recipe. */
+	uint32 ScalePath = 0;
 
 	/** Comfort settings to apply. Without scales, evaluation is neutral. */
 	FFeelComfortContext Comfort;
@@ -123,6 +129,15 @@ public:
 	 * a Release Parameter, or when the parameter is not declared. The runtime and the editor preview both release with it.
 	 */
 	static bool IsReleaseParameterReached(const UFeelRecipe& Recipe, const FFeelEvalParams& Params);
+
+	/**
+	 * Key of a track of a nested recipe in NestedTrackScales: from the ScalePath of its recipe and its index. The key of a
+	 * Play Recipe track is also the ScalePath of the recipe it plays; INDEX_NONE gives the ScalePath of a release recipe.
+	 */
+	static uint32 MakeTrackScaleKey(uint32 ScalePath, int32 TrackIndex);
+
+	/** Run-time strength multiplier of a track for this play: TrackScales at the top level, NestedTrackScales below it. */
+	static float GetTrackScale(int32 TrackIndex, const FFeelEvalParams& Params);
 
 	/** Product of a track's parameter mapping multipliers. Mappings to undeclared parameters are ignored. */
 	static float ComputeParameterScale(const UFeelRecipe& Recipe, const FFeelTrack& Track, const FFeelEvalParams& Params);

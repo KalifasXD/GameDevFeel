@@ -80,8 +80,8 @@ struct FFeelInstance
 	/** Per-track strength decided at run time (flash limiter). Same length as the recipe's tracks. */
 	TArray<float> TrackScales;
 
-	/** The same for the release recipe's tracks, once it has started. */
-	TArray<float> ReleaseTrackScales;
+	/** The same for the tracks of nested recipes (Play Recipe tracks and the release recipe), by FFeelEvaluator::MakeTrackScaleKey. */
+	TMap<uint32, float> NestedTrackScales;
 
 	/** For moment capture: whether the play started with an instigator, and the comfort of its last frame. */
 	bool bHadInstigator = false;

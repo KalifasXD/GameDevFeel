@@ -83,7 +83,7 @@ Each weapon feels different, hits and kills confirm themselves, grenades shake t
 | `FR_SHOOT_Kill` | The player takes an enemy down: a chime, a red flash on the enemy, a brief freeze into slow motion, a small zoom and a rumble. |
 | `FR_SHOOT_Explosion` | A grenade explodes, scaled by the player's distance: a crunch over a low boom and a hard shake; up close, a freeze, a warm flash and color fringes. |
 | `FR_SHOOT_EnemyFire` | Anyone else firing: the shot sounds from the shooter and fades with distance. No camera effects. |
-| `FR_SHOOT_Hurt` | The player is hit: the view is knocked away from the shot, a red pulse at the edges, a body hit and a rumble. |
+| `FR_SHOOT_Hurt` | The player is hit: the view is knocked away from the shot, a red pulse at the edges, a body hit and a rumble, all stronger for harder hits. Parameter `Damage`, passed by the character's hook. |
 | `FR_SHOOT_Death` | The player dies: time slows, the color drains, the view closes in, a heavy fall and a long rumble. |
 | `FR_SHOOT_JumpPad` | Stepping on a jump pad: a rising whoosh, the view widens on the way up, the camera pressed down for a moment, a smooth rumble. |
 | `FR_SHOOT_Land` | Landing from a real drop: a camera dip and a thud that grow with the fall. Small steps stay silent. |
