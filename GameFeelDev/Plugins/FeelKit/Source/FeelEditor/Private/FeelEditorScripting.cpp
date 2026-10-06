@@ -6,6 +6,7 @@
 // FEELKIT_PRO_BEGIN
 #include "FeelLibrary.h"
 #include "FeelMap.h"
+#include "Misc/FeedbackContext.h"
 // FEELKIT_PRO_END
 #include "FeelRecipe.h"
 #include "FeelRecipeFactory.h"

@@ -19,11 +19,19 @@ FORBIDDEN_DIRS = {"Binaries", "Intermediate", "Saved", "Tests", "DerivedDataCach
 PRO_ONLY = ("Source/FeelNiagara", "Source/FeelEnhancedInput", "Extras", "Content/Demos", "Demos")
 
 
+def read_log(path: Path) -> str:
+    """Windows PowerShell 5.1 writes redirected output as UTF-16, PowerShell 7 as UTF-8."""
+    raw = path.read_bytes()
+    if raw[:2] in (b"\xff\xfe", b"\xfe\xff"):
+        return raw.decode("utf-16", errors="ignore")
+    return raw.decode("utf-8-sig", errors="ignore")
+
+
 def check(stage: Path, edition: str, engine: str) -> list:
     problems = []
     tag = engine.replace(".", "")
     log = ROOT / f"Build/Logs/package_plugin_{edition}_{tag}.log"
-    if not log.exists() or "BUILD SUCCESSFUL" not in log.read_text(encoding="utf-8", errors="ignore"):
+    if not log.exists() or "BUILD SUCCESSFUL" not in read_log(log):
         problems.append(f"no successful BuildPlugin log {log.name}")
     descriptor = json.loads((stage / "FeelKit.uplugin").read_text(encoding="utf-8"))
     if descriptor.get("EngineVersion") != f"{engine}.0":
