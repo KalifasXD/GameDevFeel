@@ -112,7 +112,7 @@ Effects look identical in the game and in the editor preview because the same co
 - Nodes: Play Feel, Stop Feel, Stop All Feel, Play Feel And Wait, Set Feel Parameter, accumulators, Send Feel Event.
 - **Parameters** (such as Damage 0 to 100) map to track intensity through curves; the preview has sliders for them.
 - **Accumulators** are named values that build up and decay (combo streaks, sustained fire).
-- **Sustained recipes** hold a middle section until released (charging, sprinting, low health).
+- **Sustained recipes** hold a middle section until released (charging, sprinting, low health), can release themselves when a parameter reaches a set point, and can play a recipe of their own on a full or an early release (D-113, D-114).
 - **Feel Maps** turn an event tag plus context tags into a recipe; the most specific row wins.
 - Triggers without code: anim notifies (Play Feel, Play Feel Window, Set Feel Value) and the Feel Trigger component
   (landed, jumped, air jumped, launched, damaged, hit, overlaps).
@@ -138,7 +138,7 @@ UE 5.6, 5.7 and 5.8).
 |---|---|
 | Recipe editor | Timeline with tracks colored by channel, drag, resize, snap, zoom; inline intensity curves; mute, solo, copy and paste; undo; preview viewport with replaceable mesh; play, loop, scrub; comfort preset dropdown; parameter sliders; intensity graph; Play in PIE; edits apply to the next play; validation on save |
 | Effects | 37 steps: camera (shake, punch, FOV kick, roll, zoom, look-at nudge), time (global and actor hitstop, slow-mo ramp), screen (flash, vignette, chromatic aberration, desaturate, tint, fade, post-process material pulse), actor (scale punch, squash and stretch, material pulse, hit flash, mesh wobble, light flash), audio (play sound, sound class duck, pitch bend, low-pass sweep), haptics (force feedback curve, haptic pattern), UI (widget punch, shake, flash, number pop), spawn (decal, particle), meta (play recipe, random choice, Blueprint event) |
-| Inputs | Parameters, play context (instigator, target, location, direction, context tags), conditions, random ranges, sustained recipes, accumulators, Feel Maps and events, anim notifies, Feel Trigger, Enhanced Input, GAS add-on, multiplayer |
+| Inputs | Parameters, play context (instigator, target, location, direction, context tags), conditions, random ranges, sustained recipes (release by parameter, release recipes), accumulators, Feel Maps and events, anim notifies, Feel Trigger, Enhanced Input, GAS add-on, multiplayer |
 | Comfort | Everything in 3.4, the comfort menu, the Comfort Audit, flash limiter |
 | Tools | Recipe Browser with hover preview and filters; Recipe from Template; read-only library recipes; Content Browser tiles drawn as mini timelines; FeelKit Debugger; `showdebug feel`; `stat Feel`; recent plays replay; GIF capture (Off and On); sound waveforms with snapping and tracks from sound; JSON import and export |
 | Feel Switch | An actor that turns FeelKit off and on while playing (Tab or controller View), shows a start card, a FEEL ON/OFF badge and the level's controls, and opens the comfort menu (O or controller Menu) |

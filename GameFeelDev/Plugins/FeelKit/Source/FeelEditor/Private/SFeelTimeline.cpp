@@ -18,6 +18,7 @@
 #include "FeelRecipeEditorState.h"
 #include "FeelStep.h"
 #include "FeelTrack.h"
+#include "Editor.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "Modules/ModuleManager.h"
@@ -29,6 +30,7 @@
 #include "Styling/AppStyle.h"
 #include "SPositiveActionButton.h"
 #include "Styling/StyleColors.h"
+#include "Subsystems/AssetEditorSubsystem.h"
 #include "Widgets/Input/SButton.h"
 #include "Widgets/SOverlay.h"
 #include "Widgets/Input/SCheckBox.h"
@@ -224,7 +226,52 @@ private:
 	{
 		const UFeelRecipe* Recipe = State->GetRecipe();
 		const int32 NumTracks = Recipe ? Recipe->Tracks.Num() : 0;
-		return FeelTimeline::RulerHeight + NumTracks * FeelTimeline::RowHeight + (HasCurveLane(State->GetSelectedTrack()) ? FeelTimeline::CurveLaneHeight : 0.0f);
+		return FeelTimeline::RulerHeight + (NumTracks + GetNumReleaseRows()) * FeelTimeline::RowHeight + (HasCurveLane(State->GetSelectedTrack()) ? FeelTimeline::CurveLaneHeight : 0.0f);
+	}
+
+	/** Release recipes of a sustained recipe get a row each under the tracks: On Full Release, then On Early Release. */
+	int32 GetNumReleaseRows() const
+	{
+		const UFeelRecipe* Recipe = State->GetRecipe();
+		if (!Recipe || !Recipe->bSustain)
+		{
+			return 0;
+		}
+		return (Recipe->FullReleaseRecipe ? 1 : 0) + (Recipe->EarlyReleaseRecipe ? 1 : 0);
+	}
+
+	/** Recipe shown in a release row, and whether the row is On Full Release. */
+	const UFeelRecipe* GetReleaseRowRecipe(int32 Row, bool& bOutFullRelease) const
+	{
+		const UFeelRecipe* Recipe = State->GetRecipe();
+		bOutFullRelease = Row == 0 && Recipe && Recipe->FullReleaseRecipe;
+		if (!Recipe || Row < 0 || Row >= GetNumReleaseRows())
+		{
+			return nullptr;
+		}
+		return bOutFullRelease ? Recipe->FullReleaseRecipe.Get() : Recipe->EarlyReleaseRecipe.Get();
+	}
+
+	float ReleaseRowTop(int32 Row) const
+	{
+		const UFeelRecipe* Recipe = State->GetRecipe();
+		const int32 NumTracks = Recipe ? Recipe->Tracks.Num() : 0;
+		const float Lane = HasCurveLane(State->GetSelectedTrack()) ? FeelTimeline::CurveLaneHeight : 0.0f;
+		return FeelTimeline::RulerHeight + (NumTracks + Row) * FeelTimeline::RowHeight + Lane - VerticalOffset;
+	}
+
+	/** Release row under LocalY, or INDEX_NONE. */
+	int32 ReleaseRowAt(float LocalY) const
+	{
+		for (int32 Row = 0; Row < GetNumReleaseRows(); ++Row)
+		{
+			const float Top = ReleaseRowTop(Row);
+			if (LocalY >= Top && LocalY < Top + FeelTimeline::RowHeight)
+			{
+				return Row;
+			}
+		}
+		return INDEX_NONE;
 	}
 
 	int32 RowAt(float LocalY) const
@@ -702,9 +749,48 @@ int32 SFeelTimelineTrackArea::OnPaint(const FPaintArgs& Args, const FGeometry& A
 		}
 	}
 
+	// Release recipes: a row each under the tracks, a block from Sustain End as long as the release recipe's tracks.
+	for (int32 Row = 0; Row < GetNumReleaseRows(); ++Row)
+	{
+		const float Top = ReleaseRowTop(Row);
+		bool bFullRelease = false;
+		const UFeelRecipe* ReleaseRecipe = GetReleaseRowRecipe(Row, bFullRelease);
+		if (!ReleaseRecipe || Top + RowHeight < RulerHeight || Top > Size.Y)
+		{
+			continue;
+		}
+
+		const FLinearColor ReleaseAccent(0.35f, 0.75f, 1.0f);
+		const FLinearColor ReleaseColor = Palette::Srgb(52, 96, 122);
+		bool bSilenced = false;
+		const FString Decision = State->GetReleaseDecision(bFullRelease, &bSilenced).ToString();
+
+		const float StartX = TimeToX(Recipe->SustainEnd);
+		const float EndX = FMath::Max(TimeToX(Recipe->SustainEnd + ReleaseRecipe->GetTracksLength()), StartX + 6.0f);
+		const float BarTop = Top + 2.0f;
+		const float BarHeight = RowHeight - 4.0f;
+		DrawBrush(BarLayer, StartX, BarTop, EndX - StartX, BarHeight, SectionBrush, bSilenced ? Palette::Srgb(71, 71, 71) : ReleaseColor);
+
+		const float LabelLeft = FMath::Max(StartX, HeaderWidth) + 5.0f;
+		const float LabelRight = FMath::Min(EndX, Size.X) - 5.0f;
+		if (LabelRight - LabelLeft > 12.0f)
+		{
+			OutDrawElements.PushClip(FSlateClippingZone(AllottedGeometry.GetLayoutBoundingRect(FSlateRect(FMath::Max(StartX, HeaderWidth), BarTop, FMath::Min(EndX, Size.X), BarTop + BarHeight))));
+			const FString Label = Decision.IsEmpty() ? ReleaseRecipe->GetName() : FString::Printf(TEXT("%s  -  %s"), *ReleaseRecipe->GetName(), *Decision);
+			DrawText(BarDetailLayer + 2, LabelLeft, BarTop + 3.0f, Label, SmallFont, Palette::Text().CopyWithNewOpacity(bSilenced ? 0.6f : 0.95f));
+			OutDrawElements.PopClip();
+		}
+
+		DrawBox(HeaderLayer, 0.0f, Top, HeaderWidth, RowHeight - 1.0f, Palette::OutlinerRow());
+		DrawBox(HeaderLayer, 0.0f, Top + RowHeight - 1.0f, HeaderWidth, 1.0f, Palette::Separator());
+		DrawBox(HeaderDetailLayer, HeaderWidth - 4.0f, Top, 4.0f, RowHeight - 1.0f, ReleaseAccent);
+		const FText RowLabel = bFullRelease ? LOCTEXT("FullReleaseRow", "On Full Release") : LOCTEXT("EarlyReleaseRow", "On Early Release");
+		DrawText(HeaderDetailLayer, GetSoloRect(Top).Right + 10.0f, Top + 6.0f, RowLabel.ToString(), NormalFont, Palette::SubduedText());
+	}
+
 	if (Recipe->Tracks.Num() == 0)
 	{
-		DrawText(BarDetailLayer, HeaderWidth + 12.0f, RulerHeight + 10.0f, LOCTEXT("EmptyHint", "Add a track with + Track.").ToString(), NormalFont, Palette::SubduedText());
+		DrawText(BarDetailLayer, HeaderWidth + 12.0f, RulerHeight + GetNumReleaseRows() * RowHeight + 10.0f, LOCTEXT("EmptyHint", "Add a track with + Track.").ToString(), NormalFont, Palette::SubduedText());
 	}
 
 	// Ruler and grid.
@@ -1090,6 +1176,19 @@ FReply SFeelTimelineTrackArea::OnMouseButtonDoubleClick(const FGeometry& MyGeome
 			float Value = 0.0f;
 			LocalToCurve(State->GetRecipe()->Tracks[Hit.Track], RowTop(Hit.Track), Local, !MouseEvent.IsShiftDown(), Alpha, Value);
 			State->AddCurveKey(Hit.Track, Alpha, Value);
+			return FReply::Handled();
+		}
+	}
+
+	// A release row opens its recipe, as double-clicking a Play Recipe step's asset would.
+	if (MouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
+	{
+		const FVector2f Local = MyGeometry.AbsoluteToLocal(MouseEvent.GetScreenSpacePosition());
+		bool bFullRelease = false;
+		const UFeelRecipe* ReleaseRecipe = Local.Y >= FeelTimeline::RulerHeight ? GetReleaseRowRecipe(ReleaseRowAt(Local.Y), bFullRelease) : nullptr;
+		if (ReleaseRecipe && GEditor)
+		{
+			GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(const_cast<UFeelRecipe*>(ReleaseRecipe));
 			return FReply::Handled();
 		}
 	}
@@ -1501,7 +1600,7 @@ TSharedRef<SWidget> SFeelTimeline::MakeToolbar()
 			})),
 		NAME_None,
 		LOCTEXT("ReleaseButton", "Release"),
-		LOCTEXT("ReleaseTip", "End the sustain loop, as Release Feel does in game: the preview plays the rest of the recipe. Enabled while a recipe with sustain is looping."),
+		LOCTEXT("ReleaseTip", "End the sustain loop, as Release Feel does in game: the preview plays the rest of the recipe and On Early Release, if set. Enabled while a recipe with sustain is looping."),
 		FSlateIcon(FAppStyle::GetAppStyleSetName(), TEXT("Animation.Forward_End")),
 		EUserInterfaceActionType::Button,
 		NAME_None,

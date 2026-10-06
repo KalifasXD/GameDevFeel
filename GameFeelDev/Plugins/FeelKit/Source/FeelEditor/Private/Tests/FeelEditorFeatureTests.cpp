@@ -246,49 +246,54 @@ bool FFeelSaveValidationLogTest::RunTest(const FString& Parameters)
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFeelPreviewReleaseParameterTest, "FeelKit.Editor.PreviewReleaseParameter", FEEL_TEST_FLAGS)
 bool FFeelPreviewReleaseParameterTest::RunTest(const FString& Parameters)
 {
-	// The same recipe as FeelKit.Runtime.ReleaseParameter: loop 0.2 to 0.6 s, a full-charge ending and an early ending.
+	// The same setup as FeelKit.Runtime.ReleaseParameter: loop 0.2 to 0.6 s, a red On Full Release, a blue On Early Release.
 	const FName Charge(TEXT("Charge"));
-	TStrongObjectPtr<UFeelRecipe> Recipe(NewObject<UFeelRecipe>(GetTransientPackage()));
-	UFeelStep_ScreenFlash* Flash = NewObject<UFeelStep_ScreenFlash>(Recipe.Get());
-	auto AddTrack = [&Recipe, Flash](float StartTime, float Duration, EFeelReleaseCondition Release)
+	auto MakeFlashRecipe = [](float Duration, const FLinearColor& Color)
 	{
-		FFeelTrack& Track = Recipe->Tracks.AddDefaulted_GetRef();
+		UFeelRecipe* FlashRecipe = NewObject<UFeelRecipe>(GetTransientPackage());
+		UFeelStep_ScreenFlash* Flash = NewObject<UFeelStep_ScreenFlash>(FlashRecipe);
+		Flash->MaxOpacity = 1.0f;
+		Flash->Color = Color;
+		FFeelTrack& Track = FlashRecipe->Tracks.AddDefaulted_GetRef();
 		Track.Step = Flash;
 		Track.Channel = FeelTags::Screen_Flash;
-		Track.StartTime = StartTime;
 		Track.Duration = Duration;
 		Track.IntensityCurve.GetRichCurve()->Reset();
-		Track.Conditions.Release = Release;
+		return FlashRecipe;
 	};
-	AddTrack(0.0f, 1.0f, EFeelReleaseCondition::Any);
-	AddTrack(0.6f, 0.5f, EFeelReleaseCondition::WhenReleaseParameterReached);
-	AddTrack(0.6f, 0.5f, EFeelReleaseCondition::WhenReleasedEarly);
+	TStrongObjectPtr<UFeelRecipe> FullRelease(MakeFlashRecipe(0.5f, FLinearColor::Red));
+	TStrongObjectPtr<UFeelRecipe> EarlyRelease(MakeFlashRecipe(0.5f, FLinearColor::Blue));
+	TStrongObjectPtr<UFeelRecipe> Recipe(MakeFlashRecipe(0.6f, FLinearColor::White));
 	FFeelRecipeParameter& Parameter = Recipe->Parameters.AddDefaulted_GetRef();
 	Parameter.Name = Charge;
 	Recipe->bSustain = true;
 	Recipe->SustainStart = 0.2f;
 	Recipe->SustainEnd = 0.6f;
-	Recipe->bJumpToEndOnRelease = true;
 	Recipe->ReleaseParameter = Charge;
+	Recipe->FullReleaseRecipe = FullRelease.Get();
+	Recipe->EarlyReleaseRecipe = EarlyRelease.Get();
 
 	const TSharedRef<FFeelRecipeEditorState> State = MakeShared<FFeelRecipeEditorState>(Recipe.Get());
 
-	// The slider reaching Release At releases the preview, which jumps into the ending.
+	// The slider reaching Release At releases the preview, which jumps to Sustain End and plays On Full Release.
 	State->TogglePlay();
 	for (int32 Frame = 0; Frame < 10; ++Frame)
 	{
 		State->Tick(0.1f);
 	}
 	TestTrue(TEXT("Below Release At the preview keeps looping"), State->CanReleaseSustain());
-	TestTrue(TEXT("The full-charge track says what it waits for"), State->GetTrackDecision(1).ToString().Contains(TEXT("Charge reaches Release At")));
+	TestTrue(TEXT("On Full Release says what it waits for"), State->GetReleaseDecision(true).ToString().Contains(TEXT("Charge reaches Release At")));
+	TestTrue(TEXT("On Early Release says what it waits for"), State->GetReleaseDecision(false).ToString().Contains(TEXT("released before Charge reaches Release At")));
 	State->SetPreviewParameterValue(Charge, 1.0f);
 	State->Tick(0.1f);
 	TestFalse(TEXT("The slider at Release At releases the preview"), State->CanReleaseSustain());
-	TestTrue(TEXT("The preview jumps into the ending"), State->GetTime() >= 0.6f && State->GetTime() < 0.75f);
-	TestTrue(TEXT("The full-charge track plays"), State->GetTrackDecision(1).IsEmpty());
-	TestTrue(TEXT("The early-release track is skipped"), State->GetTrackDecision(2).ToString().Contains(TEXT("Skipped")));
+	TestTrue(TEXT("The preview jumps to Sustain End"), State->GetTime() >= 0.6f && State->GetTime() < 0.75f);
+	TestTrue(TEXT("On Full Release is shown"), State->GetOutput().FlashColor.Equals(FLinearColor::Red));
+	TestTrue(TEXT("On Full Release says it plays"), State->GetReleaseDecision(true).ToString().StartsWith(TEXT("Plays:")));
+	TestTrue(TEXT("On Early Release says it is skipped"), State->GetReleaseDecision(false).ToString().StartsWith(TEXT("Skipped")));
+	TestEqual(TEXT("The preview length follows On Full Release"), State->GetPlaybackLength(), 1.1f, 0.0001f);
 
-	// The Release button before a full charge jumps at once and plays the early ending.
+	// The Release button before a full charge jumps at once and plays On Early Release.
 	State->Stop();
 	State->ResetPreviewParameters();
 	State->TogglePlay();
@@ -299,8 +304,16 @@ bool FFeelPreviewReleaseParameterTest::RunTest(const FString& Parameters)
 	State->ReleaseSustain();
 	TestEqual(TEXT("The Release button jumps straight to Sustain End"), State->GetTime(), 0.6f, 0.0001f);
 	State->Tick(0.1f);
-	TestTrue(TEXT("The early-release track plays"), State->GetTrackDecision(2).IsEmpty());
-	TestTrue(TEXT("The full-charge track is skipped"), State->GetTrackDecision(1).ToString().Contains(TEXT("released before Charge reached Release At")));
+	TestTrue(TEXT("On Early Release is shown"), State->GetOutput().FlashColor.Equals(FLinearColor::Blue));
+	TestTrue(TEXT("On Full Release says why it is skipped"), State->GetReleaseDecision(true).ToString().Contains(TEXT("released before Charge reached Release At")));
+
+	// Scrubbing past Sustain End without a release shows the release the sliders give.
+	State->Stop();
+	State->SetTime(0.7f);
+	TestTrue(TEXT("Scrubbed with Charge at 0: On Early Release"), State->GetOutput().FlashColor.Equals(FLinearColor::Blue));
+	State->SetPreviewParameterValue(Charge, 1.0f);
+	State->SetTime(0.7f);
+	TestTrue(TEXT("Scrubbed with Charge at 1: On Full Release"), State->GetOutput().FlashColor.Equals(FLinearColor::Red));
 
 	return true;
 }

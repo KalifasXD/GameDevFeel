@@ -264,36 +264,6 @@
 						}
 					}
 				]
-			},
-			{
-				"step": {
-					"_ClassName": "/Script/FeelCore.FeelStep_Recipe",
-					"recipe": "/FeelKit/Library/Power/FR_Power_ChargedRelease.FR_Power_ChargedRelease"
-				},
-				"startTime": 0.95,
-				"duration": 0.6,
-				"channel": {
-					"tagName": "Feel.Meta.Recipe"
-				},
-				"intensityCurve": {
-					"editorCurveData": {
-						"keys": [
-							{
-								"interpMode": "RCIM_Linear",
-								"time": 0.0,
-								"value": 1.0
-							},
-							{
-								"interpMode": "RCIM_Linear",
-								"time": 1.0,
-								"value": 1.0
-							}
-						]
-					}
-				},
-				"conditions": {
-					"release": "WhenReleaseParameterReached"
-				}
 			}
 		],
 		"cooldown": 0.0,
@@ -311,7 +281,7 @@
 				}
 			]
 		},
-		"description": "Holding a charge: a rising hum, a tightening view and a growing rumble. At full charge it releases itself with the burst of FR_Power_ChargedRelease; let go early and the hum fades out.",
+		"description": "Holding a charge: a rising hum, a tightening view and a growing rumble. At full charge it releases itself and plays FR_Power_ChargedRelease; let go early and the hum fades out.",
 		"parameters": [
 			{
 				"name": "Charge",
@@ -324,8 +294,8 @@
 		"bSustain": true,
 		"sustainStart": 0.35,
 		"sustainEnd": 0.95,
-		"bJumpToEndOnRelease": true,
 		"releaseParameter": "Charge",
-		"releaseAt": 1.0
+		"releaseAt": 1.0,
+		"fullReleaseRecipe": "/FeelKit/Library/Power/FR_Power_ChargedRelease.FR_Power_ChargedRelease"
 	}
 }

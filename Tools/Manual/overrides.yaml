@@ -157,6 +157,8 @@ pro_fields:
   - UFeelRecipe.bJumpToEndOnRelease
   - UFeelRecipe.ReleaseParameter
   - UFeelRecipe.ReleaseAt
+  - UFeelRecipe.FullReleaseRecipe
+  - UFeelRecipe.EarlyReleaseRecipe
   - UFeelRecipe.Feeling
   - UFeelRecipe.Genres
   - UFeelRecipe.Description
@@ -167,7 +169,6 @@ pro_fields:
   - FFeelTrack.RandomDurationScale
   - FFeelConditions.bLocalPlayerOnly
   - FFeelConditions.MaxDistance
-  - FFeelConditions.Release
   - FFeelConditions.Chance
   - FFeelConditions.Platforms
   - UFeelSettings.bAllowGlobalTimeDilationInMultiplayer

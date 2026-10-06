@@ -28,6 +28,7 @@ public:
 	/**
 	 * Starts tracks reached by Time and stops tracks that have ended. Tracks crossed entirely since the last update
 	 * start and stop in the same update. Mute, solo, conditions and comfort (including substitutes) are respected at start.
+	 * After a release, the release recipe's tracks run from Sustain End the same way.
 	 */
 	void Update(const UFeelRecipe& Recipe, float Time, const FFeelEvalParams& Params, FMakeContext MakeContext);
 
@@ -51,7 +52,7 @@ public:
 	 */
 	void JumpForward(const UFeelRecipe& Recipe, float ToTime);
 
-	/** Stops every running track. */
+	/** Stops every running track, release recipe tracks included. */
 	void StopAll(const UFeelRecipe* Recipe, bool bInterrupted, FMakeContext MakeContext);
 
 	/** Number of tracks currently running. */
@@ -62,6 +63,21 @@ public:
 
 	/** Tracks of this recipe (not inner recipes) that started during the last Update. */
 	TConstArrayView<int32> GetStartedThisUpdate() const { return StartedThisUpdate; }
+
+	/** Tracks of the release recipe that started during the last Update. */
+	TConstArrayView<int32> GetReleaseStartedThisUpdate() const;
+
+	/** Release recipe whose tracks have started in this play, or null. */
+	const UFeelRecipe* GetStartedReleaseRecipe() const;
+
+	/**
+	 * Track number in step contexts for a track of a nested recipe, kept apart from the recipe's own tracks. ParentKey is
+	 * the number the outer track got; tracks of release recipes and what they play get negative numbers.
+	 */
+	static int32 MakeNestedTrackKey(int32 ParentKey, int32 TrackIndex, int32 InnerTrackIndex);
+
+	/** Track number in step contexts for a track of a release recipe: negative, so it never meets the recipe's own tracks. */
+	static int32 MakeReleaseTrackKey(int32 ReleaseTrackIndex) { return -(ReleaseTrackIndex + 2); }
 
 private:
 	enum class ETrackState : uint8
@@ -76,6 +92,12 @@ private:
 	/** Runs the tracks of a Play Recipe track's inner recipe. */
 	void UpdateChild(const UFeelRecipe& Recipe, int32 TrackIndex, float Time, const FFeelEvalParams& Params, FMakeContext MakeContext);
 
+	/** Runs the tracks of the release recipe once the play is released and time reaches Sustain End. */
+	void UpdateRelease(const UFeelRecipe& Recipe, float Time, const FFeelEvalParams& Params, FMakeContext MakeContext);
+
+	/** Stops the release recipe's running tracks and forgets them. */
+	void StopRelease(bool bInterrupted, FMakeContext MakeContext);
+
 	TArray<ETrackState> States;
 	TArray<float> StartIntensities;
 	TArray<TWeakObjectPtr<UFeelStep>> RunningSteps;
@@ -84,6 +106,10 @@ private:
 
 	/** Lifecycles of inner recipes, by the index of the Play Recipe track running them. Shared so instances stay copyable. */
 	TMap<int32, TSharedPtr<FFeelTrackLifecycle>> Children;
+
+	/** Lifecycle of the release recipe's tracks, created when they first run, and the recipe it runs. */
+	TSharedPtr<FFeelTrackLifecycle> ReleaseChild;
+	TWeakObjectPtr<const UFeelRecipe> ReleaseChildRecipe;
 
 	float LastTime = -1.0f;
 };

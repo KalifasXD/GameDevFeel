@@ -44,7 +44,7 @@ public:
 	/**
 	 * Keeps the recipe playing while a condition lasts: time loops between Sustain Start and Sustain End until the play is
 	 * released (Release Feel, the end of an anim notify state, or the Release Parameter below), then plays the rest of the
-	 * recipe. Stop Feel ends it at once.
+	 * recipe and the release recipe below, if any. Stop Feel ends it at once.
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain")
 	bool bSustain = false;
@@ -60,7 +60,8 @@ public:
 	/**
 	 * When the play is released, jump straight to Sustain End and play the ending at once, instead of finishing the
 	 * current loop first. Use it when the ending answers the release, such as a charged attack letting go. Tracks that
-	 * would have ended before Sustain End end at the jump; tracks that run past Sustain End carry on.
+	 * would have ended before Sustain End end at the jump; tracks that run past Sustain End carry on. Always on when
+	 * On Full Release or On Early Release is set.
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain", meta = (EditCondition = "bSustain"))
 	bool bJumpToEndOnRelease = false;
@@ -77,6 +78,22 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain", meta = (EditCondition = "bSustain", ClampMin = "0", ClampMax = "1"))
 	float ReleaseAt = 1.0f;
 
+	/**
+	 * Recipe that plays from Sustain End when the Release Parameter releases the play, such as the burst of a fully charged
+	 * attack. All its tracks play on this play's target, with this play's intensity and parameter values. Shown on the
+	 * timeline after Sustain End.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain", meta = (DisplayName = "On Full Release", EditCondition = "bSustain"))
+	TObjectPtr<UFeelRecipe> FullReleaseRecipe;
+
+	/**
+	 * Recipe that plays from Sustain End when the game releases the play before the Release Parameter reaches Release At
+	 * (Release Feel, the end of an anim notify state), such as a charge that fizzles out. Without a Release Parameter, every
+	 * release plays it.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain", meta = (DisplayName = "On Early Release", EditCondition = "bSustain"))
+	TObjectPtr<UFeelRecipe> EarlyReleaseRecipe;
+
 	/** Shortest usable sustain region. */
 	static constexpr float MinSustainLength = 0.01f;
 
@@ -86,12 +103,13 @@ public:
 
 	/**
 	 * Current recipe data format. 1: parameters, play context and random ranges. 2: library metadata. 3: release by
-	 * parameter, jump to end on release and the Release track condition.
+	 * parameter, jump to end on release and the release recipes.
 	 */
 	static constexpr int32 CurrentSchemaVersion = 3;
 
 	/**
-	 * Nominal length of the recipe: the latest track end time, without random duration variation.
+	 * Nominal length of the recipe: the latest track end time, without random duration variation. With release recipes,
+	 * the longer of the two counts from Sustain End.
 	 * @return	Length in seconds.
 	 */
 	UFUNCTION(BlueprintPure, Category = "Feel")
@@ -113,6 +131,12 @@ public:
 
 	/** Channels this recipe produces: the channels of its enabled tracks, including the tracks of nested recipes and the options of random choices. */
 	void GatherChannels(TSet<FGameplayTag>& OutChannels) const;
+
+	/** Latest track end time of this recipe's own tracks, without release recipes or random duration variation. */
+	float GetTracksLength() const;
+
+	/** Whether the recipe has a usable sustain region and at least one release recipe. */
+	bool HasReleaseRecipes() const;
 
 private:
 	void GatherChannels(TSet<FGameplayTag>& OutChannels, int32 Depth) const;

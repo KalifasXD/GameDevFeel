@@ -109,6 +109,7 @@ With no track selected, **Details** shows the recipe's settings. With a track se
 | **Parameters** | empty | **Pro.** Named values that the game passes when it plays the recipe ([Ref: ch07]). |
 | **Sustain**, **Sustain Start**, **Sustain End** | Off, 0 s, 1 s | **Pro.** A region that loops until the play is released ([Ref: ch07_sustain]). |
 | **Jump to End on Release**, **Release Parameter**, **Release At** | Off, None, 1 | **Pro.** How a sustained play ends: straight away instead of after the current loop, and on its own when a parameter reaches a point in its range ([Ref: ch07_sustain]). |
+| **On Full Release**, **On Early Release** | None | **Pro.** Recipes that play from Sustain End after the release: one when the Release Parameter released the play, the other when the game released it first ([Ref: ch07_sustain]). |
 | **Library** | | **Pro.** Feeling, genres and description, used by the Recipe Browser and in Content Browser tooltips ([Ref: ch09_tagging]). |
 | **Preview Mesh** | None | The mesh shown in the preview: any static or skeletal mesh, or a cube when empty. It is saved with the recipe but used only by the editor. |
 
@@ -119,7 +120,7 @@ With no track selected, **Details** shows the recipe's settings. With a track se
 | **Parameter Mappings** | **Pro.** Recipe parameters that scale this track's intensity ([Ref: ch07_parameters]). |
 | **Randomness** | **Pro.** A random intensity and a random length for each play. |
 | **Comfort** | **Essential**, **Substitute Step** and **Essential Floor**, which decide what happens when a player turns this kind of effect down ([Ref: ch08_essential]). |
-| **Conditions** | **Pro.** **Local Player Only**, **Max Distance**, **Release**, **Chance** and **Platforms** ([Ref: ch07_random]). |
+| **Conditions** | **Pro.** **Local Player Only**, **Max Distance**, **Chance** and **Platforms** ([Ref: ch07_random]). |
 
 A **Duration** of 0 makes an instant track, for steps that act once when the track starts, such as Play Sound or Blueprint Event. **Seed** changes the pattern of steps that use noise, such as Procedural Shake, so that two tracks of the same step do not move in step with each other. **Enabled** is the same switch as the mute toggle in the track header.
 
@@ -135,7 +136,9 @@ A **Duration** of 0 makes an instant track, for steps that act once when the tra
 
 [shot: S05-05 | The preview parameter slider of a copy of FR_Power_ChargeUp, which has one parameter, Charge]
 
-**Sustained recipes** (Pro). When **Sustain** is on, the ruler marks the sustain region, and playback loops inside it as it would while the game holds the play. Click **Release** to leave the loop and play the rest of the recipe, as **Release Feel** does in the game.
+**Sustained recipes** (Pro). When **Sustain** is on, the ruler marks the sustain region, and playback loops inside it as it would while the game holds the play. Click **Release** to leave the loop and play the rest of the recipe, as **Release Feel** does in the game. A recipe with a **Release Parameter** also releases itself when its preview slider reaches **Release At**.
+
+**Release recipes** (Pro). **On Full Release** and **On Early Release** each get a row under the tracks, with a block from **Sustain End** as long as that recipe. The block says what the preview play does with it: while the play loops, when it would play (**Plays if Charge reaches Release At**); after the release, whether it plays or was skipped. Paused or scrubbed past **Sustain End**, the preview shows the release that the parameter sliders give. Double-click a block to open its recipe.
 
 [shot: S05-06 | A copy of FR_Power_ChargeUp looping in its sustain region (0.35 s to 0.95 s, marked on the ruler), with Release enabled]
 
@@ -209,6 +212,9 @@ When a recipe is saved, FeelKit checks it through Unreal's data validation and r
 | Release Parameter N is set, but Sustain is off, so there is nothing to release. | **Pro.** Turn on **Sustain**, or clear **Release Parameter**. |
 | Release Parameter N is not declared, so the play never releases itself. | **Pro.** Declare the parameter, or pick one from the list. |
 | Release At is 0, so the play releases itself as soon as it starts, before N can change. | **Pro.** Raise **Release At**. |
+| On Full Release plays this recipe itself, which is skipped. Pick another recipe. | **Pro.** The same for **On Early Release**: a recipe cannot be its own release recipe. |
+| On Full Release is set, but Sustain is off, so the play is never released and R never plays. | **Pro.** The same for **On Early Release**. Turn on **Sustain**, or clear the setting. |
+| On Full Release is set, but the recipe has no declared Release Parameter, so the play is never fully released and R never plays. | **Pro.** Set **Release Parameter** ([Ref: ch07_sustain]), or use **On Early Release**, which plays on any release from the game. |
 | Sustain End is after the last track ends, so part of the loop is silent. | **Pro.** The loop includes time in which no track plays. |
 | ... has no step, so it is skipped. | A track without a step. |
 | ... has a length of 0, but this step needs a length to produce output. | Only steps that act once can be instant. |
@@ -216,9 +222,6 @@ When a recipe is saved, FeelKit checks it through Unreal's data validation and r
 | ... intensity curve never rises above 0, so the track produces no output. | The track is silent. |
 | ... is essential but has no substitute step and an essential floor of 0, so comfort settings can remove it completely. | See [Ref: ch08_essential]. |
 | ... has a substitute step but is not essential, so the substitute never plays. | Turn on **Essential**, or remove the substitute. |
-| ... depends on the release, but Sustain is off, so the play is never released and the track never plays. | **Pro.** Turn on **Sustain**, or set the track's **Release** condition to **Any**. |
-| ... plays only when the Release Parameter is reached, but the recipe has no declared Release Parameter, so it never plays. | **Pro.** Set the recipe's **Release Parameter** ([Ref: ch07_sustain]). |
-| ... depends on the release but starts before Sustain End, so it can start before the play is released and is then skipped. Start it at Sustain End or later. | **Pro.** The release decides the ending, which starts at **Sustain End**. |
 | ... has a chance of 0, so it never plays. | **Pro.** The track's **Chance** condition is 0. |
 | ... maps parameter N, which the recipe does not declare, so the mapping is ignored. | **Pro.** A parameter mapping names a parameter the recipe does not have. |
 | Parameter N reads accumulator A, which is not defined in Project Settings > Plugins > FeelKit, so it uses its default value. | **Pro.** Add the accumulator to the project settings ([Ref: ch07_accumulators]). |

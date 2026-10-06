@@ -101,6 +101,36 @@ namespace FeelInputsTests
 		return Recipe;
 	}
 
+	/** Flash recipe of one color, used as a release recipe. */
+	UFeelRecipe* MakeColorFlashRecipe(const FLinearColor& Color, float Duration)
+	{
+		UFeelRecipe* Recipe = MakeFlashRecipe(0.0f, Duration);
+		CastChecked<UFeelStep_ScreenFlash>(Recipe->Tracks[0].Step.Get())->Color = Color;
+		return Recipe;
+	}
+
+	/**
+	 * Charge recipe: a flash that loops 0.2 to 0.6 s while Charge (0 to 1) rises, releasing itself at 1, with a red
+	 * On Full Release recipe and a blue On Early Release recipe. Nothing of the recipe's own plays after Sustain End.
+	 */
+	UFeelRecipe* MakeChargeRecipe(UFeelRecipe* FullRelease, UFeelRecipe* EarlyRelease)
+	{
+		UFeelRecipe* Recipe = MakeFlashRecipe(0.0f, 0.6f);
+		FFeelRecipeParameter& Parameter = Recipe->Parameters.AddDefaulted_GetRef();
+		Parameter.Name = TEXT("Charge");
+		Parameter.MinValue = 0.0f;
+		Parameter.MaxValue = 1.0f;
+		Parameter.DefaultValue = 0.0f;
+		Recipe->bSustain = true;
+		Recipe->SustainStart = 0.2f;
+		Recipe->SustainEnd = 0.6f;
+		Recipe->ReleaseParameter = Parameter.Name;
+		Recipe->ReleaseAt = 1.0f;
+		Recipe->FullReleaseRecipe = FullRelease;
+		Recipe->EarlyReleaseRecipe = EarlyRelease;
+		return Recipe;
+	}
+
 	void AddDamageParameter(UFeelRecipe* Recipe, FName Name)
 	{
 		FFeelRecipeParameter& Parameter = Recipe->Parameters.AddDefaulted_GetRef();
@@ -339,39 +369,15 @@ bool FFeelReleaseParameterRuntimeTest::RunTest(const FString& Parameters)
 	FScopedWorld TestWorld;
 	UFeelSubsystem* Subsystem = TestWorld.Subsystem();
 	const FName Charge(TEXT("Charge"));
-
-	// Loop 0.2 to 0.6 s with Jump to End on Release; track 1 plays only on a full charge, track 2 only on an early release.
-	auto MakeChargeRecipe = [Charge]()
-	{
-		UFeelRecipe* Recipe = MakeFlashRecipe(0.0f, 1.0f);
-		FFeelRecipeParameter& Parameter = Recipe->Parameters.AddDefaulted_GetRef();
-		Parameter.Name = Charge;
-		Parameter.MinValue = 0.0f;
-		Parameter.MaxValue = 1.0f;
-		Parameter.DefaultValue = 0.0f;
-		Recipe->bSustain = true;
-		Recipe->SustainStart = 0.2f;
-		Recipe->SustainEnd = 0.6f;
-		Recipe->bJumpToEndOnRelease = true;
-		Recipe->ReleaseParameter = Charge;
-		Recipe->ReleaseAt = 1.0f;
-		FFeelTrack Reached = Recipe->Tracks[0];
-		Reached.StartTime = 0.6f;
-		Reached.Duration = 0.5f;
-		Reached.Conditions.Release = EFeelReleaseCondition::WhenReleaseParameterReached;
-		Recipe->Tracks.Add(Reached);
-		FFeelTrack Early = Reached;
-		Early.Conditions.Release = EFeelReleaseCondition::WhenReleasedEarly;
-		Recipe->Tracks.Add(Early);
-		return Recipe;
-	};
+	TStrongObjectPtr<UFeelRecipe> FullRelease(MakeColorFlashRecipe(FLinearColor::Red, 0.5f));
+	TStrongObjectPtr<UFeelRecipe> EarlyRelease(MakeColorFlashRecipe(FLinearColor::Blue, 0.5f));
 	auto FindPlay = [Subsystem](FFeelHandle Handle) -> const FFeelInstance*
 	{
 		return Subsystem->GetInstances().FindByPredicate([Handle](const FFeelInstance& Instance) { return Instance.Id == Handle.GetId() && !Instance.bFinished; });
 	};
 
-	// A full charge releases the play itself and plays the full-charge ending.
-	TStrongObjectPtr<UFeelRecipe> Full(MakeChargeRecipe());
+	// A full charge releases the play itself, jumps to Sustain End and plays On Full Release.
+	TStrongObjectPtr<UFeelRecipe> Full(MakeChargeRecipe(FullRelease.Get(), EarlyRelease.Get()));
 	const FFeelHandle FullHandle = Subsystem->PlayFeel(Full.Get(), FFeelTarget());
 	TestWorld.Step(0.1f, 10);
 	TestTrue(TEXT("Below Release At the play keeps looping"), Subsystem->IsPlaying(FullHandle));
@@ -380,25 +386,27 @@ bool FFeelReleaseParameterRuntimeTest::RunTest(const FString& Parameters)
 	if (const FFeelInstance* Play = FindPlay(FullHandle))
 	{
 		TestFalse(TEXT("Half a charge does not release"), Play->Clock.bReleased);
+		TestNull(TEXT("No release recipe runs before the release"), Play->Lifecycle.GetStartedReleaseRecipe());
 	}
 	Subsystem->SetFeelParameter(FullHandle, Charge, 1.0f);
 	TestWorld.Step(0.1f);
 	if (const FFeelInstance* Play = FindPlay(FullHandle))
 	{
 		TestTrue(TEXT("Reaching Release At releases the play"), Play->Clock.bReleased && Play->bReleaseReached);
-		TestTrue(TEXT("The release jumps straight into the ending"), Play->Clock.RecipeTime >= 0.6f && Play->Clock.RecipeTime < 0.75f);
-		TestNotNull(TEXT("The full-charge track plays"), Play->Lifecycle.GetRunningStep(1));
-		TestNull(TEXT("The early-release track does not"), Play->Lifecycle.GetRunningStep(2));
+		TestTrue(TEXT("A release recipe jumps straight to Sustain End"), Play->Clock.RecipeTime >= 0.6f && Play->Clock.RecipeTime < 0.75f);
+		TestTrue(TEXT("On Full Release runs"), Play->Lifecycle.GetStartedReleaseRecipe() == FullRelease.Get());
+		TestTrue(TEXT("Its flash reaches the screen"), Play->Output.FlashAlpha > 0.0f && Play->Output.FlashColor.Equals(FLinearColor::Red));
+		TestEqual(TEXT("The play lasts until the release recipe ends"), Play->Duration, 1.1f, 0.0001f);
 	}
 	else
 	{
 		AddError(TEXT("The play ended right after the release"));
 	}
 	TestWorld.Step(0.1f, 10);
-	TestFalse(TEXT("After its ending the play finishes"), Subsystem->IsPlaying(FullHandle));
+	TestFalse(TEXT("After the release recipe the play finishes"), Subsystem->IsPlaying(FullHandle));
 
-	// Release Feel before a full charge plays the early ending, and reaching Release At later changes nothing.
-	TStrongObjectPtr<UFeelRecipe> Early(MakeChargeRecipe());
+	// Release Feel before a full charge plays On Early Release, and reaching Release At later changes nothing.
+	TStrongObjectPtr<UFeelRecipe> Early(MakeChargeRecipe(FullRelease.Get(), EarlyRelease.Get()));
 	const FFeelHandle EarlyHandle = Subsystem->PlayFeel(Early.Get(), FFeelTarget());
 	TestWorld.Step(0.1f, 3);
 	Subsystem->SetFeelParameter(EarlyHandle, Charge, 0.5f);
@@ -407,19 +415,28 @@ bool FFeelReleaseParameterRuntimeTest::RunTest(const FString& Parameters)
 	if (const FFeelInstance* Play = FindPlay(EarlyHandle))
 	{
 		TestTrue(TEXT("Release Feel releases early"), Play->Clock.bReleased && !Play->bReleaseReached);
-		TestNull(TEXT("The full-charge track does not play"), Play->Lifecycle.GetRunningStep(1));
-		TestNotNull(TEXT("The early-release track plays"), Play->Lifecycle.GetRunningStep(2));
+		TestTrue(TEXT("On Early Release runs"), Play->Lifecycle.GetStartedReleaseRecipe() == EarlyRelease.Get());
+		TestTrue(TEXT("The early flash reaches the screen"), Play->Output.FlashColor.Equals(FLinearColor::Blue));
 	}
 	Subsystem->SetFeelParameter(EarlyHandle, Charge, 1.0f);
 	TestWorld.Step(0.1f);
 	if (const FFeelInstance* Play = FindPlay(EarlyHandle))
 	{
 		TestFalse(TEXT("Reaching Release At after an early release changes nothing"), Play->bReleaseReached);
+		TestTrue(TEXT("On Early Release keeps running"), Play->Lifecycle.GetStartedReleaseRecipe() == EarlyRelease.Get());
 	}
 	Subsystem->StopAllFeel();
 
+	// Without On Early Release, an early release plays the rest of the recipe only.
+	TStrongObjectPtr<UFeelRecipe> FullOnly(MakeChargeRecipe(FullRelease.Get(), nullptr));
+	const FFeelHandle FullOnlyHandle = Subsystem->PlayFeel(FullOnly.Get(), FFeelTarget());
+	TestWorld.Step(0.1f, 3);
+	Subsystem->ReleaseFeel(FullOnlyHandle);
+	TestWorld.Step(0.1f);
+	TestFalse(TEXT("An early release without On Early Release ends with the recipe's own tracks, at Sustain End"), Subsystem->IsPlaying(FullOnlyHandle));
+
 	// A play that starts at Release At releases on its first frame.
-	TStrongObjectPtr<UFeelRecipe> Started(MakeChargeRecipe());
+	TStrongObjectPtr<UFeelRecipe> Started(MakeChargeRecipe(FullRelease.Get(), EarlyRelease.Get()));
 	FFeelPlayContext Context;
 	Context.Parameters.Add(Charge, 1.0f);
 	const FFeelHandle StartedHandle = Subsystem->PlayFeel(Started.Get(), FFeelTarget(), 1.0f, Context);
@@ -427,6 +444,7 @@ bool FFeelReleaseParameterRuntimeTest::RunTest(const FString& Parameters)
 	if (const FFeelInstance* Play = FindPlay(StartedHandle))
 	{
 		TestTrue(TEXT("A play passed a full charge releases at once"), Play->Clock.bReleased && Play->bReleaseReached);
+		TestTrue(TEXT("and plays On Full Release"), Play->Lifecycle.GetStartedReleaseRecipe() == FullRelease.Get());
 	}
 	Subsystem->StopAllFeel();
 
@@ -437,22 +455,97 @@ bool FFeelReleaseParameterRuntimeTest::RunTest(const FString& Parameters)
 	return true;
 }
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFeelReleaseConditionTest, "FeelKit.Conditions.Release", FEEL_TEST_FLAGS)
-bool FFeelReleaseConditionTest::RunTest(const FString& Parameters)
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFeelReleaseRecipesTest, "FeelKit.Sustain.ReleaseRecipes", FEEL_TEST_FLAGS)
+bool FFeelReleaseRecipesTest::RunTest(const FString& Parameters)
 {
+	using namespace FeelInputsTests;
+
+	TStrongObjectPtr<UFeelRecipe> FullRelease(MakeColorFlashRecipe(FLinearColor::Red, 0.5f));
+	TStrongObjectPtr<UFeelRecipe> EarlyRelease(MakeColorFlashRecipe(FLinearColor::Blue, 0.3f));
+	TStrongObjectPtr<UFeelRecipe> Recipe(MakeChargeRecipe(FullRelease.Get(), EarlyRelease.Get()));
+
+	// Which release recipe a play gets.
 	FFeelEvalParams Params;
-	TestTrue(TEXT("Any always plays"), FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition::Any, Params));
-	TestFalse(TEXT("Before a release the full-charge condition fails"), FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition::WhenReleaseParameterReached, Params));
-	TestFalse(TEXT("Before a release the early condition fails"), FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition::WhenReleasedEarly, Params));
-
+	TestNull(TEXT("Nothing before the release"), FFeelEvaluator::GetReleaseRecipe(*Recipe, Params));
 	Params.bReleased = true;
-	TestFalse(TEXT("An early release fails the full-charge condition"), FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition::WhenReleaseParameterReached, Params));
-	TestTrue(TEXT("An early release passes the early condition"), FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition::WhenReleasedEarly, Params));
-
+	TestTrue(TEXT("An early release gets On Early Release"), FFeelEvaluator::GetReleaseRecipe(*Recipe, Params) == EarlyRelease.Get());
 	Params.bReleaseReached = true;
-	TestTrue(TEXT("A full charge passes the full-charge condition"), FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition::WhenReleaseParameterReached, Params));
-	TestFalse(TEXT("A full charge fails the early condition"), FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition::WhenReleasedEarly, Params));
-	TestTrue(TEXT("Any still plays"), FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition::Any, Params));
+	TestTrue(TEXT("A full release gets On Full Release"), FFeelEvaluator::GetReleaseRecipe(*Recipe, Params) == FullRelease.Get());
+
+	// Evaluation: the release recipe plays from Sustain End at the play's intensity times the default intensity.
+	FFeelOutputAccumulator Before;
+	FFeelEvaluator::Evaluate(*Recipe, 0.5f, Params, Before);
+	TestFalse(TEXT("Before Sustain End only the recipe's own flash plays"), Before.Output.FlashColor.Equals(FLinearColor::Red));
+	FFeelOutputAccumulator Full;
+	FFeelEvaluator::Evaluate(*Recipe, 0.7f, Params, Full);
+	TestTrue(TEXT("After Sustain End On Full Release plays"), Full.Output.FlashAlpha > 0.0f && Full.Output.FlashColor.Equals(FLinearColor::Red));
+	Recipe->DefaultIntensity = 0.0f;
+	FFeelOutputAccumulator Silent;
+	FFeelEvaluator::Evaluate(*Recipe, 0.7f, Params, Silent);
+	TestEqual(TEXT("The recipe's default intensity scales its release recipe"), Silent.Output.FlashAlpha, 0.0f);
+	Recipe->DefaultIntensity = 1.0f;
+	Params.TargetFilter = EFeelTrackTarget::Instigator;
+	FFeelOutputAccumulator ForInstigator;
+	FFeelEvaluator::Evaluate(*Recipe, 0.7f, Params, ForInstigator);
+	TestEqual(TEXT("A release recipe plays on the play's target, not the instigator"), ForInstigator.Output.FlashAlpha, 0.0f);
+	Params.TargetFilter.Reset();
+
+	// Length: the chosen release recipe once released, the longer one before.
+	TestEqual(TEXT("Released in full: Sustain End plus On Full Release"), FFeelEvaluator::GetRecipeDuration(*Recipe, Params), 1.1f, 0.0001f);
+	Params.bReleaseReached = false;
+	TestEqual(TEXT("Released early: Sustain End plus On Early Release"), FFeelEvaluator::GetRecipeDuration(*Recipe, Params), 0.9f, 0.0001f);
+	Params.bReleased = false;
+	TestEqual(TEXT("Not released yet: the longer one"), FFeelEvaluator::GetRecipeDuration(*Recipe, Params), 1.1f, 0.0001f);
+	TestEqual(TEXT("Nominal length includes the longer release recipe"), Recipe->GetDuration(), 1.1f, 0.0001f);
+	TestEqual(TEXT("The recipe's own tracks are shorter"), Recipe->GetTracksLength(), 0.6f, 0.0001f);
+
+	// A release recipe always jumps at once, without Jump to End on Release.
+	float JumpTime = 0.0f;
+	TestFalse(TEXT("Jump to End on Release is off"), Recipe->bJumpToEndOnRelease);
+	TestTrue(TEXT("A release recipe makes the release jump"), FFeelPlaybackClock::GetReleaseJumpTime(*Recipe, 0.3f, JumpTime));
+	TestEqual(TEXT("It jumps to Sustain End"), JumpTime, 0.6f, 0.0001f);
+
+	// Nested plays and the recipe itself never play a release recipe.
+	Params.bReleased = true;
+	Params.bReleaseReached = true;
+	FFeelEvalParams ReleaseParams;
+	TestTrue(TEXT("Release settings can be made"), FFeelEvaluator::MakeReleaseParams(*Recipe, Params, ReleaseParams));
+	TestFalse(TEXT("A release recipe is not released itself"), ReleaseParams.bReleased);
+	TestNull(TEXT("So it never plays release recipes of its own"), FFeelEvaluator::GetReleaseRecipe(*Recipe, ReleaseParams));
+	Recipe->FullReleaseRecipe = Recipe.Get();
+	TestNull(TEXT("A recipe set as its own release recipe is skipped"), FFeelEvaluator::GetReleaseRecipe(*Recipe, Params));
+	Recipe->FullReleaseRecipe = FullRelease.Get();
+	Recipe->bSustain = false;
+	TestNull(TEXT("Without Sustain there is no release recipe"), FFeelEvaluator::GetReleaseRecipe(*Recipe, Params));
+	TestEqual(TEXT("and it adds nothing to the length"), Recipe->GetDuration(), 0.6f, 0.0001f);
+	Recipe->bSustain = true;
+
+	// Channels include the release recipes'.
+	FullRelease->Tracks[0].Channel = FeelTags::Camera_Shake;
+	TSet<FGameplayTag> Channels;
+	Recipe->GatherChannels(Channels);
+	TestTrue(TEXT("Channels include the release recipes'"), Channels.Contains(FeelTags::Camera_Shake));
+	FullRelease->Tracks[0].Channel = FeelTags::Screen_Flash;
+
+	// Side effects: the release recipe's tracks start at Sustain End with numbers of their own, and stop with the play.
+	FFeelTrackLifecycle Lifecycle;
+	Lifecycle.Reset(Recipe->Tracks.Num());
+	TArray<int32> Requested;
+	auto MakeContext = [&Requested](int32 TrackIndex, float) { Requested.Add(TrackIndex); FFeelContext Context; Context.TrackIndex = TrackIndex; return Context; };
+	Params.bReleased = false;
+	Lifecycle.Update(*Recipe, 0.3f, Params, MakeContext);
+	TestNull(TEXT("No release recipe before the release"), Lifecycle.GetStartedReleaseRecipe());
+	Params.bReleased = true;
+	Lifecycle.JumpForward(*Recipe, 0.6f);
+	Lifecycle.Update(*Recipe, 0.65f, Params, MakeContext);
+	TestTrue(TEXT("On Full Release starts at Sustain End"), Lifecycle.GetStartedReleaseRecipe() == FullRelease.Get());
+	TestEqual(TEXT("Its first track started this update"), Lifecycle.GetReleaseStartedThisUpdate().Num(), 1);
+	TestTrue(TEXT("Its track is numbered apart from the recipe's tracks"), FFeelTrackLifecycle::MakeReleaseTrackKey(0) < INDEX_NONE);
+	TestTrue(TEXT("Its context comes from the play itself"), Requested.Contains(INDEX_NONE));
+	TestEqual(TEXT("It counts as running"), Lifecycle.GetNumRunning(), 1);
+	Lifecycle.StopAll(Recipe.Get(), true, MakeContext);
+	TestEqual(TEXT("Stopping the play stops it"), Lifecycle.GetNumRunning(), 0);
+	TestNull(TEXT("and forgets it"), Lifecycle.GetStartedReleaseRecipe());
 
 	TestEqual(TEXT("Schema version 3 marks the release settings"), UFeelRecipe::CurrentSchemaVersion, 3);
 	return true;
@@ -810,26 +903,33 @@ bool FFeelReleaseValidationTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("Release At 0 is a warning"), AtZero.GetNumWarnings(), 1);
 	Recipe->ReleaseAt = 1.0f;
 
-	FFeelTrack Ending = Recipe->Tracks[0];
-	Ending.StartTime = 0.4f;
-	Ending.Duration = 0.4f;
-	Ending.Conditions.Release = EFeelReleaseCondition::WhenReleaseParameterReached;
-	Recipe->Tracks.Add(Ending);
-	FDataValidationContext TooEarly;
-	Recipe->IsDataValid(TooEarly);
-	TestEqual(TEXT("A release track that starts before Sustain End is a warning"), TooEarly.GetNumWarnings(), 1);
+	TStrongObjectPtr<UFeelRecipe> Ending(MakeColorFlashRecipe(FLinearColor::Red, 0.5f));
+	Recipe->FullReleaseRecipe = Ending.Get();
+	Recipe->EarlyReleaseRecipe = Ending.Get();
+	FDataValidationContext WithRecipes;
+	Recipe->IsDataValid(WithRecipes);
+	TestEqual(TEXT("Release recipes with a declared Release Parameter are valid"), WithRecipes.GetNumErrors() + WithRecipes.GetNumWarnings(), 0);
 
-	Recipe->Tracks.Last().StartTime = 0.6f;
 	Recipe->ReleaseParameter = NAME_None;
 	FDataValidationContext NoParameter;
 	Recipe->IsDataValid(NoParameter);
-	TestEqual(TEXT("A full-charge track without a Release Parameter is a warning"), NoParameter.GetNumWarnings(), 1);
+	TestEqual(TEXT("On Full Release without a Release Parameter is a warning"), NoParameter.GetNumWarnings(), 1);
+	Recipe->FullReleaseRecipe = nullptr;
+	FDataValidationContext EarlyOnly;
+	Recipe->IsDataValid(EarlyOnly);
+	TestEqual(TEXT("On Early Release alone needs no Release Parameter"), EarlyOnly.GetNumErrors() + EarlyOnly.GetNumWarnings(), 0);
+
+	Recipe->EarlyReleaseRecipe = Recipe.Get();
+	FDataValidationContext Self;
+	Recipe->IsDataValid(Self);
+	TestEqual(TEXT("A recipe set as its own release recipe is an error"), Self.GetNumErrors(), 1);
+	Recipe->EarlyReleaseRecipe = Ending.Get();
 
 	Recipe->ReleaseParameter = TEXT("Charge");
 	Recipe->bSustain = false;
 	FDataValidationContext NoSustain;
 	Recipe->IsDataValid(NoSustain);
-	TestEqual(TEXT("Without Sustain both the Release Parameter and the release track warn"), NoSustain.GetNumWarnings(), 2);
+	TestEqual(TEXT("Without Sustain both the Release Parameter and the release recipe warn"), NoSustain.GetNumWarnings(), 2);
 
 	return true;
 }

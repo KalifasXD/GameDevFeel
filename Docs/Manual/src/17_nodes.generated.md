@@ -158,7 +158,7 @@ Whether a handle came from a successful Play Feel. The recipe may have finished 
 
 [edition: Lite and Pro]
 
-Nominal length of the recipe: the latest track end time, without random duration variation.
+Nominal length of the recipe: the latest track end time, without random duration variation. With release recipes, the longer of the two counts from Sustain End.
 
 - **Node:** Pure node, no execution pins.
 - **Target:** a Feel Recipe.

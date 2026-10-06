@@ -79,7 +79,7 @@ The descriptions are those shown in the Recipe Browser. Recipes marked **PRO** a
 | `FR_Weight_Stomp` | A deliberate, heavy stomp: a freeze, a drop of the camera and a long rumble. | |
 | >> Power | | |
 | `FR_Power_AbilityCast` | **Pro.** Casting an ability: a short wind-up, a colored wash and a firm rumble. | |
-| `FR_Power_ChargeUp` | **Pro.** Holding a charge: a rising hum, a tightening view and a growing rumble. At full charge it releases itself with the burst of FR_Power_ChargedRelease; let go early and the hum fades out. Sustained. | `Charge` |
+| `FR_Power_ChargeUp` | **Pro.** Holding a charge: a rising hum, a tightening view and a growing rumble. At full charge it releases itself and plays FR_Power_ChargedRelease; let go early and the hum fades out. Sustained. | `Charge` |
 | `FR_Power_ChargedRelease` | **Pro.** The charge let go: a flash, a wide camera kick and a heavy rumble. | |
 | `FR_Power_Explosion` | **Pro.** A blast going off nearby: the closer it is, the harder it hits. | `Distance` |
 | >> Speed | | |

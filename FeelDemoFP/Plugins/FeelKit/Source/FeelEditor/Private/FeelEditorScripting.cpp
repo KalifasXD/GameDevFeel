@@ -4,6 +4,7 @@
 
 #include "AssetToolsModule.h"
 // FEELKIT_PRO_BEGIN
+#include "FeelLibrary.h"
 #include "FeelMap.h"
 // FEELKIT_PRO_END
 #include "FeelRecipe.h"
@@ -34,6 +35,8 @@ namespace FeelEditorScriptingPrivate
 		const FString Filename = FPackageName::LongPackageNameToFilename(Package->GetName(), FPackageName::GetAssetPackageExtension());
 		FSavePackageArgs Args;
 		Args.TopLevelFlags = RF_Public | RF_Standalone;
+		// A refused save (read-only folder, file locked) is reported, not fatal.
+		Args.Error = GWarn;
 		return UPackage::SavePackage(Package, Asset, *Filename, Args);
 	}
 }
@@ -43,6 +46,11 @@ bool UFeelEditorScripting::ImportRecipeFromJsonFile(UFeelRecipe* Recipe, const F
 	if (!Recipe)
 	{
 		OutMessage = TEXT("No recipe.");
+		return false;
+	}
+	if (FeelLibrary::IsReadOnly(Recipe))
+	{
+		OutMessage = FString::Printf(TEXT("%s is in the FeelKit library, which is read-only. To change it, turn on Editor Preferences > Plugins > FeelKit > Allow Library Editing."), *Recipe->GetName());
 		return false;
 	}
 

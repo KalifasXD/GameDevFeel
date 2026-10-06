@@ -78,11 +78,16 @@ A sustained play is released by:
 
 **Releasing itself.** Set **Release Parameter** to one of the recipe's parameters and **Release At** to the point in its range where the play should let go: 1 is the parameter's max, 0.5 halfway. The play reads the value every frame, whether it comes from the play context, **Set Feel Parameter** or an accumulator, and releases itself the moment it gets there, exactly as **Release Feel** would. A play that starts at or above that point releases at once.
 
-**Ending at once.** A released play normally finishes its current loop first, so a heartbeat completes its beat. Turn on **Jump to End on Release** when the ending must answer the release straight away, such as a charged attack letting go: time jumps to **Sustain End**. Tracks that would have ended before **Sustain End** end at the jump, and tracks that run past it carry on.
+**Ending at once.** A released play normally finishes its current loop first, so a heartbeat completes its beat. Turn on **Jump to End on Release** when the ending must answer the release straight away: time jumps to **Sustain End**. Tracks that would have ended before **Sustain End** end at the jump, and tracks that run past it carry on.
 
-**Two endings.** The **Release** condition of a track ([Ref: ch07_random]) ties it to how the play was released: **When Release Parameter Reached** plays only when the parameter released it, and **When Released Early** only when the game released it first. Start such tracks at **Sustain End** or later; a track that starts before the play is released is skipped, because the outcome is not known yet.
+**What plays on release.** Two recipe pickers under the release settings choose a recipe that plays from **Sustain End** once the play is released:
 
-**Example.** `FR_Power_ChargeUp` loops from 0.35 s to 0.95 s. With **Set Feel Parameter** on its `Charge` parameter, the hum, the tightening view and the rumble grow while the charge is held. When `Charge` reaches 1, the recipe releases itself and jumps to its ending, where a **Play Recipe** track with **When Release Parameter Reached** plays `FR_Power_ChargedRelease`: a flash, a wide camera kick and a heavy rumble. Let go early with **Release Feel** and the hum fades out without the burst. Seven library recipes are sustained ([Ref: ch09_recipes]).
+- **On Full Release** plays when the **Release Parameter** released the play: the payoff of a full charge.
+- **On Early Release** plays when the game released it first, such as a charge let go too soon. Without a **Release Parameter**, every release counts as early, so a sprint can end with a stop recipe of its own.
+
+Setting either one makes every release jump to **Sustain End** at once, as **Jump to End on Release** does. The recipe's own ending still plays, so a hum that runs past **Sustain End** fades out beside the release recipe. Leave a picker empty when that release needs nothing extra. A release recipe plays on the same target with the play's intensity and parameter values, straight through: its own sustain region and release recipes are not used, every one of its tracks plays on the play's target whatever its **Applies To**, and its flashes go through the player's flash limiter like the recipe's own ([Ref: ch08_flash_limiter]). The recipe editor shows each release recipe as a row under the tracks ([Ref: ch05_preview]).
+
+**Example.** `FR_Power_ChargeUp` loops from 0.35 s to 0.95 s. With **Set Feel Parameter** on its `Charge` parameter, the hum, the tightening view and the rumble grow while the charge is held. When `Charge` reaches 1, its **Release At**, the recipe releases itself, jumps to 0.95 s and plays its **On Full Release** recipe, `FR_Power_ChargedRelease`: a flash, a wide camera kick and a heavy rumble. Let go early with **Release Feel** and the hum fades out without the burst, because **On Early Release** is empty. Seven library recipes are sustained ([Ref: ch09_recipes]).
 
 ## The instigator, and the Applies To setting {#ch07_instigator}
 [edition: Pro]
@@ -122,7 +127,6 @@ Each step falls back to its own settings or to the target when the play passes n
 |---|---|---|
 | **Local Player Only** | Off | The target belongs to a player on this machine. |
 | **Max Distance** | 0 (no limit) | The target is within this distance of the local camera. |
-| **Release** | Any | A sustained play was released the chosen way: **When Release Parameter Reached** or **When Released Early** ([Ref: ch07_sustain]). Unlike the others, it is decided when the track starts. |
 | **Chance** | 1 | A random roll succeeds: 0.5 plays about every second time. |
 | **Platforms** | empty (all) | The game runs on one of the listed platforms, by Unreal's platform names, such as Windows or PS5. |
 
@@ -138,3 +142,5 @@ The rolls are made when the play starts and kept for its whole length, so scrubb
 The **Play Recipe** step plays another recipe inside a track, with the same target, context and parameters. **Intensity Scale** multiplies the inner recipe on top of the track's intensity, and the inner recipe's tracks keep their own channels and comfort settings. Give the track at least the length of the inner recipe, which stops when the track ends.
 
 Nesting lets common pieces be shared: one impact recipe used inside several weapon recipes, changed in one place. Recipes nest up to four deep, and a recipe cannot play itself; saving reports both cases. The recipe editor previews the inner recipe exactly.
+
+The release recipes of a sustained recipe ([see: ch07_sustain]) are the other way to play one recipe from another, chosen by how the play was released. A recipe played by a Play Recipe track or as a release recipe plays straight through: its own sustain region does not loop and its own release recipes do not play.

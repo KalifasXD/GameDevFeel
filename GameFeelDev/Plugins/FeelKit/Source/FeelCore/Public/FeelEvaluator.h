@@ -10,7 +10,6 @@ class IFeelOutputSink;
 class UFeelRecipe;
 class UFeelStep;
 struct FFeelTrack;
-enum class EFeelReleaseCondition : uint8;
 
 /** Per-evaluation inputs that are not part of the recipe. */
 struct FEELCORE_API FFeelEvalParams
@@ -51,10 +50,10 @@ struct FEELCORE_API FFeelEvalParams
 	/** Direction from the play context's Location to the target, in the same view space. Zero when no location was passed. */
 	FVector ViewDirectionFromLocation = FVector::ZeroVector;
 
-	/** Whether the play has been released (sustained recipes only). Used by the Release condition of tracks. */
+	/** Whether the play has been released (sustained recipes only). Decides whether a release recipe plays. */
 	bool bReleased = false;
 
-	/** Whether the release came from the recipe's Release Parameter reaching Release At. Used by the Release condition of tracks. */
+	/** Whether the release came from the recipe's Release Parameter reaching Release At: On Full Release plays, not On Early Release. */
 	bool bReleaseReached = false;
 
 	/** Nesting depth when evaluating a recipe inside another recipe's track. */
@@ -62,6 +61,9 @@ struct FEELCORE_API FFeelEvalParams
 
 	/** Per-track strength multipliers decided at run time, such as the flash limiter's. Missing entries are 1. */
 	TConstArrayView<float> TrackScales;
+
+	/** The same multipliers for the tracks of the release recipe. */
+	TConstArrayView<float> ReleaseTrackScales;
 
 	/** Comfort settings to apply. Without scales, evaluation is neutral. */
 	FFeelComfortContext Comfort;
@@ -141,9 +143,6 @@ public:
 	 */
 	static bool PassesConditions(const FFeelTrack& Track, int32 TrackIndex, const FFeelEvalParams& Params);
 
-	/** Whether a track with this Release condition plays, given how the play was released so far. */
-	static bool PassesReleaseCondition(EFeelReleaseCondition Condition, const FFeelEvalParams& Params);
-
 	/** The chance roll of PassesConditions, in [0, 1). The track plays when the roll is below its Chance. */
 	static float GetChanceRoll(const FFeelTrack& Track, int32 TrackIndex, int32 InstanceSeed);
 
@@ -167,6 +166,19 @@ public:
 	 * one level deeper. Returns false when the step has no recipe or the nesting limit is reached.
 	 */
 	static bool MakeNestedParams(const UFeelRecipe& Recipe, int32 TrackIndex, float Time, const FFeelEvalParams& Params, const class UFeelStep_Recipe& Step, FFeelEvalParams& OutNestedParams);
+
+	/**
+	 * Release recipe this play plays from Sustain End: On Full Release when the Release Parameter released it, On Early
+	 * Release when the game did. Null before the release, without a sustain region, when the chosen setting is empty or
+	 * names the recipe itself, and inside nested recipes.
+	 */
+	static const UFeelRecipe* GetReleaseRecipe(const UFeelRecipe& Recipe, const FFeelEvalParams& Params);
+
+	/**
+	 * Evaluation settings for a release recipe: this play's intensity times the recipe default intensity, a seed of its
+	 * own, one level deeper, not released itself, every track on the play's target. Returns false at the nesting limit.
+	 */
+	static bool MakeReleaseParams(const UFeelRecipe& Recipe, const FFeelEvalParams& Params, FFeelEvalParams& OutReleaseParams);
 
 	/**
 	 * Samples each channel's combined intensity (strongest track per channel) at NumSamples evenly spaced times,

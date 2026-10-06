@@ -11,18 +11,6 @@
 
 class UFeelStep;
 
-/** How a track depends on the way a sustained play was released. */
-UENUM()
-enum class EFeelReleaseCondition : uint8
-{
-	/** The track plays however the play is released. */
-	Any,
-	/** Only when the recipe's Release Parameter reached Release At, which released the play: the payoff of a full charge. */
-	WhenReleaseParameterReached UMETA(DisplayName = "When Release Parameter Reached"),
-	/** Only when the play was released before its Release Parameter reached Release At, such as a charge let go early. */
-	WhenReleasedEarly UMETA(DisplayName = "When Released Early"),
-};
-
 /** Conditions that decide whether a track plays for a given instance. */
 USTRUCT(BlueprintType)
 struct FEELCORE_API FFeelConditions
@@ -36,14 +24,6 @@ struct FEELCORE_API FFeelConditions
 	/** Skip when the target is farther than this from the local camera. 0 means unlimited. */
 	UPROPERTY(EditAnywhere, Category = "Conditions", meta = (ClampMin = "0", Units = "Centimeters"))
 	float MaxDistance = 0.0f;
-
-	/**
-	 * Ties the track to how a sustained play was released. Meant for tracks in the recipe's ending, which starts at Sustain
-	 * End: a full charge and a charge let go early can end differently. A track that starts before the play is released
-	 * is skipped, because the release is not known yet.
-	 */
-	UPROPERTY(EditAnywhere, Category = "Conditions")
-	EFeelReleaseCondition Release = EFeelReleaseCondition::Any;
 
 	/** Probability that the track plays. */
 	UPROPERTY(EditAnywhere, Category = "Conditions", meta = (ClampMin = "0", ClampMax = "1"))

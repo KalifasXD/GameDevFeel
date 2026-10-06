@@ -17,6 +17,7 @@ namespace FeelEvaluatorPrivate
 	constexpr uint32 DurationSalt = 0x2C1B3C6D;
 	constexpr uint32 ChoiceSalt = 0x68E31DA4;
 	constexpr int32 NestedSalt = 0x1B56C4E9;
+	constexpr uint32 ReleaseSalt = 0x3D4B7A91;
 }
 
 int32 FFeelEvaluator::Evaluate(const UFeelRecipe& Recipe, float Time, const FFeelEvalParams& Params, IFeelOutputSink& Sink)
@@ -67,6 +68,17 @@ int32 FFeelEvaluator::Evaluate(const UFeelRecipe& Recipe, float Time, const FFee
 		Step->Evaluate(Context, Sink);
 		++EvaluatedCount;
 	}
+
+	// After a release, the release recipe plays from Sustain End, on the play's target.
+	const bool bForPlayTarget = !Params.TargetFilter.IsSet() || Params.TargetFilter.GetValue() == EFeelTrackTarget::PlayTarget;
+	if (const UFeelRecipe* ReleaseRecipe = GetReleaseRecipe(Recipe, Params); ReleaseRecipe && bForPlayTarget && Time >= Recipe.SustainEnd)
+	{
+		FFeelEvalParams ReleaseParams;
+		if (MakeReleaseParams(Recipe, Params, ReleaseParams))
+		{
+			EvaluatedCount += Evaluate(*ReleaseRecipe, Time - Recipe.SustainEnd, ReleaseParams, Sink);
+		}
+	}
 	return EvaluatedCount;
 }
 
@@ -115,6 +127,21 @@ float FFeelEvaluator::GetRecipeDuration(const UFeelRecipe& Recipe, const FFeelEv
 	for (int32 TrackIndex = 0; TrackIndex < Recipe.Tracks.Num(); ++TrackIndex)
 	{
 		Duration = FMath::Max(Duration, GetTrackEndTime(Recipe, TrackIndex, Params));
+	}
+
+	// Release recipes count from Sustain End: the one this play chose once released, the longer one before. They play
+	// only for the recipe the game played, not for nested recipes.
+	FFeelEvalParams ReleaseParams;
+	if (Params.NestingDepth == 0 && Recipe.HasReleaseRecipes() && MakeReleaseParams(Recipe, Params, ReleaseParams))
+	{
+		const UFeelRecipe* Chosen = GetReleaseRecipe(Recipe, Params);
+		for (const UFeelRecipe* ReleaseRecipe : { Recipe.FullReleaseRecipe.Get(), Recipe.EarlyReleaseRecipe.Get() })
+		{
+			if (ReleaseRecipe && ReleaseRecipe != &Recipe && (!Params.bReleased || ReleaseRecipe == Chosen))
+			{
+				Duration = FMath::Max(Duration, Recipe.SustainEnd + GetRecipeDuration(*ReleaseRecipe, ReleaseParams));
+			}
+		}
 	}
 	return Duration;
 }
@@ -252,29 +279,11 @@ bool FFeelEvaluator::PassesConditions(const FFeelTrack& Track, int32 TrackIndex,
 		return false;
 	}
 
-	if (!PassesReleaseCondition(Conditions.Release, Params))
-	{
-		return false;
-	}
-
 	if (Conditions.Chance < 1.0f)
 	{
 		return Conditions.Chance > 0.0f && GetChanceRoll(Track, TrackIndex, Params.InstanceSeed) < Conditions.Chance;
 	}
 	return true;
-}
-
-bool FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition Condition, const FFeelEvalParams& Params)
-{
-	switch (Condition)
-	{
-	case EFeelReleaseCondition::WhenReleaseParameterReached:
-		return Params.bReleaseReached;
-	case EFeelReleaseCondition::WhenReleasedEarly:
-		return Params.bReleased && !Params.bReleaseReached;
-	default:
-		return true;
-	}
 }
 
 float FFeelEvaluator::GetChanceRoll(const FFeelTrack& Track, int32 TrackIndex, int32 InstanceSeed)
@@ -394,6 +403,41 @@ bool FFeelEvaluator::MakeNestedParams(const UFeelRecipe& Recipe, int32 TrackInde
 	OutNestedParams.NestingDepth = Params.NestingDepth + 1;
 	OutNestedParams.bRespectSolo = false;
 	OutNestedParams.TrackScales = TConstArrayView<float>();
+	OutNestedParams.ReleaseTrackScales = TConstArrayView<float>();
+	OutNestedParams.bReleased = false;
+	OutNestedParams.bReleaseReached = false;
+	return true;
+}
+
+const UFeelRecipe* FFeelEvaluator::GetReleaseRecipe(const UFeelRecipe& Recipe, const FFeelEvalParams& Params)
+{
+	if (!Params.bReleased || !FFeelPlaybackClock::HasSustain(Recipe))
+	{
+		return nullptr;
+	}
+	const UFeelRecipe* ReleaseRecipe = Params.bReleaseReached ? Recipe.FullReleaseRecipe.Get() : Recipe.EarlyReleaseRecipe.Get();
+	return ReleaseRecipe != &Recipe ? ReleaseRecipe : nullptr;
+}
+
+bool FFeelEvaluator::MakeReleaseParams(const UFeelRecipe& Recipe, const FFeelEvalParams& Params, FFeelEvalParams& OutReleaseParams)
+{
+	if (Params.NestingDepth >= UFeelStep_Recipe::MaxNestingDepth)
+	{
+		return false;
+	}
+
+	OutReleaseParams = Params;
+	OutReleaseParams.Intensity = Params.Intensity * Recipe.DefaultIntensity;
+	OutReleaseParams.InstanceSeed = static_cast<int32>(HashCombineFast(GetTypeHash(Params.InstanceSeed), FeelEvaluatorPrivate::ReleaseSalt));
+	OutReleaseParams.NestingDepth = Params.NestingDepth + 1;
+	OutReleaseParams.bRespectSolo = false;
+	OutReleaseParams.TrackScales = Params.ReleaseTrackScales;
+	OutReleaseParams.ReleaseTrackScales = TConstArrayView<float>();
+	OutReleaseParams.bReleased = false;
+	OutReleaseParams.bReleaseReached = false;
+	// Every track of a release recipe plays on the play's target, whatever its Applies To.
+	OutReleaseParams.TargetFilter.Reset();
+	OutReleaseParams.bHasInstigator = true;
 	return true;
 }
 
@@ -449,6 +493,13 @@ namespace FeelEvaluatorPrivate
 				Channel->Samples.SetNumZeroed(SampleCount);
 			}
 			Channel->Samples[SampleIndex] = FMath::Max(Channel->Samples[SampleIndex], Value);
+		}
+
+		const UFeelRecipe* ReleaseRecipe = FFeelEvaluator::GetReleaseRecipe(Recipe, Params);
+		FFeelEvalParams ReleaseParams;
+		if (ReleaseRecipe && Time >= Recipe.SustainEnd && FFeelEvaluator::MakeReleaseParams(Recipe, Params, ReleaseParams))
+		{
+			AccumulateChannelIntensities(*ReleaseRecipe, Time - Recipe.SustainEnd, SampleSpacing, SampleIndex, SampleCount, ReleaseParams, InOutChannels);
 		}
 	}
 }
