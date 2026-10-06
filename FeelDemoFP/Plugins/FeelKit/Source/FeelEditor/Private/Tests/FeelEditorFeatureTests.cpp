@@ -243,6 +243,68 @@ bool FFeelSaveValidationLogTest::RunTest(const FString& Parameters)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFeelPreviewReleaseParameterTest, "FeelKit.Editor.PreviewReleaseParameter", FEEL_TEST_FLAGS)
+bool FFeelPreviewReleaseParameterTest::RunTest(const FString& Parameters)
+{
+	// The same recipe as FeelKit.Runtime.ReleaseParameter: loop 0.2 to 0.6 s, a full-charge ending and an early ending.
+	const FName Charge(TEXT("Charge"));
+	TStrongObjectPtr<UFeelRecipe> Recipe(NewObject<UFeelRecipe>(GetTransientPackage()));
+	UFeelStep_ScreenFlash* Flash = NewObject<UFeelStep_ScreenFlash>(Recipe.Get());
+	auto AddTrack = [&Recipe, Flash](float StartTime, float Duration, EFeelReleaseCondition Release)
+	{
+		FFeelTrack& Track = Recipe->Tracks.AddDefaulted_GetRef();
+		Track.Step = Flash;
+		Track.Channel = FeelTags::Screen_Flash;
+		Track.StartTime = StartTime;
+		Track.Duration = Duration;
+		Track.IntensityCurve.GetRichCurve()->Reset();
+		Track.Conditions.Release = Release;
+	};
+	AddTrack(0.0f, 1.0f, EFeelReleaseCondition::Any);
+	AddTrack(0.6f, 0.5f, EFeelReleaseCondition::WhenReleaseParameterReached);
+	AddTrack(0.6f, 0.5f, EFeelReleaseCondition::WhenReleasedEarly);
+	FFeelRecipeParameter& Parameter = Recipe->Parameters.AddDefaulted_GetRef();
+	Parameter.Name = Charge;
+	Recipe->bSustain = true;
+	Recipe->SustainStart = 0.2f;
+	Recipe->SustainEnd = 0.6f;
+	Recipe->bJumpToEndOnRelease = true;
+	Recipe->ReleaseParameter = Charge;
+
+	const TSharedRef<FFeelRecipeEditorState> State = MakeShared<FFeelRecipeEditorState>(Recipe.Get());
+
+	// The slider reaching Release At releases the preview, which jumps into the ending.
+	State->TogglePlay();
+	for (int32 Frame = 0; Frame < 10; ++Frame)
+	{
+		State->Tick(0.1f);
+	}
+	TestTrue(TEXT("Below Release At the preview keeps looping"), State->CanReleaseSustain());
+	TestTrue(TEXT("The full-charge track says what it waits for"), State->GetTrackDecision(1).ToString().Contains(TEXT("Charge reaches Release At")));
+	State->SetPreviewParameterValue(Charge, 1.0f);
+	State->Tick(0.1f);
+	TestFalse(TEXT("The slider at Release At releases the preview"), State->CanReleaseSustain());
+	TestTrue(TEXT("The preview jumps into the ending"), State->GetTime() >= 0.6f && State->GetTime() < 0.75f);
+	TestTrue(TEXT("The full-charge track plays"), State->GetTrackDecision(1).IsEmpty());
+	TestTrue(TEXT("The early-release track is skipped"), State->GetTrackDecision(2).ToString().Contains(TEXT("Skipped")));
+
+	// The Release button before a full charge jumps at once and plays the early ending.
+	State->Stop();
+	State->ResetPreviewParameters();
+	State->TogglePlay();
+	for (int32 Frame = 0; Frame < 3; ++Frame)
+	{
+		State->Tick(0.1f);
+	}
+	State->ReleaseSustain();
+	TestEqual(TEXT("The Release button jumps straight to Sustain End"), State->GetTime(), 0.6f, 0.0001f);
+	State->Tick(0.1f);
+	TestTrue(TEXT("The early-release track plays"), State->GetTrackDecision(2).IsEmpty());
+	TestTrue(TEXT("The full-charge track is skipped"), State->GetTrackDecision(1).ToString().Contains(TEXT("released before Charge reached Release At")));
+
+	return true;
+}
+
 #undef FEEL_TEST_FLAGS
 
 #endif // WITH_DEV_AUTOMATION_TESTS
