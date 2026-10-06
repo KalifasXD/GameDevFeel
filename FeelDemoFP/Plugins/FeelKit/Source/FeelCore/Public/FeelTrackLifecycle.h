@@ -37,6 +37,20 @@ public:
 	 */
 	void Rewind(const UFeelRecipe& Recipe, float ToTime, FMakeContext MakeContext);
 
+	/**
+	 * Sustain loop wrap, shared by the runtime and the editor preview: tracks inside the region update up to just before
+	 * Sustain End, then the region rewinds to Sustain Start. Tracks that start at Sustain End belong to the ending, so
+	 * they do not start (and stop again) on every loop.
+	 */
+	void WrapSustain(const UFeelRecipe& Recipe, const FFeelEvalParams& Params, FMakeContext MakeContext);
+
+	/**
+	 * Release with Jump to End on Release: time jumped forward to ToTime. Tracks that lie entirely between the last update
+	 * and ToTime are skipped instead of starting and stopping at once; tracks still active at ToTime start on the next
+	 * Update, and running tracks that end before ToTime stop normally then. Recipes played by tracks jump with them.
+	 */
+	void JumpForward(const UFeelRecipe& Recipe, float ToTime);
+
 	/** Stops every running track. */
 	void StopAll(const UFeelRecipe* Recipe, bool bInterrupted, FMakeContext MakeContext);
 

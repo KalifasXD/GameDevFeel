@@ -2,6 +2,7 @@
 
 #include "FeelEvaluator.h"
 
+#include "FeelPlaybackClock.h"
 #include "FeelRecipe.h"
 #include "FeelStep.h"
 #include "FeelTrack.h"
@@ -163,6 +164,21 @@ float FFeelEvaluator::GetParameterValue(const FFeelRecipeParameter& Parameter, c
 	return Parameter.MaxValue > Parameter.MinValue ? FMath::Clamp(RawValue, Parameter.MinValue, Parameter.MaxValue) : RawValue;
 }
 
+bool FFeelEvaluator::IsReleaseParameterReached(const UFeelRecipe& Recipe, const FFeelEvalParams& Params)
+{
+	if (Recipe.ReleaseParameter.IsNone() || !FFeelPlaybackClock::HasSustain(Recipe))
+	{
+		return false;
+	}
+	const FFeelRecipeParameter* Parameter = Recipe.FindParameter(Recipe.ReleaseParameter);
+	if (!Parameter)
+	{
+		return false;
+	}
+	const float Reached = Parameter->Normalize(GetParameterValue(*Parameter, Params));
+	return Reached >= FMath::Clamp(Recipe.ReleaseAt, 0.0f, 1.0f) - UE_KINDA_SMALL_NUMBER;
+}
+
 float FFeelEvaluator::ComputeParameterScale(const UFeelRecipe& Recipe, const FFeelTrack& Track, const FFeelEvalParams& Params)
 {
 	float Scale = 1.0f;
@@ -236,11 +252,29 @@ bool FFeelEvaluator::PassesConditions(const FFeelTrack& Track, int32 TrackIndex,
 		return false;
 	}
 
+	if (!PassesReleaseCondition(Conditions.Release, Params))
+	{
+		return false;
+	}
+
 	if (Conditions.Chance < 1.0f)
 	{
 		return Conditions.Chance > 0.0f && GetChanceRoll(Track, TrackIndex, Params.InstanceSeed) < Conditions.Chance;
 	}
 	return true;
+}
+
+bool FFeelEvaluator::PassesReleaseCondition(EFeelReleaseCondition Condition, const FFeelEvalParams& Params)
+{
+	switch (Condition)
+	{
+	case EFeelReleaseCondition::WhenReleaseParameterReached:
+		return Params.bReleaseReached;
+	case EFeelReleaseCondition::WhenReleasedEarly:
+		return Params.bReleased && !Params.bReleaseReached;
+	default:
+		return true;
+	}
 }
 
 float FFeelEvaluator::GetChanceRoll(const FFeelTrack& Track, int32 TrackIndex, int32 InstanceSeed)

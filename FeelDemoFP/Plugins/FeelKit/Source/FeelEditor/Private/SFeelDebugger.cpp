@@ -452,6 +452,10 @@ void SFeelDebugger::Refresh()
 
 					TArray<FString> Details;
 					Details.Add(Instance.bStopping ? TEXT("Stopping") : (bSustaining ? TEXT("Sustaining") : TEXT("Playing")));
+					if (Instance.bReleaseReached)
+					{
+						Details.Add(FString::Printf(TEXT("released by %s"), *Instance.Recipe->ReleaseParameter.ToString()));
+					}
 					for (const TPair<FName, float>& Pair : Instance.ParameterValues)
 					{
 						Details.Add(FString::Printf(TEXT("%s %.2f"), *Pair.Key.ToString(), Pair.Value));
@@ -572,7 +576,7 @@ void SFeelDebugger::Refresh()
 		Details.Add(FString::Printf(TEXT("%.2f s"), Capture.PlayedSeconds));
 		if (Capture.bReleased)
 		{
-			Details.Add(TEXT("released"));
+			Details.Add(Capture.bReleaseReached ? TEXT("released by its Release Parameter") : TEXT("released"));
 		}
 		if (Capture.bInterrupted)
 		{

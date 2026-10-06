@@ -43,7 +43,8 @@ public:
 
 	/**
 	 * Keeps the recipe playing while a condition lasts: time loops between Sustain Start and Sustain End until the play is
-	 * released (Release Feel, the end of an anim notify state, or Stop Feel), then plays the rest of the recipe.
+	 * released (Release Feel, the end of an anim notify state, or the Release Parameter below), then plays the rest of the
+	 * recipe. Stop Feel ends it at once.
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain")
 	bool bSustain = false;
@@ -56,6 +57,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain", meta = (ClampMin = "0", Units = "Seconds", EditCondition = "bSustain"))
 	float SustainEnd = 1.0f;
 
+	/**
+	 * When the play is released, jump straight to Sustain End and play the ending at once, instead of finishing the
+	 * current loop first. Use it when the ending answers the release, such as a charged attack letting go. Tracks that
+	 * would have ended before Sustain End end at the jump; tracks that run past Sustain End carry on.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain", meta = (EditCondition = "bSustain"))
+	bool bJumpToEndOnRelease = false;
+
+	/**
+	 * Parameter that releases the play on its own when it reaches Release At, as Release Feel would. It is read every
+	 * frame, so values from Set Feel Parameter and from accumulators count. Leave empty to release only from the game:
+	 * Release Feel, the end of an anim notify state, a Feel Input binding or a gameplay cue.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain", meta = (EditCondition = "bSustain", GetOptions = "GetParameterNames"))
+	FName ReleaseParameter;
+
+	/** Point in the Release Parameter's range where the play releases itself: 0 is the parameter's min, 1 its max. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Sustain", meta = (EditCondition = "bSustain", ClampMin = "0", ClampMax = "1"))
+	float ReleaseAt = 1.0f;
+
 	/** Shortest usable sustain region. */
 	static constexpr float MinSustainLength = 0.01f;
 
@@ -63,8 +84,11 @@ public:
 	UPROPERTY(VisibleAnywhere, AdvancedDisplay, Category = "Recipe")
 	int32 SchemaVersion = 0;
 
-	/** Current recipe data format. 1: parameters, play context and random ranges. 2: library metadata. */
-	static constexpr int32 CurrentSchemaVersion = 2;
+	/**
+	 * Current recipe data format. 1: parameters, play context and random ranges. 2: library metadata. 3: release by
+	 * parameter, jump to end on release and the Release track condition.
+	 */
+	static constexpr int32 CurrentSchemaVersion = 3;
 
 	/**
 	 * Nominal length of the recipe: the latest track end time, without random duration variation.
