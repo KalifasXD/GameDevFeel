@@ -881,6 +881,36 @@ void UFeelSubsystem::AdvanceInstance(FFeelInstance& Instance, float RealDeltaSec
 		return MakeContext(Instance, TrackIndex, TrackIntensity);
 	};
 
+	// Flashes that just started, those of nested recipes included, pass through their player's flash limiter. The scale
+	// applies from the frame the flash starts.
+	auto LimitStartedFlashes = [this, &Instance, &Params, &Recipe]()
+	{
+		if (!Params.Comfort.Scales)
+		{
+			return;
+		}
+		auto Register = [this, &Instance, &Params]()
+		{
+			const APlayerController* PlayerController = Instance.MakeTarget().ResolvePlayerController(GetWorld());
+			return FlashLimiters.FindOrAdd(FObjectKey(PlayerController)).RegisterFlash(AccumulatorTime, *Params.Comfort.Scales);
+		};
+		for (int32 StartedTrack : Instance.Lifecycle.GetStartedThisUpdate())
+		{
+			if (Params.Comfort.GetGroup(Recipe.Tracks[StartedTrack].Channel) == EFeelComfortGroup::Flashes)
+			{
+				Instance.TrackScales[StartedTrack] = Register();
+			}
+		}
+		for (const FFeelNestedTrackStart& Started : Instance.Lifecycle.GetNestedStartedThisUpdate())
+		{
+			if (Started.Recipe && Started.Recipe->Tracks.IsValidIndex(Started.TrackIndex)
+				&& Params.Comfort.GetGroup(Started.Recipe->Tracks[Started.TrackIndex].Channel) == EFeelComfortGroup::Flashes)
+			{
+				Instance.NestedTrackScales.Add(Started.ScaleKey, Register());
+			}
+		}
+	};
+
 	// Side effects (OnStart / OnStop) through the lifecycle shared with the editor preview. A release with Jump to End on
 	// Release or a release recipe first moves time to Sustain End, skipping the rest of the loop. A sustain loop first
 	// finishes the region, then rewinds so tracks inside it start again.
@@ -891,35 +921,11 @@ void UFeelSubsystem::AdvanceInstance(FFeelInstance& Instance, float RealDeltaSec
 	if (Instance.Clock.Advance(Recipe, RealDeltaSeconds))
 	{
 		Instance.Lifecycle.WrapSustain(Recipe, Params, MakeTrackContext);
+		LimitStartedFlashes();
 	}
 	const float Time = Instance.Clock.RecipeTime;
 	Instance.Lifecycle.Update(Recipe, Time, Params, MakeTrackContext);
-
-	// Flashes that just started, the release recipe's included, pass through their player's flash limiter.
-	auto LimitStartedFlashes = [this, &Instance, &Params](const UFeelRecipe& StartedRecipe, TConstArrayView<int32> StartedTracks, TArray<float>& InOutScales)
-	{
-		if (InOutScales.Num() != StartedRecipe.Tracks.Num())
-		{
-			InOutScales.Init(1.0f, StartedRecipe.Tracks.Num());
-		}
-		for (int32 StartedTrack : StartedTracks)
-		{
-			const FFeelTrack& Track = StartedRecipe.Tracks[StartedTrack];
-			if (!Params.Comfort.Scales || Params.Comfort.GetGroup(Track.Channel) != EFeelComfortGroup::Flashes)
-			{
-				continue;
-			}
-			const APlayerController* PlayerController = Instance.MakeTarget().ResolvePlayerController(GetWorld());
-			FFeelFlashLimiter& Limiter = FlashLimiters.FindOrAdd(FObjectKey(PlayerController));
-			InOutScales[StartedTrack] = Limiter.RegisterFlash(AccumulatorTime, *Params.Comfort.Scales);
-		}
-	};
-	LimitStartedFlashes(Recipe, Instance.Lifecycle.GetStartedThisUpdate(), Instance.TrackScales);
-	if (const UFeelRecipe* ReleaseRecipe = Instance.Lifecycle.GetStartedReleaseRecipe())
-	{
-		LimitStartedFlashes(*ReleaseRecipe, Instance.Lifecycle.GetReleaseStartedThisUpdate(), Instance.ReleaseTrackScales);
-		Params.ReleaseTrackScales = Instance.ReleaseTrackScales;
-	}
+	LimitStartedFlashes();
 
 	// Recipe edits during PIE (such as a longer track) apply even to instances already playing.
 	Instance.Duration = FFeelEvaluator::GetRecipeDuration(Recipe, Params);
@@ -988,7 +994,7 @@ void UFeelSubsystem::FinishInstance(FFeelInstance& Instance, bool bInterrupted, 
 		Capture.bHasComfort = Instance.bHasComfortSnapshot;
 		Capture.ComfortScales = Instance.ComfortSnapshot;
 		Capture.TrackScales = Instance.TrackScales;
-		Capture.ReleaseTrackScales = Instance.ReleaseTrackScales;
+		Capture.NestedTrackScales = Instance.NestedTrackScales;
 		Capture.PlayedSeconds = static_cast<float>(Instance.Elapsed);
 		Capture.bReleased = Instance.Clock.bReleased;
 		Capture.bReleaseReached = Instance.bReleaseReached;
@@ -1337,7 +1343,7 @@ FFeelEvalParams UFeelSubsystem::MakeEvalParams(const FFeelInstance& Instance, fl
 	Params.ParameterValues = &Instance.ParameterValues;
 	Params.bHasInstigator = Instance.Instigator.IsValid();
 	Params.TrackScales = Instance.TrackScales;
-	Params.ReleaseTrackScales = Instance.ReleaseTrackScales;
+	Params.NestedTrackScales = &Instance.NestedTrackScales;
 	Params.Comfort = MakeComfortContext(Instance);
 	// Release outcome, which picks the release recipe. Only a sustained recipe can be released.
 	Params.bReleased = Instance.Recipe && FFeelPlaybackClock::HasSustain(*Instance.Recipe) && Instance.Clock.bReleased;

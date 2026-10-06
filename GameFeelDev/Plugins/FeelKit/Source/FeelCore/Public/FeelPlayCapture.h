@@ -37,8 +37,8 @@ struct FEELCORE_API FFeelPlayCapture
 	/** Per-track strength decided at run time, such as flashes softened or suppressed by the flash limiter. */
 	TArray<float> TrackScales;
 
-	/** The same for the release recipe's tracks. */
-	TArray<float> ReleaseTrackScales;
+	/** The same for the tracks of nested recipes (Play Recipe tracks and the release recipe). */
+	TMap<uint32, float> NestedTrackScales;
 
 	/** Seconds the play lasted and how it ended. */
 	float PlayedSeconds = 0.0f;

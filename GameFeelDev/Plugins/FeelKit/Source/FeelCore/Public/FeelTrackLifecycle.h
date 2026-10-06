@@ -9,6 +9,14 @@
 class UFeelRecipe;
 struct FFeelEvalParams;
 
+/** A track of a nested recipe that started: which recipe, which track, and its key in FFeelEvalParams::NestedTrackScales. */
+struct FFeelNestedTrackStart
+{
+	const UFeelRecipe* Recipe = nullptr;
+	int32 TrackIndex = INDEX_NONE;
+	uint32 ScaleKey = 0;
+};
+
 /**
  * Start and stop bookkeeping for one playing instance's tracks (OnStart and OnStop).
  * Shared by the runtime subsystem and the editor preview, so side-effect steps such as sounds behave the same in both.
@@ -64,8 +72,11 @@ public:
 	/** Tracks of this recipe (not inner recipes) that started during the last Update. */
 	TConstArrayView<int32> GetStartedThisUpdate() const { return StartedThisUpdate; }
 
-	/** Tracks of the release recipe that started during the last Update. */
-	TConstArrayView<int32> GetReleaseStartedThisUpdate() const;
+	/**
+	 * Tracks of nested recipes (Play Recipe tracks and the release recipe, at any depth) that started during the last
+	 * Update, so the caller can run their flashes through the flash limiter as it does for GetStartedThisUpdate.
+	 */
+	TConstArrayView<FFeelNestedTrackStart> GetNestedStartedThisUpdate() const { return NestedStartedThisUpdate; }
 
 	/** Release recipe whose tracks have started in this play, or null. */
 	const UFeelRecipe* GetStartedReleaseRecipe() const;
@@ -103,6 +114,13 @@ private:
 	TArray<TWeakObjectPtr<UFeelStep>> RunningSteps;
 
 	TArray<int32, TInlineAllocator<4>> StartedThisUpdate;
+	TArray<FFeelNestedTrackStart> NestedStartedThisUpdate;
+
+	/** Key of the recipe this lifecycle runs, as FFeelEvalParams::ScalePath: 0 at the top level. */
+	uint32 ScalePath = 0;
+
+	/** Adds the tracks a nested lifecycle started in its last Update, with their keys, to NestedStartedThisUpdate. */
+	void CollectNestedStarts(const FFeelTrackLifecycle& Child, const UFeelRecipe& ChildRecipe);
 
 	/** Lifecycles of inner recipes, by the index of the Play Recipe track running them. Shared so instances stay copyable. */
 	TMap<int32, TSharedPtr<FFeelTrackLifecycle>> Children;

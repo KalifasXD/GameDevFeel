@@ -19,6 +19,8 @@ void FFeelTrackLifecycle::Reset(int32 NumTracks, float InLastTime)
 	Children.Reset();
 	ReleaseChild.Reset();
 	ReleaseChildRecipe.Reset();
+	StartedThisUpdate.Reset();
+	NestedStartedThisUpdate.Reset();
 	LastTime = InLastTime;
 }
 
@@ -27,9 +29,13 @@ const UFeelRecipe* FFeelTrackLifecycle::GetStartedReleaseRecipe() const
 	return ReleaseChild.IsValid() ? ReleaseChildRecipe.Get() : nullptr;
 }
 
-TConstArrayView<int32> FFeelTrackLifecycle::GetReleaseStartedThisUpdate() const
+void FFeelTrackLifecycle::CollectNestedStarts(const FFeelTrackLifecycle& Child, const UFeelRecipe& ChildRecipe)
 {
-	return ReleaseChild.IsValid() ? ReleaseChild->GetStartedThisUpdate() : TConstArrayView<int32>();
+	for (int32 StartedTrack : Child.StartedThisUpdate)
+	{
+		NestedStartedThisUpdate.Add({ &ChildRecipe, StartedTrack, FFeelEvaluator::MakeTrackScaleKey(Child.ScalePath, StartedTrack) });
+	}
+	NestedStartedThisUpdate.Append(Child.NestedStartedThisUpdate);
 }
 
 int32 FFeelTrackLifecycle::MakeNestedTrackKey(int32 ParentKey, int32 TrackIndex, int32 InnerTrackIndex)
@@ -61,11 +67,13 @@ void FFeelTrackLifecycle::UpdateChild(const UFeelRecipe& Recipe, int32 TrackInde
 		return Context;
 	};
 	(*Child)->Update(InnerRecipe, Time - StartTime, NestedParams, MakeInnerContext);
+	CollectNestedStarts(**Child, InnerRecipe);
 }
 
 void FFeelTrackLifecycle::Update(const UFeelRecipe& Recipe, float Time, const FFeelEvalParams& Params, FMakeContext MakeContext)
 {
 	StartedThisUpdate.Reset();
+	NestedStartedThisUpdate.Reset();
 
 	const int32 NumTracks = Recipe.Tracks.Num();
 	if (States.Num() != NumTracks)
@@ -129,6 +137,7 @@ void FFeelTrackLifecycle::Update(const UFeelRecipe& Recipe, float Time, const FF
 			{
 				TSharedPtr<FFeelTrackLifecycle> Child = MakeShared<FFeelTrackLifecycle>();
 				Child->Reset(RecipeStep->Recipe->Tracks.Num());
+				Child->ScalePath = FFeelEvaluator::MakeTrackScaleKey(ScalePath, TrackIndex);
 				Children.Add(TrackIndex, Child);
 			}
 		}
@@ -168,6 +177,7 @@ void FFeelTrackLifecycle::UpdateRelease(const UFeelRecipe& Recipe, float Time, c
 		// Playback restarted past Sustain End (scrubbing) skips what the release recipe had already played by then.
 		ReleaseChild = MakeShared<FFeelTrackLifecycle>();
 		ReleaseChild->Reset(ReleaseRecipe->Tracks.Num(), LastTime >= Recipe.SustainEnd ? LastTime - Recipe.SustainEnd : -1.0f);
+		ReleaseChild->ScalePath = FFeelEvaluator::MakeTrackScaleKey(ScalePath, INDEX_NONE);
 		ReleaseChildRecipe = ReleaseRecipe;
 	}
 
@@ -181,6 +191,7 @@ void FFeelTrackLifecycle::UpdateRelease(const UFeelRecipe& Recipe, float Time, c
 		return Context;
 	};
 	ReleaseChild->Update(*ReleaseRecipe, Time - Recipe.SustainEnd, ReleaseParams, MakeReleaseContext);
+	CollectNestedStarts(*ReleaseChild, *ReleaseRecipe);
 }
 
 void FFeelTrackLifecycle::StopRelease(bool bInterrupted, FMakeContext MakeContext)

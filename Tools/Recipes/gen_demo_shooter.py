@@ -15,6 +15,9 @@ HEAT = parameter('Heat', 0.0, 0.0, 8.0, 'How hot the gun runs: every shot adds 1
 DISTANCE = parameter('Distance', 1000.0, 0.0, 3000.0, 'Distance from the player to the explosion in cm, passed by the projectile hook. Close explosions hit hard, far ones only rumble.')
 LAND_SPEED = parameter('LandSpeed', 600.0, 300.0, 2000.0, 'Downward speed at landing in cm/s, passed by the Feel Trigger Landed event. Walking off a step lands well under 600; a jump pad arc comes down at 1000 or more.')
 DAMAGE = parameter('Damage', 25.0, 0.0, 100.0, 'Damage of the hit, passed by the hook. Shown as a number over the enemy.')
+HURT_DAMAGE = parameter('Damage', 25.0, 0.0, 100.0, 'Damage the player took, passed by the hook. At 25, the default damage of the template projectile, the recipe plays as tuned; harder hits knock and pulse harder.')
+# Hurt strength by damage: 25 is the tuned feel, 0 about two thirds of it, 100 two fifths more.
+HURT_SCALE = [(0, 0.65), (0.25, 1), (1, 1.4)]
 
 CLOSE_ONLY = [(0, 1), (0.25, 1), (0.3, 0), (1, 0)]
 FALLOFF = [(0, 1), (0.5, 0.35), (1, 0)]
@@ -112,13 +115,17 @@ recipe('Explosion', 'Impact', 'A grenade explodes, scaled by the player\'s dista
           parameterMappings=[mapping('Distance', [(0, 1), (1, 0.15)])]),
 ], parameters=[DISTANCE])
 
-recipe('Hurt', 'Danger', 'The player is hit: the view is knocked away from the shot, a red pulse at the edges, a body hit and a rumble.', [
-    track(step('CameraPunch', locationPunch=vec(8, 0, 0), rotationPunch=rot(2.0, 0, 0), directionSource='PlayDirection', shape='Kick', attackFraction=0.1), 0.0, 0.35),
-    track(step('ColorTint', tintColor=color(1, 0.2, 0.15), strength=0.5, shape='Kick', attackFraction=0.1), 0.0, 0.5),
-    track(step('VignettePulse', vignetteIntensity=0.6, shape='Kick', attackFraction=0.1), 0.0, 0.5),
+recipe('Hurt', 'Danger', 'The player is hit: the view is knocked away from the shot, a red pulse at the edges, a body hit and a rumble, all stronger for harder hits.', [
+    track(step('CameraPunch', locationPunch=vec(8, 0, 0), rotationPunch=rot(2.0, 0, 0), directionSource='PlayDirection', shape='Kick', attackFraction=0.1), 0.0, 0.35,
+          parameterMappings=[mapping('Damage', HURT_SCALE)]),
+    track(step('ColorTint', tintColor=color(1, 0.2, 0.15), strength=0.5, shape='Kick', attackFraction=0.1), 0.0, 0.5,
+          parameterMappings=[mapping('Damage', HURT_SCALE)]),
+    track(step('VignettePulse', vignetteIntensity=0.6, shape='Kick', attackFraction=0.1), 0.0, 0.5,
+          parameterMappings=[mapping('Damage', HURT_SCALE)]),
     track(step('PlaySound', sound=SOUND.format('Body_Hit'), placement='TwoD', volumeMultiplier=0.7, pitchVariation=0.08), 0.0, 0.3, FLAT),
-    track(step('ForceFeedbackCurve', leftLarge=0.6, rightLarge=0.3, shape='Kick'), 0.0, 0.2),
-], parameters=[DAMAGE])
+    track(step('ForceFeedbackCurve', leftLarge=0.6, rightLarge=0.3, shape='Kick'), 0.0, 0.2,
+          parameterMappings=[mapping('Damage', HURT_SCALE)]),
+], parameters=[HURT_DAMAGE])
 
 recipe('Death', 'Danger', 'The player dies: time slows, the color drains, the view closes in, a heavy fall and a long rumble.', [
     track(step('SlowMoRamp', timeDilation=0.3, rampInTime=0.1, rampOutTime=0.5), 0.0, 1.4, FLAT),

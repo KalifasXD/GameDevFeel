@@ -485,19 +485,13 @@ void FFeelRecipeEditorState::ApplyPreviewFlashLimiter()
 		}
 	}
 
-	// The release recipe's flashes too, as at runtime.
-	if (const UFeelRecipe* ReleaseRecipe = Lifecycle.GetStartedReleaseRecipe())
+	// The flashes of nested recipes (Play Recipe tracks and the release recipe) too, as at runtime.
+	for (const FFeelNestedTrackStart& Started : Lifecycle.GetNestedStartedThisUpdate())
 	{
-		if (PreviewReleaseTrackScales.Num() != ReleaseRecipe->Tracks.Num())
+		if (Started.Recipe && Started.Recipe->Tracks.IsValidIndex(Started.TrackIndex)
+			&& Params.Comfort.GetGroup(Started.Recipe->Tracks[Started.TrackIndex].Channel) == EFeelComfortGroup::Flashes)
 		{
-			PreviewReleaseTrackScales.Init(1.0f, ReleaseRecipe->Tracks.Num());
-		}
-		for (int32 StartedTrack : Lifecycle.GetReleaseStartedThisUpdate())
-		{
-			if (Params.Comfort.GetGroup(ReleaseRecipe->Tracks[StartedTrack].Channel) == EFeelComfortGroup::Flashes)
-			{
-				PreviewReleaseTrackScales[StartedTrack] = PreviewFlashLimiter.RegisterFlash(PreviewClock, *Params.Comfort.Scales);
-			}
+			PreviewNestedTrackScales.Add(Started.ScaleKey, PreviewFlashLimiter.RegisterFlash(PreviewClock, *Params.Comfort.Scales));
 		}
 	}
 }
@@ -531,7 +525,7 @@ void FFeelRecipeEditorState::RestartTrackLifecycle(float FromTime)
 	const UFeelRecipe* CurrentRecipe = GetRecipe();
 	Lifecycle.Reset(CurrentRecipe ? CurrentRecipe->Tracks.Num() : 0, FromTime);
 	PreviewTrackScales.Init(1.0f, CurrentRecipe ? CurrentRecipe->Tracks.Num() : 0);
-	PreviewReleaseTrackScales.Reset();
+	PreviewNestedTrackScales.Reset();
 }
 
 FFeelContext FFeelRecipeEditorState::MakePreviewContext(int32 TrackIndex, float TrackIntensity) const
@@ -793,7 +787,7 @@ FFeelEvalParams FFeelRecipeEditorState::GetPreviewParams() const
 	// Release outcome, which picks the release recipe, as at runtime.
 	Params.bReleased = bSustainReleased;
 	Params.bReleaseReached = bSustainReleased && bReleaseReached;
-	Params.ReleaseTrackScales = PreviewReleaseTrackScales;
+	Params.NestedTrackScales = &PreviewNestedTrackScales;
 
 	const UFeelSettings* Settings = GetDefault<UFeelSettings>();
 	if (ActiveCapture.IsSet())
@@ -809,7 +803,7 @@ FFeelEvalParams FFeelRecipeEditorState::GetPreviewParams() const
 		Params.ViewDirection = Capture.ViewDirection;
 		Params.ViewDirectionFromLocation = Capture.ViewDirectionFromLocation;
 		Params.TrackScales = Capture.TrackScales;
-		Params.ReleaseTrackScales = Capture.ReleaseTrackScales;
+		Params.NestedTrackScales = &Capture.NestedTrackScales;
 		// Released with the Release button, a replay ends the way the recorded play did.
 		Params.bReleaseReached = bSustainReleased && Capture.bReleaseReached;
 		if (Capture.bHasComfort)

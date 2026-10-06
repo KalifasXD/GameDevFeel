@@ -231,7 +231,7 @@ private:
 
 	TOptional<FFeelPlayCapture> ActiveCapture;
 	TArray<float> PreviewTrackScales;
-	TArray<float> PreviewReleaseTrackScales;
+	TMap<uint32, float> PreviewNestedTrackScales;
 	FFeelFlashLimiter PreviewFlashLimiter;
 	double PreviewClock = 0.0;
 	float LastTickSeconds = 0.0f;

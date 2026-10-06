@@ -30,10 +30,11 @@ if os.path.exists(existing):
 
 
 def set_library_editing(allow):
-    """Sets Allow Library Editing in this session only (the notify updates the write permission); returns the old value."""
+    """Sets Allow Library Editing in this session only (the notify updates the write permission); returns the old value.
+    The setting is not exposed to Blueprint, so Python reaches it by its C++ name."""
     settings = unreal.get_default_object(unreal.load_class(None, '/Script/FeelEditor.FeelEditorSettings'))
-    was = settings.get_editor_property('allow_library_editing')
-    settings.set_editor_property('allow_library_editing', allow, unreal.PropertyAccessChangeNotifyMode.ALWAYS)
+    was = settings.get_editor_property('bAllowLibraryEditing')
+    settings.set_editor_property('bAllowLibraryEditing', allow, unreal.PropertyAccessChangeNotifyMode.ALWAYS)
     return was
 
 

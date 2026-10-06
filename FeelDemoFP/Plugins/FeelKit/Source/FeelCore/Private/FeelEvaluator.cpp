@@ -175,13 +175,30 @@ float FFeelEvaluator::ComputeTrackIntensity(const UFeelRecipe& Recipe, int32 Tra
 	}
 
 	const FFeelTrack& Track = Recipe.Tracks[TrackIndex];
-	const float TrackScale = Params.TrackScales.IsValidIndex(TrackIndex) ? Params.TrackScales[TrackIndex] : 1.0f;
+	const float TrackScale = GetTrackScale(TrackIndex, Params);
 	return Params.Intensity
 		* Recipe.DefaultIntensity
 		* Track.EvaluateIntensityCurve(GetTrackAlpha(Recipe, TrackIndex, Time, Params))
 		* ComputeParameterScale(Recipe, Track, Params)
 		* GetRandomIntensityScale(Track, TrackIndex, Params)
 		* TrackScale;
+}
+
+uint32 FFeelEvaluator::MakeTrackScaleKey(uint32 ScalePath, int32 TrackIndex)
+{
+	const uint32 Key = HashCombineFast(HashCombineFast(ScalePath, GetTypeHash(TrackIndex)), 0x7F4A7C15);
+	// 0 is the top level.
+	return Key != 0 ? Key : 1;
+}
+
+float FFeelEvaluator::GetTrackScale(int32 TrackIndex, const FFeelEvalParams& Params)
+{
+	if (Params.ScalePath == 0)
+	{
+		return Params.TrackScales.IsValidIndex(TrackIndex) ? Params.TrackScales[TrackIndex] : 1.0f;
+	}
+	const float* Scale = Params.NestedTrackScales ? Params.NestedTrackScales->Find(MakeTrackScaleKey(Params.ScalePath, TrackIndex)) : nullptr;
+	return Scale ? *Scale : 1.0f;
 }
 
 float FFeelEvaluator::GetParameterValue(const FFeelRecipeParameter& Parameter, const FFeelEvalParams& Params)
@@ -403,7 +420,7 @@ bool FFeelEvaluator::MakeNestedParams(const UFeelRecipe& Recipe, int32 TrackInde
 	OutNestedParams.NestingDepth = Params.NestingDepth + 1;
 	OutNestedParams.bRespectSolo = false;
 	OutNestedParams.TrackScales = TConstArrayView<float>();
-	OutNestedParams.ReleaseTrackScales = TConstArrayView<float>();
+	OutNestedParams.ScalePath = MakeTrackScaleKey(Params.ScalePath, TrackIndex);
 	OutNestedParams.bReleased = false;
 	OutNestedParams.bReleaseReached = false;
 	return true;
@@ -431,8 +448,8 @@ bool FFeelEvaluator::MakeReleaseParams(const UFeelRecipe& Recipe, const FFeelEva
 	OutReleaseParams.InstanceSeed = static_cast<int32>(HashCombineFast(GetTypeHash(Params.InstanceSeed), FeelEvaluatorPrivate::ReleaseSalt));
 	OutReleaseParams.NestingDepth = Params.NestingDepth + 1;
 	OutReleaseParams.bRespectSolo = false;
-	OutReleaseParams.TrackScales = Params.ReleaseTrackScales;
-	OutReleaseParams.ReleaseTrackScales = TConstArrayView<float>();
+	OutReleaseParams.TrackScales = TConstArrayView<float>();
+	OutReleaseParams.ScalePath = MakeTrackScaleKey(Params.ScalePath, INDEX_NONE);
 	OutReleaseParams.bReleased = false;
 	OutReleaseParams.bReleaseReached = false;
 	// Every track of a release recipe plays on the play's target, whatever its Applies To.
